@@ -17,6 +17,24 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from backend import views
+from django.conf import settings
+from django.urls import re_path
+from django.views.static import serve
+from django.conf.urls.static import static
+
 urlpatterns = [
+        re_path(
+        r'^statics/(?P<path>.*)$',
+        serve,
+        {
+            'document_root': settings.STATIC_URL,
+            'show_indexes': True,  # must be True to render file list
+        },
+    ),
+        path('',views.home,name='home_page'),
     path('admin/', admin.site.urls),
-]
+    path('register/', views.register_user, name='register'),
+    path('login/', views.login_user, name='login'),
+    path('logout/', views.logout_user, name='logout'),
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
