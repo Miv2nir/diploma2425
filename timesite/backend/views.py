@@ -78,6 +78,7 @@ def logout_user(request):
         print('Logging out '+request.user.username)
         logout(request)
     return HttpResponseRedirect('/login/')
+
 @login_required
 def home(request):
     return HttpResponse('<h2>Still working on it, sorry</h2>')
