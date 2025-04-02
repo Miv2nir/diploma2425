@@ -1,13 +1,14 @@
 :root {
     font-size: 20px;
     font-family: 'Open Sans';
-    --bg-color: #edf7ff;
+    --bg-color: #f7efff;
     --highlight-color: white;
     --highlight-color-hover: #f0f7fe;
     --selection-color: #edf7ff;
     --selection-color-list: #eef6fc;
-    --border-color: #3179ed;
-    --hover-color: #1699e0;
+    --border-color: #8712fe;
+    --hover-color: #a752fc;
+    --shadow-color: #c497f0;
     --error-text-color: red;
     --status-text-color: #1dbe1d;
     --text-color: black;
@@ -149,6 +150,7 @@ a.underline:hover {
     border-radius: 1rem;
     border-color: var(--border-color);
     background-color: var(--highlight-color);
+    box-shadow: 5px 5px 5px 1px var(--shadow-color);
 }
 
 .error-text {
