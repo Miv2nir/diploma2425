@@ -81,4 +81,4 @@ def logout_user(request):
 
 @login_required
 def home(request):
-    return HttpResponse('<h2>Still working on it, sorry</h2>')
+    return render(request,'backend/home.html',{})
