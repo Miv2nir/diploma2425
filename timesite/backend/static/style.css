@@ -144,7 +144,8 @@ a.underline:hover {
 }
 
 .login-box {
-    min-width: fit-content;
+    /*min-width: fit-content;*/
+    width: 320px;
     padding: 2rem;
     border: solid;
     border-radius: 1rem;
