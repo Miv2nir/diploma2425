@@ -124,6 +124,19 @@ body {
     height: 90vh;
     box-shadow: 5px 5px 5px 1px var(--shadow-color);
 }
+.home-container.hidden {
+    border-width: 0.0rem;
+    min-width: 0;
+    width: 0;
+    box-shadow: none;
+}
 .home-container.center {
-    min-width: 50vw;
+    min-width: 55vw;
+}
+.home-container.full-width {
+    width: 90vw;
+    
+}
+.home-container.transitioning {
+    transition: width 600ms,box-shadow 600ms, border-width 600ms;
 }
