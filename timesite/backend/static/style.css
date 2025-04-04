@@ -39,7 +39,9 @@ body {
 
 .login-box {
     /*min-width: fit-content;*/
-    width: 320px;
+    width: 80vh;
+    /*scale: 1;*/
+    max-width: 320px;
     padding: 2rem;
     border: solid;
     border-radius: 1rem;
