@@ -132,6 +132,10 @@ a {
     text-align: center;
     vertical-align: middle;
     overflow-x: hidden;
+    overflow-y: hidden;
+}
+.underlying-container {
+    height: 90vh;
     overflow-y: auto;
 }
 .home-container.hidden {
