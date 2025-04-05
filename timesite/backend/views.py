@@ -81,4 +81,4 @@ def logout_user(request):
 
 @login_required
 def home(request):
-    return render(request,'backend/home.html',{})
+    return render(request,'backend/home.html',{'user':request.user})

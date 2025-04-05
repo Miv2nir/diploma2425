@@ -26,6 +26,10 @@ body {
     /* flex-direction: row;*/
 }
 
+a { 
+    color: inherit;
+    text-decoration: none;
+ } 
 
 
 .login-form {
@@ -125,6 +129,10 @@ body {
     width: 20vw;
     height: 90vh;
     box-shadow: 5px 5px 5px 1px var(--shadow-color);
+    text-align: center;
+    vertical-align: middle;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 .home-container.hidden {
     border-width: 0.0rem;
@@ -141,4 +149,21 @@ body {
 }
 .home-container.transitioning {
     transition: width 600ms,box-shadow 600ms, border-width 600ms;
+}
+.pfp {
+    height: auto;
+    width: 3rem;
+    padding-right: 1rem;
+}
+.profile-shorthand {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.text-containered {
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
