@@ -171,3 +171,22 @@ a {
     padding-left: 1rem;
     padding-right: 1rem;
 }
+
+.fancy-underline {
+    display: inline-block;
+    padding-bottom: 0.5rem;
+}
+
+.fancy-underline::after {
+    content: '';
+    width: 0px;
+    height: 3px;
+    margin-left: 50%;
+    display: block;
+    background: var(--border-color);
+    transition: 200ms;
+    transform: translateX(-50%);
+}
+.fancy-underline:hover::after {
+    width: 100%;
+}
