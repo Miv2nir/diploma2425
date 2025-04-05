@@ -82,3 +82,7 @@ def logout_user(request):
 @login_required
 def home(request):
     return render(request,'backend/home.html',{'user':request.user})
+
+@login_required
+def profile_page(request):
+    return render(request,'backend/profile_page.html',{'user':request.user})
