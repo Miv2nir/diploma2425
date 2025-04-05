@@ -82,7 +82,10 @@ function hider() {
 //window.addEventListener('resize',hider);
 }
 
+
 window.onresize = hider;
 //addEventListener('animationstart',(addTransition));
 addEventListener('transitionend',(delayedRemoveTransition));
+//fire the function on page load, otherwise it doesnt do anything on mobile unless form fields are interacted with
+hider();
 </script>
