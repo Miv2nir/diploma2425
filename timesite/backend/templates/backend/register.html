@@ -14,7 +14,7 @@
 
 <body>
     <div class="login-form">
-        <div class="login-box">
+        <div class="login-box" id="login-box">
             <h3>Hello, Please Register</h3>
             {% if user_found %}
             <p class="error-text">Sorry, that username already exists.</p>
@@ -40,3 +40,25 @@
 </body>
 
 </html>
+
+<script>
+    login_box=document.getElementById('login-box');
+    scale_factor=1;
+    function rescaler_calc(){
+    if (window.outerWidth <500){
+      return 2;
+    }
+    else if (window.outerWidth>1000){
+      return 1;
+    }
+    else {
+      //return (-0.005*window.outerWidth)+4.5;
+      return ((-0.002)*window.outerWidth + 3);
+    }
+  }
+  function rescaler(){
+      login_box.style.scale = rescaler_calc();
+      console.log(rescaler_calc());
+    }
+  window.onresize = rescaler;
+  </script>
