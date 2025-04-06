@@ -190,3 +190,9 @@ a {
 .fancy-underline:hover::after {
     width: 100%;
 }
+.pfp-profile {
+    height: auto;
+    width: 5rem;
+    margin-top: 2rem;
+    
+}
