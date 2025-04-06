@@ -153,7 +153,9 @@ a {
 }
 .home-container.full-width {
     width: 90vw;
-    
+}
+.home-container.half {
+    width: 47vw;
 }
 .home-container.transitioning {
     transition: width 600ms,box-shadow 600ms, border-width 600ms;
@@ -202,4 +204,20 @@ a {
 .subtitle {
 color: var(--text-subtitle-color);
 font-size: 0.7rem;
+}
+.hr {
+    min-height: 0.15rem; 
+    background-color: var(--border-color);
+}
+.project-item {
+    height: 3rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    border: solid;
+    border-radius: 1rem;
+    border-color: var(--border-color);
+    background-color: var(--highlight-color);
+    box-shadow: 5px 5px 5px 1px var(--shadow-color);
+    overflow: hidden;
+    margin-bottom: 1rem;
 }

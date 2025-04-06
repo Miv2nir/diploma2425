@@ -13,20 +13,25 @@
 
 <body>
     <span class="home-main-container">
-        <div class="home-container center full-width" id="container-main">
-            <span style="display:flex; flex-direction: row;">
 
-                <div class="underlying-container half"></div>
-                <div style="min-width: 0.1rem; background-color: var(--border-color);"></div>
-                <div class="underlying-container half">
+
+                <div class="home-container half">
+                    <br>
+                    <a href="/" class="fancy-underline">Return to the Home Page</a>
+                    <h2 style="margin-top: 0rem;">Your Projects</h2>
+                    <div class="project-item"></div>
+                    <div class="project-item"></div>
+                    <div class="project-item"></div>
+                </div>
+                <!--div style="min-width: 0.1rem; background-color: var(--border-color);"></div-->
+                <div class="home-container half">
                     <!--h1>{{user}}'s Profile Page</h1-->
                     <img src="{% static 'pfp_placeholder.png' %}" class="pfp-profile">
                     <h2 class="text-containered" style="margin-top: 0.5rem; margin-bottom: 0rem;">{{user}}
                     </h2>
                     <a href="edit/" class="fancy-underline subtitle">Edit Profile</a>
+                    <div class="hr"></div>
                 </div> 
-            </span>
-        </div>
 
     </span>
 </body>
