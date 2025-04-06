@@ -12,7 +12,7 @@
     --error-text-color: red;
     --status-text-color: #1dbe1d;
     --text-color: black;
-    --text-link-color: grey;
+    --text-subtitle-color: grey;
     --sidebar-width: 10rem;
     --header-space: 6px;
 }
@@ -138,6 +138,10 @@ a {
     height: 90vh;
     overflow-y: auto;
 }
+.underlying-container.half {
+    width: 50%;
+    
+}
 .home-container.hidden {
     border-width: 0.0rem;
     min-width: 0;
@@ -192,7 +196,10 @@ a {
 }
 .pfp-profile {
     height: auto;
-    width: 5rem;
-    margin-top: 2rem;
-    
+    width: 10rem;
+    margin-top: 1rem;
+}
+.subtitle {
+color: var(--text-subtitle-color);
+font-size: 0.7rem;
 }
