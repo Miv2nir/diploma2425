@@ -24,3 +24,6 @@ class AuthForm(forms.Form):
         super().__init__(*args, **kwargs)
         for key, field in self.fields.items():
             field.label = ""
+            
+#main page forms n whatnot
+

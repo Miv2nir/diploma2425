@@ -39,4 +39,4 @@ urlpatterns = [
     path('profile/', views.profile_page, name='profile'),
     path('profile/edit/', views.profile_page_edit, name='profile_edit'),
     path('logout/', views.logout_user, name='logout'),
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

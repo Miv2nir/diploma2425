@@ -116,11 +116,15 @@ USE_I18N = True
 
 USE_TZ = True
 
+APPEND_SLASH = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'backend/static/'
+STATIC_ROOT = 'static/'
+MEDIA_ROOT = 'backend/media/'
+MEDIA_URL = 'backend/media/'
 
 LOGIN_URL='/login/'
 

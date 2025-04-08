@@ -3,3 +3,4 @@ __pycache__
 .pgpass
 static_
 timesite/static
+timesite/backend/media/user_pfps/*
