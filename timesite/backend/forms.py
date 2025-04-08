@@ -27,3 +27,10 @@ class AuthForm(forms.Form):
             
 #main page forms n whatnot
 
+class UserEditForm(forms.Form):
+    pfp=forms.ImageField(required=False,widget=forms.FileInput(attrs={}))
+    email = forms.CharField(label='Email',required=False, widget=forms.EmailInput())
+    login = forms.CharField(label='Login',required=False, widget=forms.TextInput())
+    old_password = forms.CharField(required=False,label='Old Password', widget=forms.PasswordInput(attrs={'placeholder': 'Old Password','class': 'form-field'}))
+    password = forms.CharField(required=False,label='Password', widget=forms.PasswordInput(attrs={'placeholder': 'New Password','class': 'form-field'}))
+    password_verify = forms.CharField(required=False,label='Repeat Password', widget=forms.PasswordInput(attrs={'placeholder': 'Repeat New Password','class': 'form-field'}))

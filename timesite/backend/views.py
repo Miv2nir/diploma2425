@@ -89,4 +89,58 @@ def profile_page(request):
 
 @login_required
 def profile_page_edit(request):
-    return render(request,'backend/profile_page_edit.html',{'user':request.user})
+    user_obj=request.user
+    #retrieve the additional info object
+    try:
+        info_obj=models.UserInfo.objects.filter(user=request.user)[0]
+    except IndexError:
+        info_obj=models.UserInfo(user=request.user)
+    
+    if request.method=="POST":
+        form=forms.UserEditForm(request.POST,request.FILES)
+        if form.is_valid():
+            if request.FILES:
+                #remove the old pfp
+                info_obj.pfp.delete(save=True)
+            try:
+                info_obj.pfp=form.cleaned_data['pfp']
+                extension=info_obj.pfp.name.split('.')[-1]
+                #print(extension)
+                info_obj.pfp.name=request.user.username+'.'+extension
+                info_obj.save()
+            except AttributeError:
+                pass
+            
+            #deal with the rest of the form
+            new_username=form.cleaned_data['username'].replace('/','').replace('?','')
+            print('input',new_username)
+            if new_username:
+                #check if the username is already taken
+                try:
+                    lookup=User.objects.filter(username=new_username)[0]
+                    return HttpResponseRedirect('/profile/edit/?username_taken=true')
+                except IndexError:
+                    pass
+                user_obj.username=new_username
+            old_password=form.cleaned_data['old_password']
+            new_password=form.cleaned_data['password']
+            verify_password=form.cleaned_data['password_verify']
+            if old_password and new_password and verify_password:
+                upd_user=authenticate(request,username=request.user,password=old_password)
+                print(upd_user)
+                if upd_user is None: #credentials didn't match
+                    return HttpResponseRedirect('/profile/edit/?wrong_password=true')
+                if new_password==verify_password:
+                    user_obj.set_password(new_password)
+                else:
+                    return HttpResponseRedirect('/profile/edit/?password_mismatch=true')
+
+            user_obj.save()
+            
+            return HttpResponseRedirect('/profile/edit/?success=true')
+        return HttpResponseRedirect('/profile/edit/')
+                
+    #GET
+    form=forms.UserEditForm()               
+    
+    return render(request,'backend/profile_page_edit.html',{'user':request.user,'form':form})

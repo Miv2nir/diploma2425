@@ -23,6 +23,10 @@
                     <a href="../" class="fancy-underline subtitle">Exit without saving</a>
                     <div class="hr"></div>
                     <p>form</p>
+                    <form action="/profile/edit/" enctype="multipart/form-data" method="post" id="profile_form">
+                        {%csrf_token%}
+                        {{form.as_p}}
+                    </form>
                 </div> 
 
     </span>
