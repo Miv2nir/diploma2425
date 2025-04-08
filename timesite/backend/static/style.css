@@ -222,26 +222,13 @@ font-size: 1rem;
     margin-bottom: 1rem;
 }
 
-.buttonize {
-    appearance: auto;
-    text-rendering: auto;
-    color: buttontext;
-    letter-spacing: normal;
-    word-spacing: normal;
-    line-height: normal;
-    text-transform: none;
-    text-indent: 0px;
-    text-shadow: none;
-    display: inline-block;
-    text-align: center;
-    cursor: default;
-    box-sizing: border-box;
-    background-color: buttonface;
-    margin: 0em;
-    padding-block: 1px;
-    padding-inline: 6px;
-    border-width: 2px;
-    border-style: outset;
-    border-color: buttonborder;
-    border-image: initial;
+.pfp-edit-file-field {
+    overflow: hidden;
+    max-height: 5rem;
+    transition: max-height 600ms;
+}
+
+.pfp-edit-file-field.hidden {
+    max-height: 1rem;
+    transition: max-height 600ms;
 }

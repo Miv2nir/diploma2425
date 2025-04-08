@@ -104,7 +104,8 @@ def profile_page_edit(request):
     if request.method=="POST":
         form=forms.UserEditForm(request.POST,request.FILES)
         if form.is_valid():
-            if request.FILES.get('filepath', False) or form.cleaned_data['delete_pfp']:
+            print(request.FILES)
+            if request.FILES.get('pfp', False) or form.cleaned_data['delete_pfp']:
                 print('removing pfp')
                 #remove the old pfp
                 pfp_obj.pfp.delete(save=True)
