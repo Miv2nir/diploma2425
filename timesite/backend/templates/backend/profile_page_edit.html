@@ -12,7 +12,11 @@
 </head>
 
 <style>
-input[type="file"] {
+input[type="file"]{
+
+    display: none;
+}
+input[type="file"]::file-selector-button {
     display: none;
 }
 </style>
@@ -32,13 +36,14 @@ input[type="file"] {
                     <form action="/profile/edit/" enctype="multipart/form-data" method="post" id="profile_form">
                         {%csrf_token%}
                         <div>
-                            <p style="display: flex;justify-content: center;">{{form.pfp}}
+                            <div id="file-label-target" style="margin-top: 1rem;">No file chosen</div>
+                            <p style="display: flex;justify-content: center; margin-top: 0.1rem;">
                                 <label for="id_pfp" class="login-button-primary" style="min-height: 1.7rem; display: flex; justify-content: center; align-items: center;">
                                     <span>Upload new PFP </span>
                                 </label>
                             </p>
+                            {{form.pfp}}
                             <div style="display: none;">{{form.delete_pfp}}</div>
-
                             <button class="login-button-secondary" id="delete_button" type="button" onclick="setPFPDeletion();">Remove PFP</button>
                             <p>{{form.email}}</p>
                             <p>{{form.login}}</p>
@@ -72,6 +77,18 @@ input[type="file"] {
             delete_button.classList.add('login-button-primary');
             delete_button.innerHTML= "Cancel PFP Removal";
             delete_flag=true;
+        }
+    }
+    function updateLabel() {
+        try{
+            document.getElementById('file-label-target').innerHTML=document.getElementById('id_pfp').files[0].name;
+        }
+        catch (e) {
+            if (e instanceof TypeError) {
+                document.getElementById('file-label-target').innerHTML='No file chosen';
+            } else {
+                throw e;
+            }
         }
     }
 </script>

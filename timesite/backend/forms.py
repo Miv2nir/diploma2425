@@ -28,7 +28,7 @@ class AuthForm(forms.Form):
 #main page forms n whatnot
 
 class UserEditForm(forms.Form):
-    pfp=forms.ImageField(required=False,widget=forms.FileInput(attrs={}))
+    pfp=forms.ImageField(required=False,widget=forms.FileInput(attrs={'onchange':'updateLabel();'}))
     delete_pfp=forms.BooleanField(required=False)
     display_name = forms.CharField(required=False,widget=forms.TextInput(attrs={'placeholder': 'Display Name','class': 'login-input-box'}))
     email = forms.CharField(label='Email',required=False, widget=forms.EmailInput(attrs={'placeholder': 'Email','class': 'login-input-box'}))
