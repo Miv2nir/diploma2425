@@ -3,6 +3,7 @@
 
 <head>
   {% load static %}
+  {% load filters %}
   <link rel="stylesheet" href="{% static 'style.css' %}" />
   <!-- font import -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,7 +31,7 @@
         </div>
         <div class="home-container" id="container-side-2">
             
-            <p class="profile-shorthand"><img src="{% static 'pfp_placeholder.png' %}" class="pfp"><b>{{user}}</b></p>
+            <p class="profile-shorthand"><img src="{{user|get_pfp}}" class="pfp"><b>{{user}}</b></p>
             <a href='profile/' class="fancy-underline">Profile Page</a><br>
             <a href='projects/' class="fancy-underline">Projects</a><br>
             <a href='logout/' class="fancy-underline">Log Out</a><br>

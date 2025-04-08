@@ -3,6 +3,7 @@
 
 <head>
   {% load static %}
+  {% load filters %}
   <link rel="stylesheet" href="{% static 'style.css' %}" />
   <!-- font import -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -16,7 +17,7 @@
                 <!--div style="min-width: 0.1rem; background-color: var(--border-color);"></div-->
                 <div class="home-container half">
                     <!--h1>{{user}}'s Profile Page</h1-->
-                    <img src="{% static 'pfp_placeholder.png' %}" class="pfp-profile">
+                    <img src="{{user|get_pfp}}" class="pfp-profile">
                     <h2 class="text-containered" style="margin-top: 0.5rem; margin-bottom: 0rem;">{{user}}
                     </h2>
                     <a href="edit/" class="fancy-underline subtitle">Edit Profile</a>

@@ -3,6 +3,7 @@
 
 <head>
   {% load static %}
+  {% load filters %}
   <link rel="stylesheet" href="{% static 'style.css' %}" />
   <!-- font import -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,7 +28,7 @@ input[type="file"]::file-selector-button {
                 <div class="home-container" style="width: 65vw; overflow-y: auto;">
                     <div class="underlying-container">
                     <!--h1>{{user}}'s Profile Page</h1-->
-                    <img src="{% static 'pfp_placeholder.png' %}" class="pfp-profile">
+                    <img src="{{user|get_pfp}}" class="pfp-profile">
                     <h2 class="text-containered" style="margin-top: 0.5rem; margin-bottom: 0rem;">{{user}}
                     </h2>
                     <!--a href="edit/" class="fancy-underline subtitle">Edit Profile</a-->
@@ -38,7 +39,7 @@ input[type="file"]::file-selector-button {
                         {%csrf_token%}
                         <div>
                             <div id="drop-zone" class="pfp-edit-file-field">
-                                <div id="file-label-target" style="margin-top: 1rem;">No file chosen</div>
+                                <div id="file-label-target" style="margin-top: 1rem; overflow-x: hidden; white-space: nowrap; text-overflow: ellipsis;">No file chosen</div>
                                 <p style="display: flex;justify-content: center; margin-top: 0.1rem;">
                                     <label for="id_pfp" class="login-button-primary" style="min-height: 1.7rem; display: flex; justify-content: center; align-items: center;">
                                         <span>Upload new PFP </span>
