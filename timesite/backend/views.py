@@ -95,30 +95,40 @@ def profile_page_edit(request):
         info_obj=models.UserInfo.objects.filter(user=request.user)[0]
     except IndexError:
         info_obj=models.UserInfo(user=request.user)
+    #retrieve pfp
+    try:
+        pfp_obj=models.UserPFP.objects.filter(user=request.user)[0]
+    except IndexError:
+        pfp_obj=models.UserPFP(user=request.user)
     
     if request.method=="POST":
         form=forms.UserEditForm(request.POST,request.FILES)
         if form.is_valid():
-            if request.FILES:
+            if request.FILES.get('filepath', False) or form.cleaned_data['delete_pfp']:
+                print('removing pfp')
                 #remove the old pfp
-                info_obj.pfp.delete(save=True)
+                pfp_obj.pfp.delete(save=True)
             try:
-                info_obj.pfp=form.cleaned_data['pfp']
-                extension=info_obj.pfp.name.split('.')[-1]
+                pfp_obj.pfp=form.cleaned_data['pfp']
+                extension=pfp_obj.pfp.name.split('.')[-1]
                 #print(extension)
-                info_obj.pfp.name=request.user.username+'.'+extension
-                info_obj.save()
+                pfp_obj.pfp.name=request.user.username+'.'+extension
+                pfp_obj.save()
             except AttributeError:
                 pass
             
             #deal with the rest of the form
-            new_username=form.cleaned_data['username'].replace('/','').replace('?','')
+            new_username=form.cleaned_data['login'].replace('/','').replace('?','')
             print('input',new_username)
             if new_username:
                 #check if the username is already taken
                 try:
                     lookup=User.objects.filter(username=new_username)[0]
-                    return HttpResponseRedirect('/profile/edit/?username_taken=true')
+                    #check if the user in question is the logged in user
+                    if lookup==request.user:
+                        pass
+                    else:
+                        return HttpResponseRedirect('/profile/edit/?username_taken=true')
                 except IndexError:
                     pass
                 user_obj.username=new_username
@@ -137,10 +147,19 @@ def profile_page_edit(request):
 
             user_obj.save()
             
+            if form.cleaned_data['display_name']:
+                info_obj.display_name=form.cleaned_data['display_name']
+                info_obj.save()
+            
+            
             return HttpResponseRedirect('/profile/edit/?success=true')
         return HttpResponseRedirect('/profile/edit/')
                 
     #GET
-    form=forms.UserEditForm()               
+    form=forms.UserEditForm(initial={
+        'email':user_obj.email,
+        'login':user_obj.username,
+        'display_name':info_obj.display_name
+    })
     
     return render(request,'backend/profile_page_edit.html',{'user':request.user,'form':form})

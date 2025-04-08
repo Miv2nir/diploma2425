@@ -11,6 +11,12 @@
     rel="stylesheet" />
 </head>
 
+<style>
+input[type="file"] {
+    display: none;
+}
+</style>
+
 <body>
     <span class="home-main-container">
                 <!--div style="min-width: 0.1rem; background-color: var(--border-color);"></div-->
@@ -22,12 +28,50 @@
                     <!--a href="edit/" class="fancy-underline subtitle">Edit Profile</a-->
                     <a href="../" class="fancy-underline subtitle">Exit without saving</a>
                     <div class="hr"></div>
-                    <p>form</p>
+                    <!--p>form</p-->
                     <form action="/profile/edit/" enctype="multipart/form-data" method="post" id="profile_form">
                         {%csrf_token%}
-                        {{form.as_p}}
+                        <div>
+                            <p style="display: flex;justify-content: center;">{{form.pfp}}
+                                <label for="id_pfp" class="login-button-primary" style="min-height: 1.7rem; display: flex; justify-content: center; align-items: center;">
+                                    <span>Upload new PFP </span>
+                                </label>
+                            </p>
+                            <div style="display: none;">{{form.delete_pfp}}</div>
+
+                            <button class="login-button-secondary" id="delete_button" type="button" onclick="setPFPDeletion();">Remove PFP</button>
+                            <p>{{form.email}}</p>
+                            <p>{{form.login}}</p>
+                            <p>{{form.display_name}}</p>
+                            <h3>Password change</h3>
+                            <p>{{form.old_password}}</p>
+                            <p>{{form.password}}</p>
+                            <p>{{form.password_verify}}</p>
+                        </div>
+                        <button class="login-button-primary" type="submit" value="OK">Save</button>
                     </form>
                 </div> 
 
     </span>
 </body>
+<script>
+    delete_check=document.getElementById('id_delete_pfp');
+    delete_flag=false;
+    delete_button=document.getElementById('delete_button');
+    function setPFPDeletion() {
+        if (delete_flag){
+            delete_check.checked=false;
+            delete_button.classList.remove('login-button-primary');
+            delete_button.classList.add('login-button-secondary');
+            delete_button.innerHTML= "Remove PFP";
+            delete_flag=false;
+        }
+        else {
+            delete_check.checked=true;
+            delete_button.classList.remove('login-button-secondary');
+            delete_button.classList.add('login-button-primary');
+            delete_button.innerHTML= "Cancel PFP Removal";
+            delete_flag=true;
+        }
+    }
+</script>
