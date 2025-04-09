@@ -153,7 +153,8 @@ def profile_page_edit(request):
                 info_obj.save()
             
             
-            return HttpResponseRedirect('/profile/edit/?success=true')
+            #return HttpResponseRedirect('/profile/edit/?success=true')
+            return HttpResponseRedirect('/profile/?success=true')
         return HttpResponseRedirect('/profile/edit/')
                 
     #GET

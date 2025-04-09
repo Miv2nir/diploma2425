@@ -120,6 +120,7 @@ a {
     flex-wrap: wrap;
 }
 .home-container {
+    position: relative;
     background-color: var(--highlight-color);
     border:solid;
     border-radius: 0.5rem;
@@ -233,4 +234,9 @@ font-size: 1rem;
 .pfp-edit-file-field.hidden {
     max-height: 1rem;
     transition: max-height 600ms;
+}
+.back-text {
+    position: absolute;
+    left: 1rem;
+    top:0.5rem;
 }
