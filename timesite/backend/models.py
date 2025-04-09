@@ -22,7 +22,7 @@ class ProjectTag(models.Model):
     
   
 class Project(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid5, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user=models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
     icon=models.ImageField(null=True,blank=True,upload_to='project_icons/')
     name=models.CharField(max_length=100)

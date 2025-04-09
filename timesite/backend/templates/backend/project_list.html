@@ -30,6 +30,12 @@
                 </div>
                 <br>
                 <!--div class="hr"></div-->
+                {%for item in lookup%}
+                <div class="project-item">
+                    <img src="{%static 'icon_placeholder.png' %}" class="thumb-icon">
+                    <h3>{{item.name}}</h3>
+                </div>
+                {%endfor%}
             </div>
         </div>
         <div class="home-container" id="container-side-2">

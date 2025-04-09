@@ -234,6 +234,11 @@ font-size: 1rem;
     box-shadow: 5px 5px 5px 1px var(--shadow-color);
     overflow: hidden;
     margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content:start;
+    align-items:center;
+    
 }
 
 .pfp-edit-file-field {
@@ -293,4 +298,12 @@ font-size: 1rem;
 .search-button:hover {
     background-color: var(--selection-color);
     transition: 200ms ease;
+}
+
+.thumb-icon {
+    height: auto;
+    width: 2.7rem;
+    margin-left: 0.3rem;
+    margin-right: 1rem;
+    border-radius: 10%;
 }
