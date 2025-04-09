@@ -8,6 +8,7 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse, HttpResponseRedirect, FileResponse, JsonResponse
 import backend.forms as forms
 import backend.models as models
+from backend.functions import *
 from django.contrib.auth import authenticate, login, logout
 
 from django.contrib.auth.decorators import login_required
@@ -165,3 +166,16 @@ def profile_page_edit(request):
     })
     
     return render(request,'backend/profile_page_edit.html',{'user':request.user,'form':form})
+
+@login_required
+def project_list(request):
+    if request.method == 'POST':
+        form = forms.SearchForm(request.POST)
+        if form.is_valid():
+            prompt=form.cleaned_data['search']
+            return HttpResponseRedirect('/projects/?prompt='+prompt)
+        else:
+            return HttpResponseRedirect('/projects/')
+    form=forms.SearchForm(initial={'search':request.GET.get('prompt','')})
+    lookup=find_projects_by_name(request.GET.get('prompt',''))
+    return render(request,'backend/project_list.html',{'user':request.user,'lookup':lookup,'form':form})

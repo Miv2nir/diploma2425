@@ -6,3 +6,6 @@ from backend.models import *
 
 admin.site.register(UserInfo)
 admin.site.register(UserPFP)
+
+admin.site.register(Project)
+admin.site.register(ProjectTag)

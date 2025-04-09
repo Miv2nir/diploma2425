@@ -98,10 +98,10 @@ a {
     border: solid;
     border-radius: 1rem;
     background-color: white;
+    border-color: var(--border-color);
     color: black;
     font-size: 0.8rem;
     cursor: pointer;
-    border-color: var(--border-color);
     transition: 200ms ease;
 }
 
@@ -239,4 +239,47 @@ font-size: 1rem;
     position: absolute;
     left: 1rem;
     top:0.5rem;
+}
+
+.search-form {
+    display: flex;
+     flex-direction: row;
+      justify-content: space-evenly; 
+      align-items: center;
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+.search-box {
+    flex-grow: 1;
+    display: block;
+    max-height: 2rem;
+    min-height: 1.8rem;
+    border: solid;
+    border-radius: 0.4rem;
+    border-width: 0.1rem;
+    font-size: 0.8rem;
+    text-align: center;
+    background-color: white;
+    /*color: grey;*/
+    border-color: var(--border-color);
+    box-shadow: 5px 5px 5px 1px var(--shadow-color);
+}
+.search-button {
+    display: block;
+    min-width: 2rem;
+    margin-left: 1rem;
+    min-height: 2.1rem;
+    font-size: 0.8rem;
+    border-radius: 0.4rem;
+    border-width: 0.1rem;
+    background-color: white;
+    border-color: var(--border-color);
+    cursor: pointer;
+    transition: 200ms ease;
+    box-shadow: 5px 5px 5px 1px var(--shadow-color);
+}
+
+.search-button:hover {
+    background-color: var(--selection-color);
+    transition: 200ms ease;
 }

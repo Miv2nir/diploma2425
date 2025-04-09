@@ -28,3 +28,15 @@ class Project(models.Model):
     name=models.CharField(max_length=100)
     description=models.TextField(null=True,blank=True)
     tags=models.ManyToManyField(ProjectTag,blank=True)
+    ACCESS_LEVEL = (
+        ('A','Public'),
+        ('B','Unlisted'),
+        ('C','Private'),
+    )
+    access=models.CharField(max_length=1,choices=ACCESS_LEVEL,default='C')
+    def __str__(self):
+        return self.name
+    
+    def save(self,*args,**kwargs):
+        self.name=self.name.replace('/','').replace('?','')
+        super(Project,self).save(*args,**kwargs)

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    {% load filters %}
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <!-- font import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <span class="home-main-container">
+        <div class="home-container" id="container-side-1">
+            <h2>Recent projects</h2>
+            <div class="project-item"></div>
+        </div>
+        <div class="home-container center" id="container-main">
+            <div class="underlying-container">
+                <h1>Project List</h1>
+                <div>
+                    <form action="/projects/" class="search-form" method="post">
+                        {% csrf_token %}
+                        {{ form.search }}
+                        <button class="search-button" type="submit">🔍</button>
+                    </form>
+                </div>
+                <br>
+                <!--div class="hr"></div-->
+            </div>
+        </div>
+        <div class="home-container" id="container-side-2">
+
+            <p class="profile-shorthand"><img src="{{user|get_pfp}}" class="pfp"><b>{{user}}</b></p>
+            <a href='profile/' class="fancy-underline">Profile Page</a><br>
+            <a href='projects/' class="fancy-underline">Projects</a><br>
+            <a href='logout/' class="fancy-underline">Log Out</a><br>
+        </div>
+    </span>
+</body>
+<script>
+    //var init
+    container_left = document.getElementById('container-side-1');
+    container_main = document.getElementById('container-main');
+    container_right = document.getElementById('container-side-2');
+    animate = false;
+    shrunk = (window.innerWidth < 1000);
+    function addTransition() {
+        container_left.classList.add('transitioning');
+        container_right.classList.add('transitioning');
+        container_main.classList.add('transitioning');
+        console.log('transitions added');
+    }
+    function removeTransition() {
+        container_left.classList.remove('transitioning');
+        container_right.classList.remove('transitioning');
+        container_main.classList.remove('transitioning');
+        animate = false;
+        console.log('transitions removed');
+    }
+    function delayedRemoveTransition() {
+        //console.log('aea');
+        setTimeout(removeTransition, 100);
+    }
+    function hider() {
+        if (window.innerWidth < 1000) {
+            if (animate == false && shrunk == false) {
+                animate = true;
+                shrunk = true;
+                addTransition();
+            }
+            container_left.classList.add('hidden');
+            container_right.classList.add('hidden');
+            container_main.classList.add('full-width');
+        }
+        else {
+            if (animate == false && shrunk == true) {
+                animate = true;
+                shrunk = false;
+                addTransition();
+            }
+            container_left.classList.remove('hidden');
+            container_right.classList.remove('hidden');
+            container_main.classList.remove('full-width');
+        }
+        //window.addEventListener('resize',hider);
+    }
+
+
+    window.onresize = hider;
+    //addEventListener('animationstart',(addTransition));
+    addEventListener('transitionend', (delayedRemoveTransition));
+    //fire the function on page load, otherwise it doesnt do anything on mobile unless form fields are interacted with
+    hider();
+</script>
