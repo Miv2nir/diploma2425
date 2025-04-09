@@ -198,6 +198,17 @@ a {
 .fancy-underline:hover::after {
     width: 100%;
 }
+.fancy-underline.underlined::after {
+    content: '';
+    width: 100%;
+    height: 3px;
+    margin-left: 50%;
+    display: block;
+    background: var(--border-color);
+    transition: 200ms;
+    transform: translateX(-50%);
+
+}
 .pfp-profile {
     height: auto;
     width: 10rem;

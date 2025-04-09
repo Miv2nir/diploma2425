@@ -35,9 +35,10 @@
         <div class="home-container" id="container-side-2">
 
             <p class="profile-shorthand"><img src="{{user|get_pfp}}" class="pfp"><b>{{user}}</b></p>
-            <a href='profile/' class="fancy-underline">Profile Page</a><br>
-            <a href='projects/' class="fancy-underline">Projects</a><br>
-            <a href='logout/' class="fancy-underline">Log Out</a><br>
+            <a href='/' class="fancy-underline">Home Page</a><br>
+            <a href='/profile/' class="fancy-underline">Profile Page</a><br>
+            <a href='/projects/' class="fancy-underline underlined">Projects</a><br>
+            <a href='/logout/' class="fancy-underline">Log Out</a><br>
         </div>
     </span>
 </body>
@@ -95,4 +96,7 @@
     addEventListener('transitionend', (delayedRemoveTransition));
     //fire the function on page load, otherwise it doesnt do anything on mobile unless form fields are interacted with
     hider();
+
+    //underline the Projects text entry on the right panel
+    //document.getElementById('projects-text').get
 </script>
