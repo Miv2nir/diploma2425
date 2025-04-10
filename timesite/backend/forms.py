@@ -44,3 +44,9 @@ class SearchForm(forms.Form):
         super().__init__(*args, **kwargs)
         for key, field in self.fields.items():
             field.label = ""
+            
+class ProfileMetadataForm(forms.Form):
+    icon=forms.ImageField(required=False,widget=forms.FileInput(attrs={'onchange':'updateLabel();'}))
+    delete_icon=forms.BooleanField(required=False)
+    name = forms.CharField(required=False,widget=forms.TextInput(attrs={'placeholder': 'Project Name','class': 'login-input-box'}))
+    description=forms.CharField(label='Description',required=False,widget=forms.Textarea(attrs={'placeholder':'Description','class':'login-input-box'}))

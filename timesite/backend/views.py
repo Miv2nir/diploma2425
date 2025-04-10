@@ -200,4 +200,38 @@ def project_item_edit(request,id):
     is_author=proj_obj.user==request.user
     if not is_author:
         raise PermissionDenied()
-    return render(request,'backend/project_item_edit.html',{'user':request.user,'item':proj_obj})
+    #form time
+    if request.method=="POST":
+        form=forms.ProfileMetadataForm(request.POST,request.FILES)
+        if form.is_valid():
+            print(request.FILES)
+            if request.FILES.get('icon', False) or form.cleaned_data['delete_icon']:
+                print('removing icon')
+                #remove the old icon
+                proj_obj.icon.delete(save=True)
+            try:
+                proj_obj.icon=form.cleaned_data['icon']
+                extension=proj_obj.icon.name.split('.')[-1]
+                #print(extension)
+                proj_obj.icon.name=str(proj_obj.id)+'.'+extension
+                proj_obj.save()
+            except AttributeError:
+                pass
+            
+            #deal with the rest of the form
+            proj_obj.name=form.cleaned_data['name']
+            proj_obj.description=form.cleaned_data['description']
+            proj_obj.save()
+            
+            
+            #return HttpResponseRedirect('/profile/edit/?success=true')
+            return HttpResponseRedirect('/projects/'+str(proj_obj.id)+'/?success=true')
+        return HttpResponseRedirect('/projects/'+str(proj_obj.id)+'/metadata_edit/')
+                
+    #GET
+    form=forms.ProfileMetadataForm(initial={
+        'name':proj_obj.name,
+        'description':proj_obj.description
+    })
+    
+    return render(request,'backend/project_item_edit.html',{'user':request.user,'item':proj_obj,'form':form})
