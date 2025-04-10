@@ -185,10 +185,19 @@ def project_list(request):
 def project_item(request,id):
     proj_obj=models.Project.objects.get(pk=id)
     #check if the logged in user is the author of the project
-    if_author=proj_obj.user==request.user
+    is_author=proj_obj.user==request.user
     #verify that the user is allowed to view this page
     allowed_to_see=verify_project_viewing_eligibility(proj_obj,request.user)
     if not allowed_to_see:
         raise PermissionDenied()
     return render(request,'backend/project_item.html',{'user':request.user,'item':proj_obj,
-                                                       'if_author':if_author})
+                                                       'is_author':is_author})
+    
+@login_required
+def project_item_edit(request,id):
+    proj_obj=models.Project.objects.get(pk=id)
+    #check if the logged in user is the author of the project
+    is_author=proj_obj.user==request.user
+    if not is_author:
+        raise PermissionDenied()
+    return render(request,'backend/project_item_edit.html',{'user':request.user,'item':proj_obj})
