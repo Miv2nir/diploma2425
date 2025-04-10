@@ -31,13 +31,14 @@
                 <br>
                 <!--div class="hr"></div-->
                 {%for item in lookup%}
+                <a href="{{item.id}}/">
                 <div class="project-item">
                     <img src="{%static 'icon_placeholder.png' %}" class="thumb-icon">
                     <div style="text-align: start;">
                         <h3 style="margin-bottom: 0; margin-top: 0;">{{item.name}}</h3>
                         By {{item.user}}
                     </div>
-                </div>
+                </div></a>
                 {%endfor%}
             </div>
         </div>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% load static %}
+  {% load filters %}
+  <link rel="stylesheet" href="{% static 'style.css' %}" />
+  <!-- font import -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body>
+    <span class="home-main-container">
+                <!--div style="min-width: 0.1rem; background-color: var(--border-color);"></div-->
+                <div class="home-container half">
+                    <a href="../"  class="fancy-underline back-text">Go Back</a>
+                    <!--h1>{{user}}'s Profile Page</h1-->
+                    <br>
+                    <br>
+                    <div class="project-item">
+                        <img src="{%static 'icon_placeholder.png' %}" class="thumb-icon">
+                        <div style="text-align: start;">
+                            <h3 style="margin-bottom: 0; margin-top: 0;">{{item.name}}</h3>
+                            By {{item.user}}
+                        </div>
+                    </div>
+                    <div class="hr"></div>
+                    <br>
+                    <div style="display: flex;flex-direction: row;
+                                margin-left: 1rem; margin-right: 1rem;">
+                        <button type="button" class="login-button-primary" style="margin-right: 1rem;">a</button>
+                        <button type="button" class="login-button-secondary">a</button>
+                    </div>
+                <h2>Description:</h2>
+                <p>{{item.description}}</p>
+                </div> 
+
+    </span>
+</body>

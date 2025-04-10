@@ -238,7 +238,10 @@ font-size: 1rem;
     flex-direction: row;
     justify-content:start;
     align-items:center;
-    
+}
+.project-item:hover {
+    background-color: var(--selection-color);
+    transition: 200ms ease;
 }
 
 .pfp-edit-file-field {

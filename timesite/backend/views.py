@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
+import uuid
 
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
@@ -179,3 +180,8 @@ def project_list(request):
     form=forms.SearchForm(initial={'search':request.GET.get('prompt','')})
     lookup=find_projects_by_name(request.GET.get('prompt',''))
     return render(request,'backend/project_list.html',{'user':request.user,'lookup':lookup,'form':form})
+
+@login_required
+def project_item(request,id):
+    proj_obj=models.Project.objects.get(pk=id)
+    return render(request,'backend/project_item.html',{'user':request.user,'item':proj_obj})
