@@ -13,3 +13,12 @@ def find_projects_by_name(prompt=''):
     else:
         lookup=models.Project.objects.filter(access='A',name__icontains=prompt)
     return lookup
+
+def verify_project_viewing_eligibility(proj_obj,user):
+    #firstly, check if public or unlisted
+    if proj_obj.access=='A' or proj_obj.access=='B':
+        return True
+    else: #access set to private
+        if proj_obj.user==user:
+            return True
+        return False #not allowed
