@@ -53,8 +53,8 @@
                             {{form.icon}}
                             <div style="display: none;">{{form.delete_icon}}</div>
                             <button class="login-button-secondary" id="delete_button" type="button" onclick="setIconDeletion();">Remove icon</button>
-                            <p>{{form.name}}</p>
-                            <p>{{form.description}}</p>
+                            <p>{{form.name.label_tag}}<br>{{form.name}}</p>
+                            <p>{{form.description.label_tag}}<br>{{form.description}}</p>
                         </div>
                         <button class="login-button-primary" type="submit" value="OK" style="margin-bottom: 1rem;">Save</button>
                         

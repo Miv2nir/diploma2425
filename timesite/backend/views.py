@@ -205,18 +205,21 @@ def project_item_edit(request,id):
         form=forms.ProfileMetadataForm(request.POST,request.FILES)
         if form.is_valid():
             print(request.FILES)
+            print(form.cleaned_data['delete_icon'])
             if request.FILES.get('icon', False) or form.cleaned_data['delete_icon']:
                 print('removing icon')
                 #remove the old icon
                 proj_obj.icon.delete(save=True)
-            try:
-                proj_obj.icon=form.cleaned_data['icon']
-                extension=proj_obj.icon.name.split('.')[-1]
-                #print(extension)
-                proj_obj.icon.name=str(proj_obj.id)+'.'+extension
-                proj_obj.save()
-            except AttributeError:
-                pass
+            #see if the need for icon update is be
+            if request.FILES.get('icon', False):
+                try:
+                    proj_obj.icon=form.cleaned_data['icon']
+                    extension=proj_obj.icon.name.split('.')[-1]
+                    #print(extension)
+                    proj_obj.icon.name=str(proj_obj.id)+'.'+extension
+                    proj_obj.save()
+                except AttributeError:
+                    pass
             
             #deal with the rest of the form
             proj_obj.name=form.cleaned_data['name']

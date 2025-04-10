@@ -25,7 +25,8 @@ input[type="file"]::file-selector-button {
 <body>
     <span class="home-main-container">
                 <!--div style="min-width: 0.1rem; background-color: var(--border-color);"></div-->
-                <div class="home-container" style="width: 65vw; overflow-y: auto;">
+                <!--div class="home-container" style="width: 65vw; overflow-y: auto;"-->
+                <div class="home-container half">
                     <div class="underlying-container">
                     <!--h1>{{user}}'s Profile Page</h1-->
                     <img src="{{user|get_pfp}}" class="pfp-profile">
@@ -49,9 +50,9 @@ input[type="file"]::file-selector-button {
                             {{form.pfp}}
                             <div style="display: none;">{{form.delete_pfp}}</div>
                             <button class="login-button-secondary" id="delete_button" type="button" onclick="setPFPDeletion();">Remove PFP</button>
-                            <p>{{form.email}}</p>
-                            <p>{{form.login}}</p>
-                            <p>{{form.display_name}}</p>
+                            <p>{{form.email.label_tag}}<br>{{form.email}}</p>
+                            <p>{{form.login.label_tag}}<br>{{form.login}}</p>
+                            <p>{{form.display_name.label_tag}}<br>{{form.display_name}}</p>
                             <h3>Password change</h3>
                             <p>{{form.old_password}}</p>
                             <p>{{form.password}}</p>

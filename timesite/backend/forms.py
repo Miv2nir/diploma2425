@@ -30,7 +30,7 @@ class AuthForm(forms.Form):
 class UserEditForm(forms.Form):
     pfp=forms.ImageField(required=False,widget=forms.FileInput(attrs={'onchange':'updateLabel();'}))
     delete_pfp=forms.BooleanField(required=False)
-    display_name = forms.CharField(required=False,widget=forms.TextInput(attrs={'placeholder': 'Display Name','class': 'login-input-box'}))
+    display_name = forms.CharField(label='Display Name',required=False,widget=forms.TextInput(attrs={'placeholder': 'Display Name','class': 'login-input-box'}))
     email = forms.CharField(label='Email',required=False, widget=forms.EmailInput(attrs={'placeholder': 'Email','class': 'login-input-box'}))
     login = forms.CharField(label='Login',required=False, widget=forms.TextInput(attrs={'placeholder': 'Login','class': 'login-input-box'}))
     old_password = forms.CharField(required=False,label='Old Password', widget=forms.PasswordInput(attrs={'placeholder': 'Old Password','class': 'login-input-box'}))
