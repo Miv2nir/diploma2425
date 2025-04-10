@@ -22,3 +22,10 @@ def get_pfp(user):
         return settings.STATIC_URL+'pfp_placeholder.png'
     except ValueError:
         return settings.STATIC_URL+'pfp_placeholder.png'
+    
+@register.filter #get user pfp
+def get_icon(item:models.Project):
+    if item.icon:
+        return item.icon.url
+    else:
+        return settings.STATIC_URL+'icon_placeholder.png'

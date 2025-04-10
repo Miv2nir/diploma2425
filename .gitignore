@@ -4,3 +4,4 @@ __pycache__
 static_
 timesite/static
 timesite/backend/media/user_pfps/*
+timesite/backend/media/project_icons/*

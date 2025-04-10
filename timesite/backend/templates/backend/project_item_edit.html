@@ -31,7 +31,7 @@
                     <br>
                     <br>
                     <div class="project-item">
-                        <img src="{%static 'icon_placeholder.png' %}" class="thumb-icon">
+                        <img src="{{item|get_icon}}" class="thumb-icon">
                         <div style="text-align: start;">
                             <h3 style="margin-bottom: 0; margin-top: 0;">{{item.name}}</h3>
                             By {{item.user}}
@@ -45,7 +45,7 @@
                             <div id="drop-zone" class="pfp-edit-file-field">
                                 <div id="file-label-target" style="margin-top: 1rem; overflow-x: hidden; white-space: nowrap; text-overflow: ellipsis;">No file chosen</div>
                                 <p style="display: flex;justify-content: center; margin-top: 0.1rem;">
-                                    <label for="id_pfp" class="login-button-primary" style="min-height: 1.7rem; display: flex; justify-content: center; align-items: center;">
+                                    <label for="id_icon" class="login-button-primary" style="min-height: 1.7rem; display: flex; justify-content: center; align-items: center;">
                                         <span>Upload new Icon </span>
                                     </label>
                                 </p>
