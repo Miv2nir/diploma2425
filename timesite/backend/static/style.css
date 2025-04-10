@@ -224,7 +224,7 @@ font-size: 1rem;
     background-color: var(--border-color);
 }
 .project-item {
-    height: 3rem;
+    height: 3.5rem;
     margin-left: 1rem;
     margin-right: 1rem;
     border: solid;
