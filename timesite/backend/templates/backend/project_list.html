@@ -20,7 +20,11 @@
         </div>
         <div class="home-container center" id="container-main">
             <div class="underlying-container">
+                {%if prompt %}
+                <h1>Results for {{prompt}}</h1>
+                {%else%}
                 <h1>Project List</h1>
+                {%endif%}
                 <div>
                     <form action="/projects/" class="search-form" method="post">
                         {% csrf_token %}
