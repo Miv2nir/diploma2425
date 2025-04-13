@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from backend import views
+from backend import views, api_views
 from django.conf import settings
 from django.urls import re_path
 from django.views.static import serve
@@ -42,4 +42,6 @@ urlpatterns = [
     path('projects/<uuid:id>/', views.project_item, name='project_item'),
     path('projects/<uuid:id>/metadata_edit/', views.project_item_edit, name='project_item_edit'),
     path('logout/', views.logout_user, name='logout'),
+    #api stuff
+    path('api/project/<uuid:id>/',api_views.get_project)
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
