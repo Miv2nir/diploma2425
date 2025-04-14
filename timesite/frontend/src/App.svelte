@@ -29,6 +29,8 @@
   //first things first, retrieve info about the user
   var user_logged_in = false;
   var user = null;
+  var proj_uuid='';
+  var proj_obj=null;
   async function getRequest(url) {
     //moving to async otherwise this will be way too overcomplicated
     try {
@@ -37,7 +39,7 @@
         throw new Error(`Response status: ${response.status}`);
       }
       const json = await response.json();
-      console.log(json);
+      //console.log(json);
       return json;
     } catch (error) {
       console.error(error.message);
@@ -57,7 +59,14 @@
     }
     //pull the project information
     // TODO: Pass project uuid to the app (likely as query)
-    //enable animations for the ui (cant situate it outside the function due to async await)
+    const query_string= new URLSearchParams(window.location.search)
+    if (query_string.has('project_id'))
+    {
+      proj_uuid=query_string.get('project_id');
+    }
+    //retrieve project info
+    proj_obj = await getRequest('/api/project/'+proj_uuid+'/');
+    console.log(proj_obj);
   }
   pageInit();
 </script>
