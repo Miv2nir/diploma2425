@@ -1,6 +1,7 @@
 from rest_framework import serializers
 import backend.models as models
 import uuid
+from django.contrib.auth.models import User
 
 class ProjectSerializer(serializers.ModelSerializer):
     '''
@@ -15,3 +16,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         model=models.Project
         fields=['id','user','name','description','access']
     
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=User
+        fields=['pk','username']

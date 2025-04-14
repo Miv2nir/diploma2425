@@ -43,5 +43,7 @@ urlpatterns = [
     path('projects/<uuid:id>/metadata_edit/', views.project_item_edit, name='project_item_edit'),
     path('logout/', views.logout_user, name='logout'),
     #api stuff
-    path('api/project/<uuid:id>/',api_views.get_project)
+    path('api/project/<uuid:id>/',api_views.get_project),
+    path('api/user/data/',api_views.get_user_info),
+    
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
