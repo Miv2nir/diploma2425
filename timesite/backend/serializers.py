@@ -22,7 +22,8 @@ class UserSerializer(serializers.ModelSerializer):
         fields=['pk','username']
 
 class UserExtendedSerializer(serializers.Serializer):
-    pk=serializers.IntegerField(read_only=True)
+    pk=serializers.IntegerField()
     username=serializers.CharField(allow_blank=True)
     display_name=serializers.CharField(allow_blank=True)
     has_pfp=serializers.BooleanField()
+    pfp_path=serializers.CharField()

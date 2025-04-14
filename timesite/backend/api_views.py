@@ -37,18 +37,20 @@ def get_user_info(request):
         #serializer=serializers.UserSerializer(request.user)
         user_detais=models.UserInfo.objects.filter(user=request.user)[0]
         has_pfp=False
+        pfp_path=''
         try:
             pfp_obj=models.UserPFP.objects.filter(user=request.user)[0]
             if pfp_obj.pfp:
                 has_pfp=True
+                pfp_path=pfp_obj.pfp.name
         except IndexError:
             pass
-        
+        print(type(request.user.pk))
         serializer=serializers.UserExtendedSerializer(data={'pk':request.user.pk,
                                                             'username':request.user.username,
                                                             'display_name':user_detais.display_name,
-                                                            'has_pfp':has_pfp})
+                                                            'has_pfp':has_pfp,'pfp_path':pfp_path})
         is_valid = serializer.is_valid()
         if not is_valid:
-            print(serializer.errors)
+            print('serializer',serializer.errors)
         return JsonResponse(serializer.data)

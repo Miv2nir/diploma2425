@@ -27,7 +27,7 @@
       )*/
  //first things first, retrieve info about the user
  var user_logged_in = false;
- var username = 'user';
+ var user=null;
   async function getRequest(url) { //moving to async otherwise this will be way too overcomplicated
     try {
       const response = await fetch(url);
@@ -44,7 +44,7 @@
   }
 
   async function pageInit() {
-    var user = await getRequest('/api/user/data/');
+    user = await getRequest('/api/user/data/');
     console.log(user);
     if (user.pk == null) 
     {
@@ -53,7 +53,7 @@
     }
     else {
       user_logged_in = true;
-      username = user.username;
+      //username = user.display_name;
     }
     //pull the project information
     }
@@ -77,7 +77,7 @@
   </div>
   <div class="home-container center" id="container-main">
       <div class="underlying-container">
-      <h1>Welcome back, {username}</h1>
+      <h1>Welcome back, {user.display_name}</h1>
       <p class="text-containered">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -87,8 +87,11 @@
       </div> 
   </div>
   <div class="home-container" id="container-side-2">
-      
-      <p class="profile-shorthand"><img src="/backend/static/icon_placeholder.png" alt='pfp' class="pfp"><b></b></p>
+    {#if user.has_pfp}
+      <p class="profile-shorthand"><img src="/backend/media/{user.pfp_path}" alt='pfp' class="pfp"><b>{user.display_name}</b></p>
+      {:else}
+      <p class="profile-shorthand"><img src="/backend/static/icon_placeholder.png" alt='pfp' class="pfp"><b>{user.display_name}</b></p>
+      {/if}
       <a href='/' class="fancy-underline underlined">Home Page</a><br>
       <a href='/profile/' class="fancy-underline">Profile Page</a><br>
       <a href='/projects/' class="fancy-underline">Projects</a><br>
