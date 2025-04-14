@@ -1,8 +1,34 @@
 <script>
   /*
   import { onMount } from "svelte";
-  async function getUser() {
-    const url = '/api/user/data/';
+
+  */
+ //const response = fetch('/api/user/data/');
+  //var obj;
+  //fetch('/api/user/data/').then(x=>x.json()).then(data=> {obj = data}).then(()=>{console.log(obj)});
+  
+  /*
+  var userdata_promise;
+  var user_logged_in = false;
+  userdata_promise = fetch('/api/user/data').then(x=>x.json());
+  console.log(userdata_promise);
+  userdata_promise.then(
+    function(value) {
+      console.log(value);
+      if (value.pk == null) {
+        //user not logged in. redirect to the login page
+        window.location.href = '/login?next=/edit/';
+        }
+        else {
+          user_logged_in = true;
+      }
+      },
+      function(error) {console.log(error);}
+      )*/
+ //first things first, retrieve info about the user
+ var user_logged_in = false;
+ var username = 'user';
+  async function getRequest(url) { //moving to async otherwise this will be way too overcomplicated
     try {
       const response = await fetch(url);
       if (!response.ok) {
@@ -16,28 +42,23 @@
       return null;
     }
   }
-  */
- //const response = fetch('/api/user/data/');
-  //var obj;
-  //fetch('/api/user/data/').then(x=>x.json()).then(data=> {obj = data}).then(()=>{console.log(obj)});
-  
-  var userdata_promise;
-  var user_logged_in = false;
-  userdata_promise = fetch('/api/user/data').then(x=>x.json());
-  console.log(userdata_promise);
-  userdata_promise.then(
-    function(value) {
-      console.log(value);
-      if (value.pk == null) {
-        //user not logged in. redirect to the login page
-        window.location.href = '/login?next=/edit/';
-      }
-      else {
-        user_logged_in = true;
-      }
-    },
-    function(error) {console.log(error);}
-  )
+
+  async function pageInit() {
+    var user = await getRequest('/api/user/data/');
+    console.log(user);
+    if (user.pk == null) 
+    {
+      //user not logged in. redirect to the login page
+      window.location.href = '/login?next=/edit/';
+    }
+    else {
+      user_logged_in = true;
+      username = user.username;
+    }
+    //pull the project information
+    }
+
+  pageInit();
  /*
  onMount(async function() {
   const response = await fetch('/api/user/data/');
@@ -56,7 +77,7 @@
   </div>
   <div class="home-container center" id="container-main">
       <div class="underlying-container">
-      <h1>Welcome back, user</h1>
+      <h1>Welcome back, {username}</h1>
       <p class="text-containered">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.

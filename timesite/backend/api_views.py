@@ -31,6 +31,24 @@ def get_project(request,id):
         return JsonResponse(serializer.data)
 
 def get_user_info(request):
+    if not request.user.pk: #None if not logged in, returns a value otherwise
+        return HttpResponse(status=401)
     if request.method == 'GET':
-        serializer=serializers.UserSerializer(request.user)
+        #serializer=serializers.UserSerializer(request.user)
+        user_detais=models.UserInfo.objects.filter(user=request.user)[0]
+        has_pfp=False
+        try:
+            pfp_obj=models.UserPFP.objects.filter(user=request.user)[0]
+            if pfp_obj.pfp:
+                has_pfp=True
+        except IndexError:
+            pass
+        
+        serializer=serializers.UserExtendedSerializer(data={'pk':request.user.pk,
+                                                            'username':request.user.username,
+                                                            'display_name':user_detais.display_name,
+                                                            'has_pfp':has_pfp})
+        is_valid = serializer.is_valid()
+        if not is_valid:
+            print(serializer.errors)
         return JsonResponse(serializer.data)
