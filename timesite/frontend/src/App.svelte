@@ -28,6 +28,7 @@
       )*/
   //first things first, retrieve info about the user
   var user_logged_in = false;
+  var project_retrieved = false;
   var user = null;
   var proj_uuid='';
   var proj_obj=null;
@@ -64,14 +65,18 @@
     {
       proj_uuid=query_string.get('project_id');
     }
+    
     //retrieve project info
     proj_obj = await getRequest('/api/project/'+proj_uuid+'/');
+    if (proj_obj!=null) {
+      project_retrieved=true;
+    }
     console.log(proj_obj);
   }
   pageInit();
 </script>
 
-{#if user_logged_in}
+{#if user_logged_in && project_retrieved}
   <span class="home-main-container">
     <div class="home-container" id="container-side-1">
       <h2>Recent projects</h2>
@@ -80,7 +85,7 @@
     <div class="home-container center" id="container-main">
       <div class="underlying-container">
         <h1>Welcome back, {user.display_name}</h1>
-        
+        <ProjectThumb user={user} project={proj_obj}/>
       </div>
     </div>
     <div class="home-container" id="container-side-2">
@@ -93,7 +98,7 @@
       {:else}
         <p class="profile-shorthand">
           <img
-            src="/backend/static/icon_placeholder.png"
+            src="/backend/static/pfp_placeholder.png"
             alt="pfp"
             class="pfp"
           /><b>{user.display_name}</b>

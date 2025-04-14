@@ -14,7 +14,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     #this one is only for browsing the data
     class Meta:
         model=models.Project
-        fields=['id','user','name','description','access']
+        fields=['id','user','name','description','access','icon']
     
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
