@@ -239,6 +239,9 @@ font-size: 1rem;
     justify-content:start;
     align-items:center;
 }
+.project-item.special {
+    margin:0;
+}
 .project-item:hover {
     background-color: var(--selection-color);
     transition: 200ms ease;

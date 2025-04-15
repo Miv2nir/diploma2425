@@ -27,6 +27,7 @@
       function(error) {console.log(error);}
       )*/
   //first things first, retrieve info about the user
+  const special_unit_mark=true;
   var user_logged_in = false;
   var project_retrieved = false;
   var user = null;
@@ -65,6 +66,10 @@
     {
       proj_uuid=query_string.get('project_id');
     }
+    else 
+    {
+      window.location.href = "/projects/";
+    }
     
     //retrieve project info
     proj_obj = await getRequest('/api/project/'+proj_uuid+'/');
@@ -79,14 +84,16 @@
 {#if user_logged_in && project_retrieved}
   <span class="home-main-container">
     <div class="home-container" id="container-side-1">
-      <h2>Recent projects</h2>
+      <h2>Available Functions</h2>
       <div class="project-item"></div>
     </div>
-    <div class="home-container center" id="container-main">
-      <div class="underlying-container">
-        <h1>Welcome back, {user.display_name}</h1>
-        <ProjectThumb user={user} project={proj_obj}/>
+    <div style="display:flex; flex-direction:column; justify-content: space-around; height:90.3vh;" id='container-main-spacer'>
+      <div class="home-container center" id="container-main" style="margin-bottom:1rem;">
+        <div class="underlying-container">
+          <h1>Working Field</h1>
+        </div>
       </div>
+      <ProjectThumb user={user} project={proj_obj} is_special={special_unit_mark}/>
     </div>
     <div class="home-container" id="container-side-2">
       {#if user.has_pfp}
@@ -104,10 +111,6 @@
           /><b>{user.display_name}</b>
         </p>
       {/if}
-      <a href="/" class="fancy-underline underlined">Home Page</a><br />
-      <a href="/profile/" class="fancy-underline">Profile Page</a><br />
-      <a href="/projects/" class="fancy-underline">Projects</a><br />
-      <a href="/logout/" class="fancy-underline">Log Out</a><br />
     </div>
   </span>
   <script>

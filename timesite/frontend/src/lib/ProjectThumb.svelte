@@ -1,10 +1,15 @@
 <script>
     //export let user;
     //export let project;
-    let {user,project} = $props();
+    let {user,project,is_special=false} = $props();
+    var special_class='';
+    if (is_special)
+    {
+        special_class='special';
+    }
 </script>
 
-<div class="project-item">
+<div class="project-item {special_class}">
     {#if project.icon}
     <img src="{project.icon}" class="thumb-icon" alt='icon'>
     {:else}
