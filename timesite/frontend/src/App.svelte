@@ -1,6 +1,6 @@
 <!--script src="/backend/static/front_lib/api_functions.js"></script-->
 <script>
-  import ProjectThumb from "./lib/ProjectThumb.svelte";
+  import ProjectThumb from "./elements/ProjectThumb.svelte";
   import {getRequest} from "./lib/APICalls.js";
   /*
   import { onMount } from "svelte";

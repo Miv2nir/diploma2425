@@ -2,7 +2,7 @@
     //export let user;
     //export let project;
     let {user,project,is_special=false} = $props();
-    var special_class='';
+    var special_class=$state('');
     if (is_special)
     {
         special_class='special';
