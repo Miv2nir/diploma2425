@@ -1,5 +1,7 @@
+<!--script src="/backend/static/front_lib/api_functions.js"></script-->
 <script>
   import ProjectThumb from "./lib/ProjectThumb.svelte";
+  import {getRequest} from "./lib/APICalls.js";
   /*
   import { onMount } from "svelte";
 
@@ -33,21 +35,6 @@
   var user = null;
   var proj_uuid='';
   var proj_obj=null;
-  async function getRequest(url) {
-    //moving to async otherwise this will be way too overcomplicated
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-      }
-      const json = await response.json();
-      //console.log(json);
-      return json;
-    } catch (error) {
-      console.error(error.message);
-      return null;
-    }
-  }
 
   async function pageInit() {
     user = await getRequest("/api/user/data/");
