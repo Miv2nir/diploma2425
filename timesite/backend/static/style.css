@@ -313,3 +313,14 @@ font-size: 1rem;
     margin-right: 1rem;
     border-radius: 0.8rem;
 }
+
+.pd-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border:none;
+    color: var(--border-color);
+    table-layout: fixed;
+    margin-left: auto;
+    margin-bottom: 1em;
+    margin-right: auto;
+}

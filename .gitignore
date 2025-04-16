@@ -5,6 +5,7 @@ static_
 timesite/static
 timesite/backend/media/user_pfps/*
 timesite/backend/media/project_icons/*
+timesite/backend/media/data_store/*
 
 #imported from svelte
 # Logs
