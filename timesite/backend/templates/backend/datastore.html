@@ -28,15 +28,13 @@
         <div class="home-container" id="container-side-2">
             
             <p class="profile-shorthand"><img src="{{user|get_pfp}}" class="pfp"><b>{{user}}</b></p>
-            <a href='/' class="fancy-underline">Home Page</a><br>
-            <a href='/profile/' class="fancy-underline">Profile Page</a><br>
-            <a href='/projects/' class="fancy-underline">Projects</a><br>
-            <a href='/projects/' class="fancy-underline  underlined">Data Store</a><br>
-            <a href='/logout/' class="fancy-underline">Log Out</a><br>
+            {% include "prefabs/right_panel_links.html" %}
         </div>
     </span>
 </body>
 <script>
+//underline
+document.getElementById('datastore_link').classList.add('underlined');
 //var init
 container_left=document.getElementById('container-side-1');
 container_main=document.getElementById('container-main');
