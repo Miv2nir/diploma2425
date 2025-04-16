@@ -22,7 +22,9 @@
             <div class="underlying-container">
             <h1>{{user}}'s datastore</h1>
             <p>The following items can be used in the editor for data processing.</p>
-            <div class="hr"> </div>
+            <div><button class="login-button-primary">Upload New Dataset</button></div> <br>
+            <div></div>
+            <div class="hr"> </div> 
             </div> 
         </div>
         <div class="home-container" id="container-side-2">
@@ -35,57 +37,6 @@
 <script>
 //underline
 document.getElementById('datastore_link').classList.add('underlined');
-//var init
-container_left=document.getElementById('container-side-1');
-container_main=document.getElementById('container-main');
-container_right=document.getElementById('container-side-2');
-animate=false;
-shrunk=(window.innerWidth <1000);
-function addTransition() {
-    container_left.classList.add('transitioning');
-    container_right.classList.add('transitioning');
-    container_main.classList.add('transitioning');
-    console.log('transitions added');
-}
-function removeTransition() {
-    container_left.classList.remove('transitioning');
-    container_right.classList.remove('transitioning');
-    container_main.classList.remove('transitioning');
-    animate=false;
-    console.log('transitions removed');
-}
-function delayedRemoveTransition(){
-    //console.log('aea');
-    setTimeout(removeTransition,100);
-}
-function hider() {
-    if (window.innerWidth <1000) {
-        if (animate==false && shrunk ==false){
-            animate=true;
-            shrunk=true;
-            addTransition();
-        }
-        container_left.classList.add('hidden');
-        container_right.classList.add('hidden');
-        container_main.classList.add('full-width');
-    }
-    else {
-        if (animate==false && shrunk ==true){
-            animate=true;
-            shrunk=false;
-            addTransition();
-        }
-        container_left.classList.remove('hidden');
-        container_right.classList.remove('hidden');
-        container_main.classList.remove('full-width');
-    }
-//window.addEventListener('resize',hider);
-}
-
-
-window.onresize = hider;
-//addEventListener('animationstart',(addTransition));
-addEventListener('transitionend',(delayedRemoveTransition));
-//fire the function on page load, otherwise it doesnt do anything on mobile unless form fields are interacted with
-hider();
+//take care of the dataset upload
 </script>
+<script src="{% static 'three_panel_animator.js' %}"></script>
