@@ -2,32 +2,11 @@
 <script>
   import ProjectThumb from "./elements/ProjectThumb.svelte";
   import {getRequest} from "./lib/APICalls.js";
-  /*
-  import { onMount } from "svelte";
 
-  */
-  //const response = fetch('/api/user/data/');
-  //var obj;
-  //fetch('/api/user/data/').then(x=>x.json()).then(data=> {obj = data}).then(()=>{console.log(obj)});
+  import FunctionListPanel from "./panels/FunctionListPanel.svelte";
+  import MainPanel from "./panels/MainPanel.svelte";
+  import PipelinePanel from "./panels/PipelinePanel.svelte";
 
-  /*
-  var userdata_promise;
-  var user_logged_in = false;
-  userdata_promise = fetch('/api/user/data').then(x=>x.json());
-  console.log(userdata_promise);
-  userdata_promise.then(
-    function(value) {
-      console.log(value);
-      if (value.pk == null) {
-        //user not logged in. redirect to the login page
-        window.location.href = '/login?next=/edit/';
-        }
-        else {
-          user_logged_in = true;
-      }
-      },
-      function(error) {console.log(error);}
-      )*/
   //first things first, retrieve info about the user
   const special_unit_mark=true;
   var user_logged_in = false;
@@ -70,37 +49,12 @@
 
 {#if user_logged_in && project_retrieved}
   <span class="home-main-container">
-    <div class="home-container" id="container-side-1">
-      <h2>Available Functions</h2>
-      <div class="project-item"></div>
-    </div>
-    <div style="display:flex; flex-direction:column; justify-content: space-around; height:90.3vh;" id='container-main-spacer'>
-      <div class="home-container center" id="container-main" style="margin-bottom:1rem;">
-        <div class="underlying-container">
-          <h1>Working Field</h1>
-        </div>
-      </div>
-      <ProjectThumb user={user} project={proj_obj} is_special={special_unit_mark}/>
-    </div>
-    <div class="home-container" id="container-side-2">
-      {#if user.has_pfp}
-        <p class="profile-shorthand">
-          <img src="/backend/media/{user.pfp_path}" alt="pfp" class="pfp" /><b
-            >{user.display_name}</b
-          >
-        </p>
-      {:else}
-        <p class="profile-shorthand">
-          <img
-            src="/backend/static/pfp_placeholder.png"
-            alt="pfp"
-            class="pfp"
-          /><b>{user.display_name}</b>
-        </p>
-      {/if}
-    </div>
+    <FunctionListPanel />
+    <MainPanel user={user} proj_obj={proj_obj} />
+    <PipelinePanel user={user} />
   </span>
   <script>
+    //not part of the svelte component, the code below takes care of the transition animations
     var container_left = document.getElementById("container-side-1");
     var container_main = document.getElementById("container-main");
     var container_right = document.getElementById("container-side-2");
