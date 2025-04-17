@@ -3,6 +3,7 @@ from django.template.defaulttags import register
 import backend.forms as forms
 import backend.models as models
 from django.contrib.auth.models import User
+from backend import functions
 
 from django.conf import settings
 
@@ -29,3 +30,7 @@ def get_icon(item:models.Project):
         return item.icon.url
     else:
         return settings.STATIC_URL+'icon_placeholder.png'
+
+@register.filter #get the last 5 recent projects
+def get_projects(user):
+    return functions.get_last_projects(user,5)

@@ -22,3 +22,8 @@ def verify_project_viewing_eligibility(proj_obj,user):
         if proj_obj.user==user:
             return True
         return False #not allowed
+
+def get_last_projects(user,items=5):
+    return models.Project.objects.filter(user=user).order_by('-last_edited')[:items]
+    
+    

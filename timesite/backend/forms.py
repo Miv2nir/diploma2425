@@ -50,3 +50,11 @@ class ProfileMetadataForm(forms.Form):
     delete_icon=forms.BooleanField(required=False)
     name = forms.CharField(required=False,widget=forms.TextInput(attrs={'placeholder': 'Project Name','class': 'login-input-box'}))
     description=forms.CharField(label='Description',required=False,widget=forms.Textarea(attrs={'placeholder':'Description','class':'login-input-box'}))
+    
+class DataFileForm(forms.ModelForm):
+    class Meta:
+        model= models.DataFile
+        fields=['file','name','description']
+        widgets = {
+            'file':forms.FileInput(attrs={'onchange':'updateLabel();'})
+        }

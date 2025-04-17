@@ -16,7 +16,16 @@
     <span class="home-main-container">
         <div class="home-container" id="container-side-1">
             <h2>Recent projects</h2>
-            <div class="project-item"></div>
+            {% for item in user|get_projects %}
+            <a href="{{item.id}}/">
+                <div class="project-item">
+                    <img src="{{item|get_icon}}" class="thumb-icon">
+                    <div style="text-align: start;">
+                        <h3 style="margin-bottom: 0; margin-top: 0;">{{item.name}}</h3>
+                        By {{item.user}}
+                    </div>
+                </div></a>
+            {%endfor%}
         </div>
         <div class="home-container center" id="container-main">
             <div class="underlying-container">

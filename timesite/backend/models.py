@@ -34,6 +34,7 @@ class Project(models.Model):
         ('C','Private'),
     )
     access=models.CharField(max_length=1,choices=ACCESS_LEVEL,default='C')
+    last_edited=models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.name
     
