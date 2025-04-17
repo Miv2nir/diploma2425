@@ -16,7 +16,9 @@
     <span class="home-main-container">
         <div class="home-container" id="container-side-1">
             <h2>Recent projects</h2>
-            <div class="project-item"></div>
+            {% for item in user|get_projects %}
+            {%include 'prefabs/project_thumb.html'%}
+            {%endfor%}
         </div>
         <div class="home-container center" id="container-main">
             <div class="underlying-container">
