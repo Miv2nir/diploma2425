@@ -25,7 +25,7 @@ def get_project(request,id):
         return HttpResponse(status=404)
     if request.method=='GET':
         #finally, verify whether the user is authorized to view this content
-        if project.access=='C' and project.user!=request.user.pk:
+        if project.access=='C' and project.user!=request.user:
             return HttpResponse(status=403)
         serializer=serializers.ProjectSerializer(project)
         return JsonResponse(serializer.data)
@@ -54,3 +54,25 @@ def get_user_info(request):
         if not is_valid:
             print('serializer',serializer.errors)
         return JsonResponse(serializer.data)
+
+@csrf_exempt
+def upd_proj_date(request,id):
+    '''
+    test api to retrieve project metadata info
+    '''
+    if not request.user.pk: #None if not logged in, returns a value otherwise
+        return HttpResponse(status=401)
+    #check if exists
+    try:
+        project = models.Project.objects.get(pk=id)
+    except models.Project.DoesNotExist:
+        return HttpResponse(status=404)
+    if request.method=='GET':
+        return HttpResponse(status=400)
+    elif request.method=='POST':
+        #finally, verify whether the user is authorized to view this content
+        if project.user!=request.user:
+            return HttpResponse(status=404)
+        #serializer=serializers.ProjectSerializer(project)
+        project.save() #no changes were made, it just updates the edited
+        return HttpResponse(status=201)

@@ -1,7 +1,7 @@
 <!--script src="/backend/static/front_lib/api_functions.js"></script-->
 <script>
   import ProjectThumb from "./elements/ProjectThumb.svelte";
-  import {getRequest} from "./lib/APICalls.js";
+  import {getRequest, postRequest} from "./lib/APICalls.js";
 
   import FunctionListPanel from "./panels/FunctionListPanel.svelte";
   import MainPanel from "./panels/MainPanel.svelte";
@@ -43,6 +43,8 @@
       project_retrieved=true;
     }
     console.log(proj_obj);
+    //assuming things went successful, update the last_edited value of the project
+    await postRequest('/api/project/'+proj_uuid+'/upd_date/');
   }
   pageInit();
 </script>
