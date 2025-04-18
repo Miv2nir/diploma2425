@@ -56,5 +56,7 @@ class DataFileForm(forms.ModelForm):
         model= models.DataFile
         fields=['file','name','description']
         widgets = {
-            'file':forms.FileInput(attrs={'onchange':'updateLabel();'})
+            'file':forms.FileInput(attrs={'onchange':'updateLabel();'}),
+            'name':forms.TextInput(attrs={'placeholder': 'File Name','class': 'login-input-box'}),
+            'description':forms.Textarea(attrs={'placeholder':'Description','class':'login-input-box'})
         }

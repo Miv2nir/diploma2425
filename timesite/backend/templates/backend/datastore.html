@@ -12,6 +12,16 @@
     rel="stylesheet" />
 </head>
 
+
+<style>
+    input[type="file"]{
+    
+        display: none;
+    }
+    input[type="file"]::file-selector-button {
+        display: none;
+    }
+    </style>
 <body>
     <span class="home-main-container">
         <div class="home-container" id="container-side-1">
@@ -24,7 +34,17 @@
             <div class="underlying-container">
             <h1>{{user}}'s datastore</h1>
             <p>The following items can be used in the editor for data processing.</p>
-            <div><button class="login-button-primary">Upload New Dataset</button></div> <br>
+            <div><button class="login-button-primary" id="add_button" onclick="enableUploadField();">Upload New Dataset</button></div>
+            
+            <form action="/datastore/" enctype="multipart/form-data" method="post" id="datastore_form">
+                {%csrf_token%}
+                <div id="drop-zone" class="datastore-field hidden">
+                    {% include 'prefabs/file_upload_label.html' %}
+                    {{form.file}}
+                    <p>{{form.name.label_tag}}<br>{{form.name}}</p>
+                    <p>{{form.description.label_tag}}<br>{{form.description}}</p>
+                </div>
+            </form>
             <div></div>
             <div class="hr"> </div> 
             </div> 
@@ -42,3 +62,36 @@ document.getElementById('datastore_link').classList.add('underlined');
 //take care of the dataset upload
 </script>
 <script src="{% static 'three_panel_animator.js' %}"></script>
+<script>
+    add_button=document.getElementById('add_button');
+    drop_zone=document.getElementById('drop-zone');
+    enabled=false;
+    function enableUploadField() {
+        if (enabled){
+            add_button.classList.add('login-button-primary');
+            add_button.classList.remove('login-button-secondary');
+            add_button.innerHTML= "Upload new Dataset";
+            enabled=false;
+            drop_zone.classList.add('hidden');
+        }
+        else {
+            add_button.classList.add('login-button-secondary');
+            add_button.classList.remove('login-button-primary');
+            add_button.innerHTML= "Cancel Dataset Upload";
+            enabled=true;
+            drop_zone.classList.remove('hidden');
+        }
+    }
+    function updateLabel() {
+        try{
+            document.getElementById('file-label-target').innerHTML=document.getElementById('id_file').files[0].name;
+        }
+        catch (e) {
+            if (e instanceof TypeError) {
+                document.getElementById('file-label-target').innerHTML='No file chosen';
+            } else {
+                throw e;
+            }
+        }
+    }
+</script>

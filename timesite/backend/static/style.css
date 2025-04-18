@@ -257,6 +257,18 @@ font-size: 1rem;
     max-height: 1rem;
     transition: max-height 600ms;
 }
+
+.datastore-field {
+    overflow: hidden;
+    max-height: 25rem;
+    transition: max-height 600ms;
+}
+
+.datastore-field.hidden {
+    max-height: 1rem;
+    transition: max-height 600ms;
+}
+
 .back-text {
     position: absolute;
     left: 1rem;

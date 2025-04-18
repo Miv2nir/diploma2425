@@ -238,4 +238,7 @@ def project_item_edit(request,id):
     return render(request,'backend/project_item_edit.html',{'user':request.user,'item':proj_obj,'form':form})
 
 def datastore(request):
-    return render(request,'backend/datastore.html',{'user':request.user})
+    
+    #GET
+    form=forms.DataFileForm()
+    return render(request,'backend/datastore.html',{'user':request.user,'form':form})
