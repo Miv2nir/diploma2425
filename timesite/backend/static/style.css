@@ -384,3 +384,12 @@ font-size: 1rem;
     background-color: var(--selection-color);
     transition: 200ms ease;
 }
+
+.thumb-text {
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.thumb-text.title {
+    margin-bottom: 0; margin-top: 0;
+}

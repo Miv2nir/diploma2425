@@ -2,8 +2,8 @@
 <a href="{{item.id}}/">
     <div class="project-item">
         <img src="{{item|get_icon}}" class="thumb-icon">
-        <div style="text-align: start;">
-            <h3 style="margin-bottom: 0; margin-top: 0;">{{item.name}}</h3>
-            By {{item.user}}
+        <div style="text-align: start; overflow-x: hidden; padding-right: 0.1rem;">
+            <h3 class="thumb-text title">{{item.name}}</h3>
+            <div class="thumb-text ">By {{item.user}}</div>
         </div>
     </div></a>
