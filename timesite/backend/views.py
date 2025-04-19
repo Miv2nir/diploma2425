@@ -246,12 +246,12 @@ def datastore(request):
             print(request.FILES)
             #assuming that the file is indeed supplied because the file field is set to be required
             #data_obj=form.save(commit=False)
-            form.save()
             #data_obj.user=request.user
-            data_obj.file=form.cleaned_data['file']
+            #data_obj.file=form.cleaned_data['file']
             extension=data_obj.file.name.split('.')[-1]
             data_obj.file.name=str(data_obj.id)+'.'+extension
-            data_obj.save()
+            form.save()
+            #data_obj.save()
 
     #GET
     form=forms.DataFileForm()
