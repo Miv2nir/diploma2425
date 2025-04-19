@@ -336,6 +336,7 @@ font-size: 1rem;
     margin-bottom: 1em;
     margin-right: auto;
 }
+/*
 .datastore-item {
     height: 6rem;
     width: 6rem;
@@ -352,10 +353,33 @@ font-size: 1rem;
     border-radius: 0.4rem;
     border-width: 0.1rem;
     border-color: var(--border-color);
-}
+}*/
 
 .data-icon {
     height: auto;
-    width: 3rem;
+    width: 2.2rem;
+    margin-left: 0.7rem;
+    margin-right: 0.7rem;
     border-radius: 0;
+}
+
+.datastore-item {
+    height: 3.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    border: solid;
+    border-radius: 1rem;
+    border-color: var(--border-color);
+    background-color: var(--highlight-color);
+    box-shadow: 5px 5px 5px 1px var(--shadow-color);
+    overflow: hidden;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content:start;
+    align-items:center;
+}
+.datastore-item:hover {
+    background-color: var(--selection-color);
+    transition: 200ms ease;
 }
