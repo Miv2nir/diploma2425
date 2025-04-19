@@ -252,8 +252,15 @@ def datastore(request):
             data_obj.file.name=str(data_obj.id)+'.'+extension
             form.save()
             #data_obj.save()
-
     #GET
     form=forms.DataFileForm()
     lookup=models.DataFile.objects.filter(user=request.user)
     return render(request,'backend/datastore.html',{'user':request.user,'form':form,'lookup':lookup})
+
+def datastore_edit(request,id):
+    data_obj=models.DataFile.objects.get(pk=id)
+    if data_obj.user != request.user:
+        #unauthorized
+        raise PermissionDenied()
+    
+    return render(request,'backend/datastore_item.html',{'user':request.user,'item':data_obj})

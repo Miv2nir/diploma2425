@@ -42,6 +42,7 @@ urlpatterns = [
     path('projects/<uuid:id>/', views.project_item, name='project_item'),
     path('projects/<uuid:id>/metadata_edit/', views.project_item_edit, name='project_item_edit'),
     path('datastore/', views.datastore, name='datastore'),
+    path('datastore/<uuid:id>/', views.datastore_edit, name='datastore_edit'),
     path('logout/', views.logout_user, name='logout'),
     #api stuff
     path('api/project/<uuid:id>/',api_views.get_project),
