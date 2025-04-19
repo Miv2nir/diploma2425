@@ -12,6 +12,16 @@
     rel="stylesheet" />
 </head>
 
+<style>
+    input[type="file"]{
+    
+        display: none;
+    }
+    input[type="file"]::file-selector-button {
+        display: none;
+    }
+    </style>
+
 <body>
     <span class="home-main-container">
                 <!--div style="min-width: 0.1rem; background-color: var(--border-color);"></div-->
@@ -21,11 +31,16 @@
                     <br>
                     <br>
                     {% include 'prefabs/datastore_thumb.html' %}
-                    <a href="edit/" class="fancy-underline subtitle">Edit Dataset Metadata</a>
+                    <a href="../" class="fancy-underline subtitle">Exit without saving</a>
                     <div class="hr"></div>
-
-                <h2>Description:</h2>
-                <p>{{item.description}}</p>
+                    <form action="/datastore/{{item.id}}/edit/" enctype="multipart/form-data" method="post" id="datastore_form">
+                        {%csrf_token%}
+                        <div class="datastore-field">
+                            <p>{{form.name.label_tag}}<br>{{form.name}}</p>
+                            <p>{{form.description.label_tag}}<br>{{form.description}}</p>
+                            <button class="login-button-primary" type="submit" value="OK" style="margin-bottom: 1rem;">Save</button>
+                        </div>
+                    </form>
                 </div> 
     </span>
 </body>

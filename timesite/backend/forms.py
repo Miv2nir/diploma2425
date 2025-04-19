@@ -61,3 +61,13 @@ class DataFileForm(forms.ModelForm):
             'name':forms.TextInput(attrs={'placeholder': 'File Name','class': 'login-input-box'}),
             'description':forms.Textarea(attrs={'placeholder':'Description','class':'login-input-box'})
         }
+
+class DataFileUPDForm(forms.ModelForm):
+    #description=forms.CharField(required=False)
+    class Meta:
+        model= models.DataFile
+        fields=['name','description']
+        widgets = {
+            'name':forms.TextInput(attrs={'placeholder': 'File Name','class': 'login-input-box'}),
+            'description':forms.Textarea(attrs={'placeholder':'Description','class':'login-input-box'})
+        }
