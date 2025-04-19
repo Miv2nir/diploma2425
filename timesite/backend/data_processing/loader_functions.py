@@ -1,5 +1,11 @@
 import pandas as pd
 
-def load_csv(path):
-    df = pd.read_csv(path)
-    return df
+
+class LoadCSV:
+    def __init__(self):
+        self.initial=True
+        self.description='Loads a CSV file from the DataStore'
+        self.type='loader'
+        
+        self.accepts=[]
+    #def execute(self):
