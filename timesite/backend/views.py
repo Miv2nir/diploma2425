@@ -243,7 +243,7 @@ def datastore(request):
         data_obj=models.DataFile(user=request.user)
         form=forms.DataFileForm(request.POST,request.FILES,instance=data_obj)
         if form.is_valid():
-            print(request.FILES)
+            #print(request.FILES)
             #assuming that the file is indeed supplied because the file field is set to be required
             #data_obj=form.save(commit=False)
             #data_obj.user=request.user
@@ -255,4 +255,5 @@ def datastore(request):
 
     #GET
     form=forms.DataFileForm()
-    return render(request,'backend/datastore.html',{'user':request.user,'form':form})
+    lookup=models.DataFile.objects.filter(user=request.user)
+    return render(request,'backend/datastore.html',{'user':request.user,'form':form,'lookup':lookup})

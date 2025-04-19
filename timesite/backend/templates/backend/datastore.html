@@ -48,6 +48,13 @@
             </form>
             <div></div>
             <div class="hr"> </div> 
+            <div style="display: flex; flex-wrap: wrap; align-items: flex-start;">
+            {% for i in lookup %}
+                <div class="datastore-item">
+                    <img src="{% static 'data_icon.png' %}" class="data-icon">
+                </div>
+            {%endfor%}
+            </div>
             </div> 
         </div>
         <div class="home-container" id="container-side-2">

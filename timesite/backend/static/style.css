@@ -306,8 +306,8 @@ font-size: 1rem;
     font-size: 0.8rem;
     border-radius: 0.4rem;
     border-width: 0.1rem;
-    background-color: white;
     border-color: var(--border-color);
+    background-color: white;
     cursor: pointer;
     transition: 200ms ease;
     box-shadow: 5px 5px 5px 1px var(--shadow-color);
@@ -335,4 +335,27 @@ font-size: 1rem;
     margin-left: auto;
     margin-bottom: 1em;
     margin-right: auto;
+}
+.datastore-item {
+    height: 6rem;
+    width: 6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    background-color: white;
+    box-shadow: 5px 5px 5px 1px var(--shadow-color);
+    border: solid;
+    border-radius: 0.4rem;
+    border-width: 0.1rem;
+    border-color: var(--border-color);
+}
+
+.data-icon {
+    height: auto;
+    width: 3rem;
+    border-radius: 0;
 }
