@@ -16,7 +16,8 @@
     <span class="home-main-container">
                 <!--div style="min-width: 0.1rem; background-color: var(--border-color);"></div-->
                 <div class="home-container half">
-                    <a href="../"  class="fancy-underline back-text">Go Back</a>
+                    <!--a href="../"  class="fancy-underline back-text">Go Back</a-->
+                    <span onclick="window.history.go(-1); return false;" class="fancy-underline back-text">Go Back</span>
                     <!--h1>{{user}}'s Profile Page</h1-->
                     <img src="{{user|get_pfp}}" class="pfp-profile">
                     <h2 class="text-containered" style="margin-top: 0.5rem; margin-bottom: 0rem;">{{user}}
