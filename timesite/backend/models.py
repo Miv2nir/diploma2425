@@ -54,4 +54,4 @@ class DataFile(models.Model):
     
     def save(self,*args,**kwargs):
         self.name=self.name.replace('/','').replace('?','')
-        super(Project,self).save(*args,**kwargs)
+        super(DataFile,self).save(*args,**kwargs)

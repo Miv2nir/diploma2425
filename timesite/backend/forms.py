@@ -52,6 +52,7 @@ class ProfileMetadataForm(forms.Form):
     description=forms.CharField(label='Description',required=False,widget=forms.Textarea(attrs={'placeholder':'Description','class':'login-input-box'}))
     
 class DataFileForm(forms.ModelForm):
+    #description=forms.CharField(required=False)
     class Meta:
         model= models.DataFile
         fields=['file','name','description']

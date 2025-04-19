@@ -238,7 +238,21 @@ def project_item_edit(request,id):
     return render(request,'backend/project_item_edit.html',{'user':request.user,'item':proj_obj,'form':form})
 
 def datastore(request):
-    
+    #POST
+    if request.method=='POST':
+        data_obj=models.DataFile(user=request.user)
+        form=forms.DataFileForm(request.POST,request.FILES,instance=data_obj)
+        if form.is_valid():
+            print(request.FILES)
+            #assuming that the file is indeed supplied because the file field is set to be required
+            #data_obj=form.save(commit=False)
+            form.save()
+            #data_obj.user=request.user
+            data_obj.file=form.cleaned_data['file']
+            extension=data_obj.file.name.split('.')[-1]
+            data_obj.file.name=str(data_obj.id)+'.'+extension
+            data_obj.save()
+
     #GET
     form=forms.DataFileForm()
     return render(request,'backend/datastore.html',{'user':request.user,'form':form})
