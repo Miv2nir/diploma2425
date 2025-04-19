@@ -8,7 +8,9 @@ class Registry:
         self.loaders={
             'LoadCSV':LoadCSV
         }
-        self.displayers={}
+        self.renderers={
+            'RenderDF':RenderDF
+        }
         self.processors={}
         self.splitters={}
         self.models={}
