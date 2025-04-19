@@ -6,7 +6,7 @@ import uuid
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 
-from django.http import HttpResponse, HttpResponseRedirect, FileResponse, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, FileResponse, JsonResponse, HttpResponseNotAllowed
 import backend.forms as forms
 import backend.models as models
 from backend.functions import *
@@ -248,7 +248,16 @@ def datastore(request):
             #data_obj=form.save(commit=False)
             #data_obj.user=request.user
             #data_obj.file=form.cleaned_data['file']
+            #form supported extensions list
+            #TODO: rewrite to use mimetypes instead of file extensions
             extension=data_obj.file.name.split('.')[-1]
+            e=models.DataFile.EXTENSIONS
+            if '.'+extension in e.values():
+                pass
+            else:
+                return HttpResponseNotAllowed([])
+            #the following might be better suited in DataFile.save() method instead
+            data_obj.filetype=list(e.keys())[list(e.values()).index('.'+extension)]
             data_obj.file.name=str(data_obj.id)+'.'+extension
             form.save()
             #data_obj.save()
