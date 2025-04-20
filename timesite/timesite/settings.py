@@ -25,8 +25,9 @@ SECRET_KEY = 'django-insecure-trcc#)o$76-#u7k9o=t=brcn18ldfpke*p)s0^ym7v)*x0o3ps
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.239','127.0.0.1']
+ALLOWED_HOSTS = ['192.168.1.239','127.0.0.1','timesite.miv2nir.me']
 
+CSRF_TRUSTED_ORIGINS = ['https://timesite.miv2nir.me']
 
 # Application definition
 

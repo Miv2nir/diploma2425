@@ -1,4 +1,5 @@
 from backend.data_processing.functions import *
+import json
 
 #class Loaders:
 #    def __init__(self):
@@ -14,4 +15,5 @@ class Registry:
         self.processors={}
         self.splitters={}
         self.models={}
-    
+    #def get_json_lists(self):
+        
