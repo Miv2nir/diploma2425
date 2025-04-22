@@ -12,3 +12,4 @@ admin.site.register(ProjectTag)
 
 #debug
 admin.site.register(DataFile)
+admin.site.register(ProjectPin)

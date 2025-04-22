@@ -59,3 +59,7 @@ class DataFile(models.Model):
     def save(self,*args,**kwargs):
         self.name=self.name.replace('/','').replace('?','')
         super(DataFile,self).save(*args,**kwargs)
+
+class ProjectPin(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    project=models.ForeignKey(Project,on_delete=models.CASCADE)

@@ -81,7 +81,11 @@ def logout_user(request):
 
 @login_required
 def home(request):
-    return render(request,'backend/home.html',{'user':request.user})
+    project_pins=[]
+    lookup=models.ProjectPin.objects.filter(user=request.user)
+    for i in lookup:
+        project_pins.append(i.project)
+    return render(request,'backend/home.html',{'user':request.user,'project_pins':project_pins})
 
 @login_required
 def profile_page(request):
