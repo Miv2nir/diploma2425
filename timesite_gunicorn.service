@@ -1,0 +1,15 @@
+[Unit]
+Description=gunicorn daemon for timesite
+After=network.target
+
+[Service]
+User=miv2nir
+Group=miv2nir
+WorkingDirectory=/home/miv2nir/project/timesite
+ExecStart=/home/miv2nir/project/venv/bin/gunicorn -c gunicorn_config.py timesite.wsgi
+#Restart=on-failure
+#StartLimitBurst=2
+#StartLimitInterval=30
+
+[Install]
+WantedBy=multi-user.target
