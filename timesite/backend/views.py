@@ -85,7 +85,8 @@ def home(request):
     lookup=models.ProjectPin.objects.filter(user=request.user)
     for i in lookup:
         project_pins.append(i.project)
-    return render(request,'backend/home.html',{'user':request.user,'project_pins':project_pins})
+    datastore=models.DataFile.objects.filter(user=request.user).order_by('last_edited')[0]
+    return render(request,'backend/home.html',{'user':request.user,'project_pins':project_pins,'data_obj':[datastore]})
 
 @login_required
 def profile_page(request):

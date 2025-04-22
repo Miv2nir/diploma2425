@@ -33,6 +33,10 @@
             {% for item in project_pins %}
             {% include 'prefabs/project_thumb.html' %}
             {%endfor%}
+            <h2>Latest datastore upload</h2>
+            {%for item in data_obj %}
+            {% include 'prefabs/datastore_thumb.html' %}
+            {%endfor%}
             </div> 
         </div>
         <div class="home-container" id="container-side-2">
