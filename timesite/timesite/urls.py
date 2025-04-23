@@ -42,6 +42,7 @@ urlpatterns = [
     path('projects/new/', views.project_item_new, name='project_item_new'),
     path('projects/<uuid:id>/', views.project_item, name='project_item'),
     path('projects/<uuid:id>/metadata_edit/', views.project_item_edit, name='project_item_edit'),
+    path('projects/<uuid:id>/delete/', views.project_item_delete, name='project_item_delete'),
     path('datastore/', views.datastore, name='datastore'),
     path('datastore/<uuid:id>/', views.datastore_item, name='datastore_item'),
     path('datastore/<uuid:id>/edit/', views.datastore_edit, name='datastore_edit'),

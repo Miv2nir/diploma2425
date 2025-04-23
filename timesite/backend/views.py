@@ -275,6 +275,20 @@ def project_item_new(request):
     proj_obj.user=request.user
     return render(request,'backend/project_item_new.html',{'user':request.user,'item':proj_obj,'form':form})
     
+@login_required
+def project_item_delete(request,id):
+    proj_obj=models.Project.objects.get(pk=id)
+    if proj_obj.user != request.user:
+        raise PermissionDenied()
+    #do the query handling here
+    if request.GET.get('confirm',''):
+        #commence the deletion
+        proj_obj.icon.delete(save=True) #should get rid of the file
+        proj_obj.delete()
+        return HttpResponseRedirect('/projects/')
+        
+    return render(request,'backend/project_item_delete.html',{'user':request.user,'item':proj_obj})
+    
 
 @login_required
 def datastore(request):

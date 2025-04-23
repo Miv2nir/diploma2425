@@ -86,9 +86,26 @@ a {
     border-color: var(--border-color);
     transition: 200ms ease;
 }
-
 .login-button-primary:hover {
     background-color: var(--hover-color);
+    transition: 200ms ease;
+}
+
+.login-button-delete {
+    width: 80%;
+    min-height: 2rem;
+    border: solid;
+    border-radius: 1rem;
+    background-color: red;
+    color: white;
+    font-size: 0.8rem;
+    cursor: pointer;
+    border-color: red;
+    transition: 200ms ease;
+}
+
+.login-button-delete:hover {
+    background-color: #c90000;
     transition: 200ms ease;
 }
 

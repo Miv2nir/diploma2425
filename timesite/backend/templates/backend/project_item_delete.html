@@ -27,21 +27,15 @@
                             By {{item.user}}
                         </div>
                     </div>
-                    {% if is_author %}
-                    <a href="metadata_edit/" class="fancy-underline subtitle">Edit Project Metadata</a>
-                    {%endif%}
                     <div class="hr"></div>
+                    <h2>Are you Sure you want to delete this project?</h2>
+                    <h3>This action is Irreversible!</h3>
                     <br>
                     <div style="display: flex;flex-direction: row;
                                 margin-left: 1rem; margin-right: 1rem;">
-                        <a href="" style="width: 100%;"><button type="button" class="login-button-primary">Run</button></a>
-                        {% if is_author %}
-                        <a href="/edit/?project_id={{item.id}}" style=" width: 100%;"><button type="button" class="login-button-secondary">Pipeline Editor</button></a>
-                        {%endif%}
+                        <a href="../" style="width: 100%;"><button type="button" class="login-button-secondary">Cancel</button></a>
+                        <a href="?confirm=true" style=" width: 100%;"><button type="button" class="login-button-delete">Confirm</button></a>
                     </div>
-                <h2>Description:</h2>
-                <p>{{item.description}}</p>
-                </div> 
 
     </span>
 </body>
