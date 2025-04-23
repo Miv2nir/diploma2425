@@ -22,7 +22,7 @@
         </div>
         <div class="home-container center" id="container-main">
             <div class="underlying-container">
-            <h1>Welcome back, {{user}}</h1>
+            <h1>Welcome back, {{user|get_display_name}}</h1>
             <!--p class="text-containered">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -40,7 +40,9 @@
             <h2>Latest datastore Upload</h2>
             {% if data_obj %}
             {%for item in data_obj %}
+            <a href="/datastore/{{item.id}}/">
             {% include 'prefabs/datastore_thumb.html' %}
+            </a>
             {%endfor%}
             {%else%}
             <p>No data has been uploaded yet.</p>
@@ -49,7 +51,7 @@
         </div>
         <div class="home-container" id="container-side-2">
             
-            <p class="profile-shorthand"><img src="{{user|get_pfp}}" class="pfp"><b>{{user}}</b></p>
+            <p class="profile-shorthand"><img src="{{user|get_pfp}}" class="pfp"><b>{{user|get_display_name}}</b></p>
             {% include "prefabs/right_panel_links.html" %}
         </div>
     </span>

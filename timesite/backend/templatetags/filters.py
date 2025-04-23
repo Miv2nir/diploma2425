@@ -13,6 +13,13 @@ register=template.Library()
 def get_item(dictionary,key):
     return dictionary.get(key)
 
+@register.filter
+def get_display_name(user):
+    try:
+        return models.UserInfo.objects.filter(user=user)[0].display_name
+    except IndexError: #fallback
+        return user.username
+
 @register.filter #get user pfp
 def get_pfp(user):
     try:
