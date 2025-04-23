@@ -39,6 +39,7 @@ urlpatterns = [
     path('profile/', views.profile_page, name='profile'),
     path('profile/edit/', views.profile_page_edit, name='profile_edit'),
     path('projects/', views.project_list, name='project_list'),
+    path('projects/new/', views.project_item_new, name='project_item_new'),
     path('projects/<uuid:id>/', views.project_item, name='project_item'),
     path('projects/<uuid:id>/metadata_edit/', views.project_item_edit, name='project_item_edit'),
     path('datastore/', views.datastore, name='datastore'),

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% load static %}
+  {% load filters %}
+  <link rel="stylesheet" href="{% static 'style.css' %}" />
+  <!-- font import -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+    rel="stylesheet" />
+</head>
+
+<style>
+    input[type="file"]{
+    
+        display: none;
+    }
+    input[type="file"]::file-selector-button {
+        display: none;
+    }
+    </style>
+
+<body>
+    <span class="home-main-container">
+                <!--div style="min-width: 0.1rem; background-color: var(--border-color);"></div-->
+                <div class="home-container half">
+                    <a href="../"  class="fancy-underline back-text">Go Back</a>
+                    <!--h1>{{user}}'s Profile Page</h1-->
+                    <br>
+                    <br>
+                    <div class="project-item">
+                        <img src="{{item|get_icon}}" class="thumb-icon">
+                        <div style="text-align: start;">
+                            <h3 style="margin-bottom: 0; margin-top: 0;">{{item.name}}</h3>
+                            By {{item.user}}
+                        </div>
+                    </div>
+                    <a href="../" class="fancy-underline subtitle">Exit without saving</a>
+                    <div class="hr"></div>
+                    <form action="/projects/new/" enctype="multipart/form-data" method="post" id="profile_form">
+                        {%csrf_token%}
+                        <div>
+                            <div id="drop-zone" class="pfp-edit-file-field">
+                                <div id="file-label-target" style="margin-top: 1rem; overflow-x: hidden; white-space: nowrap; text-overflow: ellipsis;">No file chosen</div>
+                                <p style="display: flex;justify-content: center; margin-top: 0.1rem;">
+                                    <label for="id_icon" class="login-button-primary" style="min-height: 1.7rem; display: flex; justify-content: center; align-items: center;">
+                                        <span>Upload new Icon </span>
+                                    </label>
+                                </p>
+                            </div>
+                            {{form.icon}}
+                            <div style="display: none;">{{form.delete_icon}}</div>
+                            <p>{{form.name.label_tag}}<br>{{form.name}}</p>
+                            <p>{{form.description.label_tag}}<br>{{form.description}}</p>
+                        </div>
+                        <button class="login-button-primary" type="submit" value="OK" style="margin-bottom: 1rem;">Save</button>
+                        
+                    </form>
+                </div> 
+
+    </span>
+</body>
+<script>
+    delete_check=document.getElementById('id_delete_icon');
+    delete_flag=false;
+    delete_button=document.getElementById('delete_button');
+    drop_zone=document.getElementById('drop-zone');
+    function setIconDeletion() {
+        if (delete_flag){
+            delete_check.checked=false;
+            delete_button.classList.remove('login-button-primary');
+            delete_button.classList.add('login-button-secondary');
+            delete_button.innerHTML= "Remove icon";
+            delete_flag=false;
+            drop_zone.classList.remove('hidden');
+        }
+        else {
+            delete_check.checked=true;
+            delete_button.classList.remove('login-button-secondary');
+            delete_button.classList.add('login-button-primary');
+            delete_button.innerHTML= "Cancel icon Removal";
+            delete_flag=true;
+            drop_zone.classList.add('hidden');
+        }
+    }
+    function updateLabel() {
+        try{
+            document.getElementById('file-label-target').innerHTML=document.getElementById('id_icon').files[0].name;
+        }
+        catch (e) {
+            if (e instanceof TypeError) {
+                document.getElementById('file-label-target').innerHTML='No file chosen';
+            } else {
+                throw e;
+            }
+        }
+    }
+</script>

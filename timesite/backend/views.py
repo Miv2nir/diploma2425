@@ -243,6 +243,40 @@ def project_item_edit(request,id):
     
     return render(request,'backend/project_item_edit.html',{'user':request.user,'item':proj_obj,'form':form})
 
+@login_required
+def project_item_new(request):
+    proj_obj=models.Project()
+    #POST
+    if request.method=="POST":
+        form=forms.ProfileMetadataForm(request.POST,request.FILES)
+        if form.is_valid():
+            print(request.FILES)
+            if request.FILES.get('icon', False): #returns an icon or false if none is provided
+                try:
+                    proj_obj.icon=form.cleaned_data['icon']
+                    extension=proj_obj.icon.name.split('.')[-1]
+                    #print(extension)
+                    proj_obj.icon.name=str(proj_obj.id)+'.'+extension
+                    proj_obj.save()
+                except AttributeError:
+                    pass
+            
+            #deal with the rest of the form
+            proj_obj.user=request.user
+            proj_obj.name=form.cleaned_data['name']
+            proj_obj.description=form.cleaned_data['description']
+            proj_obj.save()
+            return HttpResponseRedirect('/projects/'+str(proj_obj.id)+'/?success=true')
+        return HttpResponseRedirect('/projects/new/')
+    #GET
+    form=forms.ProfileMetadataForm()
+    #set names for the dummy project thumb (do not save!)
+    proj_obj.name='New Project'
+    proj_obj.user=request.user
+    return render(request,'backend/project_item_new.html',{'user':request.user,'item':proj_obj,'form':form})
+    
+
+@login_required
 def datastore(request):
     #POST
     if request.method=='POST':
@@ -273,6 +307,7 @@ def datastore(request):
     lookup=models.DataFile.objects.filter(user=request.user)
     return render(request,'backend/datastore.html',{'user':request.user,'form':form,'lookup':lookup})
 
+@login_required
 def datastore_item(request,id):
     data_obj=models.DataFile.objects.get(pk=id)
     if data_obj.user != request.user:
@@ -281,6 +316,7 @@ def datastore_item(request,id):
     
     return render(request,'backend/datastore_item.html',{'user':request.user,'item':data_obj})
 
+@login_required
 def datastore_edit(request,id):
     data_obj=models.DataFile.objects.get(pk=id)
     if data_obj.user != request.user:
