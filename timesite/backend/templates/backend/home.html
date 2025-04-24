@@ -20,9 +20,9 @@
             {%include 'prefabs/project_thumb.html'%}
             {%endfor%}
         </div>
+        <div class="sidebar-substituter" id="sidebar_substituter_left">sdfdsfgthfds</div>
         <div class="home-container center" id="container-main">
-            <img class="data-icon"
-            style="position: absolute; left: 0; margin-left: 0;"
+            <img class="sidebar-button-icon" id="sidepanel_button_left" onclick="buttonPanelReturnLeft();"
              src="{% static 'call_sidepanel_button.png' %}" />
             <div class="underlying-container">
             <h1>Welcome back, {{user|get_display_name}}</h1>

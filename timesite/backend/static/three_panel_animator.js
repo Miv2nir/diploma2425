@@ -2,20 +2,24 @@
     var container_left=document.getElementById('container-side-1');
     var container_main=document.getElementById('container-main');
     var container_right=document.getElementById('container-side-2');
-    var animate=false;
+
+    var sidepanel_button_left=document.getElementById('sidepanel_button_left');
+    var sidebar_substituter_left=document.getElementById('sidebar_substituter_left');
+
+    var animate=false; //not a flag to set but a thing used in functions below
     var shrunk=(window.innerWidth <1000);
     function addTransition() {
         container_left.classList.add('transitioning');
         container_right.classList.add('transitioning');
         container_main.classList.add('transitioning');
-        console.log('transitions added');
+        //console.log('transitions added');
     }
     function removeTransition() {
         container_left.classList.remove('transitioning');
         container_right.classList.remove('transitioning');
         container_main.classList.remove('transitioning');
         animate=false;
-        console.log('transitions removed');
+        //console.log('transitions removed');
     }
     function delayedRemoveTransition(){
         //console.log('aea');
@@ -31,6 +35,7 @@
             container_left.classList.add('hidden');
             container_right.classList.add('hidden');
             container_main.classList.add('full-width');
+            sidepanel_button_left.classList.add('shown');
         }
         else {
             if (animate==false && shrunk ==true){
@@ -41,10 +46,25 @@
             container_left.classList.remove('hidden');
             container_right.classList.remove('hidden');
             container_main.classList.remove('full-width');
+            sidepanel_button_left.classList.remove('shown');
         }
         //window.addEventListener('resize',hider);
     }
-    
+    var button_pressed_left=false;
+    function buttonPanelReturnLeft() { //called via onclick
+        if (button_pressed_left){
+            container_left.classList.add('hidden');
+            container_left.classList.remove('unfold');
+            sidebar_substituter_left.classList.remove('triggered');
+            button_pressed_left=false;
+        }
+        else {
+            container_left.classList.remove('hidden');
+            container_left.classList.add('unfold');
+            sidebar_substituter_left.classList.add('triggered');
+            button_pressed_left=true;
+        }
+    }
     
     window.onresize = hider;
     //addEventListener('animationstart',(addTransition));
