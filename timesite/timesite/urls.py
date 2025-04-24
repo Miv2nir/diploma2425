@@ -46,6 +46,7 @@ urlpatterns = [
     path('datastore/', views.datastore, name='datastore'),
     path('datastore/<uuid:id>/', views.datastore_item, name='datastore_item'),
     path('datastore/<uuid:id>/edit/', views.datastore_edit, name='datastore_edit'),
+    path('datastore/<uuid:id>/delete/', views.datastore_delete, name='datastore_delete'),
     path('logout/', views.logout_user, name='logout'),
     #api stuff
     path('api/project/<uuid:id>/',api_views.get_project),

@@ -345,3 +345,18 @@ def datastore_edit(request,id):
     #GET
     form=forms.DataFileUPDForm(instance=data_obj)
     return render(request,'backend/datastore_item_edit.html',{'user':request.user,'item':data_obj,'form':form})
+
+@login_required
+def datastore_delete(request,id):
+    data_obj=models.DataFile.objects.get(pk=id)
+    if data_obj.user != request.user:
+        #unauthorized
+        raise PermissionDenied()
+    #do the query handling here
+    if request.GET.get('confirm',''):
+        #commence the deletion
+        data_obj.file.delete(save=True)
+        data_obj.delete()
+        return HttpResponseRedirect('/datastore/')
+        
+    return render(request,'backend/datastore_item_delete.html',{'user':request.user,'item':data_obj})

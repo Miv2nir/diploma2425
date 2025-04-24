@@ -32,6 +32,8 @@
                     <br>
                     {% include 'prefabs/datastore_thumb.html' %}
                     <a href="../" class="fancy-underline subtitle">Exit without saving</a>
+                    <br>
+                    <a href="../delete/" class="fancy-underline subtitle">Delete this project</a>
                     <div class="hr"></div>
                     <form action="/datastore/{{item.id}}/edit/" enctype="multipart/form-data" method="post" id="datastore_form">
                         {%csrf_token%}
