@@ -3,23 +3,24 @@
     var container_main=document.getElementById('container-main');
     var container_right=document.getElementById('container-side-2');
 
-    var sidepanel_button_left=document.getElementById('sidepanel_button_left');
-    var sidebar_substituter_left=document.getElementById('sidebar_substituter_left');
+    //var sidebar_substituter_left=document.getElementById('sidebar_substituter_left');
 
     var animate=false; //not a flag to set but a thing used in functions below
     var shrunk=(window.innerWidth <1000);
+
+    var button_pressed_left=false;
     function addTransition() {
         container_left.classList.add('transitioning');
         container_right.classList.add('transitioning');
         container_main.classList.add('transitioning');
-        //console.log('transitions added');
+        console.log('transitions added');
     }
     function removeTransition() {
         container_left.classList.remove('transitioning');
         container_right.classList.remove('transitioning');
         container_main.classList.remove('transitioning');
         animate=false;
-        //console.log('transitions removed');
+        console.log('transitions removed');
     }
     function delayedRemoveTransition(){
         //console.log('aea');
@@ -36,32 +37,47 @@
             container_right.classList.add('hidden');
             container_main.classList.add('full-width');
             sidepanel_button_left.classList.add('shown');
+            sidepanel_button_left_double.classList.add('shown');
         }
         else {
+            //remove button press changes here
+            button_pressed_left=false;
+            //sidebar_substituter_left.classList.remove('triggered');
+            container_left.classList.remove('unfold-left');
             if (animate==false && shrunk ==true){
                 animate=true;
                 shrunk=false;
                 addTransition();
             }
+            //
+            //general process
+            container_main.classList.remove('offset-left');
+            container_left.classList.remove('left');
+            setTimeout(function(){container_left.classList.remove('absoluted');},0);
             container_left.classList.remove('hidden');
             container_right.classList.remove('hidden');
             container_main.classList.remove('full-width');
             sidepanel_button_left.classList.remove('shown');
+            sidepanel_button_left_double.classList.remove('shown');
         }
         //window.addEventListener('resize',hider);
     }
-    var button_pressed_left=false;
     function buttonPanelReturnLeft() { //called via onclick
-        if (button_pressed_left){
+        if (button_pressed_left){ //container hidden
+            ////sidebar_substituter_left.classList.remove('triggered');
+            addTransition();
             container_left.classList.add('hidden');
-            container_left.classList.remove('unfold');
-            sidebar_substituter_left.classList.remove('triggered');
+            container_left.classList.remove('unfold-left');
             button_pressed_left=false;
         }
-        else {
+        else { //container shown
+            container_left.classList.add('absoluted');
+            container_left.classList.add('left');
+            //sidebar_substituter_left.classList.add('triggered');
+            container_main.classList.add('offset-left');
+            addTransition();
             container_left.classList.remove('hidden');
-            container_left.classList.add('unfold');
-            sidebar_substituter_left.classList.add('triggered');
+            container_left.classList.add('unfold-left');
             button_pressed_left=true;
         }
     }

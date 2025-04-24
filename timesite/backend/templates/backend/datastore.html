@@ -25,12 +25,15 @@
 <body>
     <span class="home-main-container">
         <div class="home-container" id="container-side-1">
+            {%include 'prefabs/sidepanel_button_left_double.html' %}
             <h2>Recent projects</h2>
             {% for item in user|get_projects %}
             {%include 'prefabs/project_thumb.html'%}
             {%endfor%}
         </div>
+        <div class="sidebar-substituter" id="sidebar_substituter_left"></div>
         <div class="home-container center" id="container-main">
+            {%include 'prefabs/sidepanel_button_left.html' %}
             <div class="underlying-container">
             <h1>{{user|get_display_name}}'s datastore</h1>
             <p>The following items can be used in the editor for data processing.</p>
