@@ -64,3 +64,4 @@ class DataFile(models.Model):
 class ProjectPin(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     project=models.ForeignKey(Project,on_delete=models.CASCADE)
+    created_at=models.DateTimeField(auto_now_add=True)

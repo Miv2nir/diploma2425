@@ -32,6 +32,19 @@
                     {%endif%}
                     <div class="hr"></div>
                     <br>
+                    <div>
+                        <form action="./" method="post">
+                            {%csrf_token%}
+                            <button type="submit" id="pin_button" style="width: 40vw; transition: none;" 
+                            {% if is_pinned %}
+                            class="login-button-primary">Unpin this project
+                            {% else %}
+                            class="login-button-secondary">Pin this project
+                            {%endif%}
+                        </button>
+                        </form>
+                    </div>
+                    <br>
                     <div style="display: flex;flex-direction: row;
                                 margin-left: 1rem; margin-right: 1rem;">
                         <a href="" style="width: 100%;"><button type="button" class="login-button-primary">Run</button></a>

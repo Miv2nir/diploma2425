@@ -76,3 +76,23 @@ def upd_proj_date(request,id):
         #serializer=serializers.ProjectSerializer(project)
         project.save() #no changes were made, it just updates the edited
         return HttpResponse(status=201)
+'''
+def pin_project(request,id):
+    if not request.user.pk: #None if not logged in, returns a value otherwise
+        return HttpResponse(status=401)
+    #check if exists
+    try:
+        proj_obj = models.Project.objects.get(pk=id)
+    except models.Project.DoesNotExist:
+        return HttpResponse(status=404)
+    if request.method=='GET':
+        return HttpResponse(status=400)
+    elif request.method=='POST':
+        #finally, verify whether the user is authorized to view this content
+        if proj_obj.user!=request.user:
+            return HttpResponse(status=404)
+        #now for the actual pinning logic
+        try: #find an existing pin object
+            pin_obj=models.ProjectPin.objects.filter(project=proj_obj,user=request.user)[0]
+        except IndexError:
+'''        

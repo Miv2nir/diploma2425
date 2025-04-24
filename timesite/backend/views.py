@@ -82,7 +82,7 @@ def logout_user(request):
 @login_required
 def home(request):
     project_pins=[]
-    lookup=models.ProjectPin.objects.filter(user=request.user)
+    lookup=models.ProjectPin.objects.filter(user=request.user).order_by('-created_at')
     for i in lookup:
         project_pins.append(i.project)
     #latest datastore upload
@@ -194,8 +194,30 @@ def project_item(request,id):
     allowed_to_see=verify_project_viewing_eligibility(proj_obj,request.user)
     if not allowed_to_see:
         raise PermissionDenied()
+    #pin handling
+    #POST
+    if request.method=='POST':
+        try:
+            pin_obj=models.ProjectPin.objects.filter(user=request.user,project=proj_obj)[0]
+            #pin exists, remove it
+            pin_obj.delete()
+        except IndexError:
+            #no pin exists, create one
+            pin_obj=models.ProjectPin(user=request.user,project=proj_obj)
+            pin_obj.save()
+        return HttpResponseRedirect('./')
+    #GET
+    #is_pinned=False
+    try:
+        pin_obj=models.ProjectPin.objects.filter(user=request.user,project=proj_obj)[0]
+        #if pin_obj exists then the object is pinned
+        is_pinned=True
+    except IndexError:
+        #not pinned
+        is_pinned=False
+        
     return render(request,'backend/project_item.html',{'user':request.user,'item':proj_obj,
-                                                       'is_author':is_author})
+                                                       'is_author':is_author,'is_pinned':is_pinned})
     
 @login_required
 def project_item_edit(request,id):
@@ -288,7 +310,6 @@ def project_item_delete(request,id):
         return HttpResponseRedirect('/projects/')
         
     return render(request,'backend/project_item_delete.html',{'user':request.user,'item':proj_obj})
-    
 
 @login_required
 def datastore(request):

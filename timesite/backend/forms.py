@@ -71,3 +71,6 @@ class DataFileUPDForm(forms.ModelForm):
             'name':forms.TextInput(attrs={'placeholder': 'File Name','class': 'login-input-box'}),
             'description':forms.Textarea(attrs={'placeholder':'Description','class':'login-input-box'})
         }
+
+class ProjectPinForm(forms.Form):
+    is_pinned=forms.BooleanField(required=False)
