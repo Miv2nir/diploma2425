@@ -135,6 +135,7 @@ a {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    position: relative;
 }
 .home-container {
     position: relative;
@@ -151,6 +152,7 @@ a {
     vertical-align: middle;
     overflow-x: hidden;
     overflow-y: hidden;
+    z-index: 0;
 }
 .underlying-container {
     height: 90vh;
@@ -165,6 +167,13 @@ a {
     min-width: 0;
     width: 0;
     box-shadow: none;
+    z-index: 0;
+}
+.home-container.unfold {
+    position: absolute;
+    left: 1rem;
+    width: 60vw;
+    z-index: 0;
 }
 .home-container.center {
     min-width: 55vw;
