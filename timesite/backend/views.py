@@ -188,7 +188,7 @@ def project_list(request):
         else:
             return HttpResponseRedirect('/projects/')
     form=forms.SearchForm(initial={'search':request.GET.get('prompt','')})
-    lookup=find_projects_by_name(request.GET.get('prompt',''))
+    lookup=find_projects_by_name(request.GET.get('prompt',''),only_public=False,user=request.user)
     return render(request,'backend/project_list.html',{'user':request.user,'lookup':lookup,'form':form,'prompt':request.GET.get('prompt','')})
 
 @login_required
