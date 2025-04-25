@@ -45,6 +45,7 @@
                 <div id="drop-zone" class="datastore-field hidden">
                     {% include 'prefabs/file_upload_label.html' %}
                     {{form.file}}
+                    <p>Accepted formats: .csv</p>
                     <p>{{form.name.label_tag}}<br>{{form.name}}</p>
                     <p>{{form.description.label_tag}}<br>{{form.description}}</p>
                     <button class="login-button-primary" type="submit" value="OK" style="margin-bottom: 1rem;">Upload</button>
