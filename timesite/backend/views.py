@@ -91,7 +91,9 @@ def home(request):
 
 @login_required
 def profile_page(request):
-    return render(request,'backend/profile_page.html',{'user':request.user})
+    #get user's stuff
+    lookup=models.Project.objects.filter(user=request.user).order_by('-last_edited')
+    return render(request,'backend/profile_page.html',{'user':request.user,'lookup':lookup})
 
 @login_required
 def profile_page_edit(request):
