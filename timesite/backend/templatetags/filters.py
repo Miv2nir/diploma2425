@@ -41,3 +41,12 @@ def get_icon(item:models.Project):
 @register.filter #get the last 5 recent projects
 def get_projects(user):
     return functions.get_last_projects(user,5)
+
+@register.filter
+def get_project_visibility(proj_obj:models.Project):
+    if proj_obj.access=='A':
+        return ''
+    elif proj_obj.access=='B':
+        return '(Unlisted)'
+    else:
+        return '(Private)'
