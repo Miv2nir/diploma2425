@@ -200,7 +200,7 @@ a {
     width: 90vw;
 }
 .home-container.half {
-    width: 47vw;
+    width: 67vw;
 }
 .home-container.transitioning {
     transition: width 600ms,box-shadow 600ms, border-width 600ms;
@@ -445,6 +445,7 @@ font-size: 1rem;
     position: absolute;
     left: -4rem;
     transition: left 400ms;
+    cursor:pointer;
 }
 .sidebar-button-icon-left.shown {
     left: 0;
@@ -458,6 +459,7 @@ font-size: 1rem;
     right: -4rem;
     transition: right 400ms;
     transform: scaleX(-1);
+    cursor:pointer;
 }
 .sidebar-button-icon-right.shown {
     right:0;
