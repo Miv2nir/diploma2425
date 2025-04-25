@@ -26,7 +26,8 @@
     <span class="home-main-container">
                 <!--div style="min-width: 0.1rem; background-color: var(--border-color);"></div-->
                 <div class="home-container half">
-                    <a href="../"  class="fancy-underline back-text">Go Back</a>
+                    <!--a href="../"  class="fancy-underline back-text">Go Back</a-->
+                    <div class="underlying-container">
                     <!--h1>{{user}}'s Profile Page</h1-->
                     <br>
                     <br>
@@ -56,11 +57,13 @@
                             <div style="display: none;">{{form.delete_icon}}</div>
                             <button class="login-button-secondary" id="delete_button" type="button" onclick="setIconDeletion();">Remove icon</button>
                             <p>{{form.name.label_tag}}<br>{{form.name}}</p>
+                            <p>{{form.access.label_tag}}<br>{{form.access}}</p>
                             <p>{{form.description.label_tag}}<br>{{form.description}}</p>
                         </div>
                         <button class="login-button-primary" type="submit" value="OK" style="margin-bottom: 1rem;">Save</button>
                         
                     </form>
+                </div>
                 </div> 
 
     </span>

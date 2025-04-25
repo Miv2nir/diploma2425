@@ -255,6 +255,7 @@ def project_item_edit(request,id):
             
             #deal with the rest of the form
             proj_obj.name=form.cleaned_data['name']
+            proj_obj.access=form.cleaned_data['access']
             proj_obj.description=form.cleaned_data['description']
             proj_obj.save()
             
@@ -266,6 +267,7 @@ def project_item_edit(request,id):
     #GET
     form=forms.ProfileMetadataForm(initial={
         'name':proj_obj.name,
+        'access':proj_obj.access,
         'description':proj_obj.description
     })
     
@@ -292,6 +294,7 @@ def project_item_new(request):
             #deal with the rest of the form
             proj_obj.user=request.user
             proj_obj.name=form.cleaned_data['name']
+            proj_obj.access=form.cleaned_data['access']
             proj_obj.description=form.cleaned_data['description']
             proj_obj.save()
             return HttpResponseRedirect('/projects/'+str(proj_obj.id)+'/?success=true')

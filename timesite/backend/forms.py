@@ -49,6 +49,7 @@ class ProfileMetadataForm(forms.Form):
     icon=forms.ImageField(required=False,widget=forms.FileInput(attrs={'onchange':'updateLabel();'}))
     delete_icon=forms.BooleanField(required=False)
     name = forms.CharField(required=False,widget=forms.TextInput(attrs={'placeholder': 'Project Name','class': 'login-input-box'}))
+    access=forms.ChoiceField(label='Visibility',required=False,widget=forms.RadioSelect(),choices=models.Project.ACCESS_LEVEL)
     description=forms.CharField(label='Description',required=False,widget=forms.Textarea(attrs={'placeholder':'Description','class':'login-input-box'}))
     
 class DataFileForm(forms.ModelForm):
