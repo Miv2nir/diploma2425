@@ -34,6 +34,7 @@
         <div class="sidebar-substituter" id="sidebar_substituter_left"></div>
         <div class="home-container center" id="container-main">
             {%include 'prefabs/sidepanel_button_left.html' %}
+            {%include 'prefabs/sidepanel_button_right.html' %}
             <div class="underlying-container">
             <h1>{{user|get_display_name}}'s datastore</h1>
             <p>The following items can be used in the editor for data processing.</p>
@@ -62,7 +63,7 @@
             </div> 
         </div>
         <div class="home-container" id="container-side-2">
-            
+            {%include 'prefabs/sidepanel_button_right_double.html' %}
             <p class="profile-shorthand"><img src="{{user|get_pfp}}" class="pfp"><b>{{user|get_display_name}}</b></p>
             {% include "prefabs/right_panel_links.html" %}
         </div>

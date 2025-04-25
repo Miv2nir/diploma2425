@@ -180,8 +180,18 @@ a {
     width: 60vw;
     z-index: 1;
 }
+.home-container.right {
+    right: 1rem;
+}
 .home-container.offset-left {
     margin-left: 1.5rem;
+}
+.home-container.unfold-right {
+    width: 60vw;
+    z-index: 1;
+}
+.home-container.offset-right {
+    margin-right: 1.5rem;
 }
 .home-container.center {
     min-width: 55vw;
