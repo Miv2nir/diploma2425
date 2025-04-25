@@ -86,8 +86,12 @@ def home(request):
     for i in lookup:
         project_pins.append(i.project)
     #latest datastore upload
-    datastore=models.DataFile.objects.filter(user=request.user).order_by('last_edited')
-    return render(request,'backend/home.html',{'user':request.user,'project_pins':project_pins,'data_obj':datastore})
+    datastore=models.DataFile.objects.filter(user=request.user).order_by('-last_edited')
+    try:
+        data_obj=[datastore[0]]
+    except IndexError:
+        data_obj=[]
+    return render(request,'backend/home.html',{'user':request.user,'project_pins':project_pins,'data_obj':data_obj})
 
 @login_required
 def profile_page(request):
