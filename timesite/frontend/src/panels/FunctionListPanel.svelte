@@ -1,6 +1,9 @@
 <script>
-  //TODO: pull the list of all available functions
-    import LeftDouble from "../elements/panel_buttons/LeftDouble.svelte";
+  import LeftDouble from "../elements/panel_buttons/LeftDouble.svelte";
+  //pull the list of all available functions
+  //it's going to generate a list of functions in the ui basically
+  
+
 </script>
 
 <div class="home-container" id="container-side-1">

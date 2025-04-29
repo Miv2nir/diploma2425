@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['192.168.1.239','127.0.0.1','timesite.miv2nir.me','localhost']
 
-CSRF_TRUSTED_ORIGINS = ['https://timesite.miv2nir.me']
+CSRF_TRUSTED_ORIGINS = ['https://timesite.miv2nir.me','http://127.0.0.1','http://localhost','http://192.168.1.239']
 
 # Application definition
 
