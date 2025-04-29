@@ -14,10 +14,14 @@ export async function getRequest(url) {
     }
   }
 
-  export async function postRequest(url) {
+  export async function postRequest(url,csrftoken) {
     //moving to async otherwise this will be way too overcomplicated
     try {
-      const response = await fetch(url,{method:"POST"});
+      const response = await fetch(url,{
+        method:"POST",
+        headers:{'X-CSRFToken': csrftoken},
+        mode: 'same-origin'
+      });
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }

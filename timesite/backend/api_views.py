@@ -55,7 +55,6 @@ def get_user_info(request):
             print('serializer',serializer.errors)
         return JsonResponse(serializer.data)
 
-@csrf_exempt
 def upd_proj_date(request,id):
     '''
     test api to retrieve project metadata info

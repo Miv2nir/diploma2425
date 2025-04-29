@@ -1,5 +1,9 @@
 <!--script src="/backend/static/front_lib/api_functions.js"></script-->
 <script>
+  //get csrf token
+  const csrftoken = Cookies.get('csrftoken');
+  
+  import Cookies from 'js-cookie';
   import ProjectThumb from "./elements/ProjectThumb.svelte";
   import {getRequest, postRequest} from "./lib/APICalls.js";
 
@@ -44,9 +48,10 @@
     }
     console.log(proj_obj);
     //assuming things went successful, update the last_edited value of the project
-    await postRequest('/api/project/'+proj_uuid+'/upd_date/');
+    await postRequest('/api/project/'+proj_uuid+'/upd_date/',csrftoken);
   }
   pageInit();
+
 </script>
 
 {#if user_logged_in && project_retrieved}
