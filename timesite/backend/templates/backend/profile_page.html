@@ -28,7 +28,17 @@
                         </h2>
                         <a href="edit/" class="fancy-underline subtitle">Edit Profile</a>
                         <div class="hr"></div>
+                        <br>
+                        <form action="/profile/" class="search-form" method="post">
+                            {% csrf_token %}
+                            {{ form.search }}
+                            <button class="search-button" type="submit">🔍</button>
+                        </form>
+                        {%if prompt %}
+                        <h2>Results for {{prompt}}:</h2>
+                        {%else%}
                         <h2>Your Projects:</h2>
+                        {%endif%}
                         {% for item in lookup %}
                         {% include 'prefabs/project_thumb.html' %}
                         {%endfor%}

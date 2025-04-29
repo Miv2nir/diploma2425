@@ -95,9 +95,21 @@ def home(request):
 
 @login_required
 def profile_page(request):
-    #get user's stuff
-    lookup=models.Project.objects.filter(user=request.user).order_by('-last_edited')
-    return render(request,'backend/profile_page.html',{'user':request.user,'lookup':lookup})
+    if request.method == 'POST':
+        form = forms.SearchForm(request.POST)
+        if form.is_valid():
+            prompt=form.cleaned_data['search']
+            return HttpResponseRedirect('/profile/?prompt='+prompt)
+        else:
+            return HttpResponseRedirect('/profile/')
+    form=forms.SearchForm(initial={'search':request.GET.get('prompt','')})
+    prompt=request.GET.get('prompt','')
+    if prompt:
+        lookup=models.Project.objects.filter(user=request.user,name__icontains=prompt).order_by('-last_edited')
+        #get user's stuff
+    else:
+        lookup=models.Project.objects.filter(user=request.user).order_by('-last_edited')
+    return render(request,'backend/profile_page.html',{'user':request.user,'lookup':lookup,'form':form,'prompt':prompt})
 
 @login_required
 def profile_page_edit(request):
