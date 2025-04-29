@@ -5,6 +5,7 @@ import json
 #    def __init__(self):
 
 class Registry:
+    
     def __init__(self):
         self.loaders={
             'LoadCSV':LoadCSV
@@ -16,4 +17,3 @@ class Registry:
         self.splitters={}
         self.models={}
     #def get_json_lists(self):
-        

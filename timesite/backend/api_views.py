@@ -4,14 +4,19 @@ from rest_framework.parsers import JSONParser
 
 import backend.models as models
 import backend.serializers as serializers
+import backend.data_processing.registry as registry
 
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+import json
 #TODO: rewrite login_required to dump a 401 if user not authorized
 # the frontend will need to preserve the url and redirect to /login with query being the current logged in page
 
-#@login_required
+
 def get_project(request,id):
     '''
     test api to retrieve project metadata info
@@ -75,23 +80,19 @@ def upd_proj_date(request,id):
         #serializer=serializers.ProjectSerializer(project)
         project.save() #no changes were made, it just updates the edited
         return HttpResponse(status=201)
-'''
-def pin_project(request,id):
-    if not request.user.pk: #None if not logged in, returns a value otherwise
-        return HttpResponse(status=401)
-    #check if exists
-    try:
-        proj_obj = models.Project.objects.get(pk=id)
-    except models.Project.DoesNotExist:
-        return HttpResponse(status=404)
-    if request.method=='GET':
-        return HttpResponse(status=400)
-    elif request.method=='POST':
-        #finally, verify whether the user is authorized to view this content
-        if proj_obj.user!=request.user:
-            return HttpResponse(status=404)
-        #now for the actual pinning logic
-        try: #find an existing pin object
-            pin_obj=models.ProjectPin.objects.filter(project=proj_obj,user=request.user)[0]
-        except IndexError:
-'''        
+
+    
+@api_view()
+def get_functions_all(request):
+    '''
+    Retrieves a list of all functions in the registry
+    '''
+    l={}
+    r=registry.Registry()
+    l['loaders']=r.loaders.keys()
+    l['renderers']=r.renderers.keys()
+    l['processors']=r.processors.keys()
+    l['splitters']=r.splitters.keys()
+    l['models']=r.models.keys()
+    return Response(l)
+    

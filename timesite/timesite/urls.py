@@ -52,5 +52,5 @@ urlpatterns = [
     path('api/project/<uuid:id>/',api_views.get_project),
     path('api/project/<uuid:id>/upd_date/', api_views.upd_proj_date),
     path('api/user/data/',api_views.get_user_info),
-    
+    path('api/functions/get_all/',api_views.get_functions_all)
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
