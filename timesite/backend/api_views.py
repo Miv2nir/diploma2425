@@ -85,7 +85,7 @@ def _assemble_info(r_sublist):
     info={}
     for i in r_sublist.keys():
         info['name']=i
-        obj=r_sublist[i]
+        obj=r_sublist[i]()
         info['display_name']=obj.display_name
         info['description']=obj.description
         info['accepts']=obj.accepts

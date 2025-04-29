@@ -7,7 +7,6 @@ self.type - self-referential property declaring its subclass. To be replaced wit
 self.accepts - keywords to hint what can be fed into the function from other functions
 self.returns - keywords to hint what object does it return.
 '''
-'''
 class LoadCSV:
     def __init__(self):
         self.initial=True
@@ -34,7 +33,6 @@ class RenderDF:
 '''
 #leaving out the constructor intentionally so to not nuke the memory of the host on every api call
 class LoadCSV:
-    
     initial=True
     display_name='Load CSV'
     description='Loads a CSV file from the Datastore'
@@ -46,7 +44,6 @@ class LoadCSV:
         return pd.read_csv(data_obj.file.path)
     
 class RenderDF:
-    
     initial=False
     display_name='Render Dataframe'
     description='Invokes .to_html() of a dataframe object.'
@@ -56,3 +53,4 @@ class RenderDF:
     returns=['html']
     def execute(self,df:pd.DataFrame):
         return df.to_html()
+'''
