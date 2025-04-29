@@ -1,8 +1,13 @@
 <script>
   import LeftDouble from "../elements/panel_buttons/LeftDouble.svelte";
+  import {getRequest, postRequest} from "../lib/APICalls.js";
   //pull the list of all available functions
   //it's going to generate a list of functions in the ui basically
-  
+  async function setFunctionList(){
+    const l = await getRequest('/api/functions/get_all/');
+    console.log(l);
+  }
+  setFunctionList();
 
 </script>
 

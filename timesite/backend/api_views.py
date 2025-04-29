@@ -81,6 +81,17 @@ def upd_proj_date(request,id):
         project.save() #no changes were made, it just updates the edited
         return HttpResponse(status=201)
 
+def _assemble_info(r_sublist):
+    info={}
+    for i in r_sublist.keys():
+        info['name']=i
+        obj=r_sublist[i]
+        info['display_name']=obj.display_name
+        info['description']=obj.description
+        info['accepts']=obj.accepts
+        info['returns']=obj.returns
+        info['initial']=obj.initial
+    return info
     
 @api_view()
 def get_functions_all(request):
@@ -89,10 +100,14 @@ def get_functions_all(request):
     '''
     l={}
     r=registry.Registry()
-    l['loaders']=r.loaders.keys()
-    l['renderers']=r.renderers.keys()
-    l['processors']=r.processors.keys()
-    l['splitters']=r.splitters.keys()
-    l['models']=r.models.keys()
+    #l['loaders']=r.loaders.keys()
+    #l['renderers']=r.renderers.keys()
+    #l['processors']=r.processors.keys()
+    #l['splitters']=r.splitters.keys()
+    #l['models']=r.models.keys()
+    l['loaders']=_assemble_info(r.loaders)
+    l['renderers']=_assemble_info(r.renderers)
+    l['splitters']=_assemble_info(r.splitters)
+    l['models']=_assemble_info(r.models)
     return Response(l)
     
