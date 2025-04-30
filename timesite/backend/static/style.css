@@ -285,6 +285,7 @@ font-size: 1rem;
 }
 .project-item.center {
     justify-content: center;
+    cursor: pointer;
 }
 .project-item.special {
     margin:0;

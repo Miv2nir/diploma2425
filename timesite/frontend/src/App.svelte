@@ -52,13 +52,13 @@
   }
   pageInit();
   //for the matter of selecting functions
-  let selectedFunction= $state('');
+  let func_name= $state('');
 </script>
 
 {#if user_logged_in && project_retrieved}
   <span class="home-main-container">
-    <FunctionListPanel bind:func_name={selectedFunction} />
-    <MainPanel user={user} proj_obj={proj_obj} />
+    <FunctionListPanel bind:func_name={func_name} />
+    <MainPanel user={user} proj_obj={proj_obj} func_name={func_name} />
     <PipelinePanel user={user} />
   </span>
   <script src="/backend/static/three_panel_animator.js"></script>
