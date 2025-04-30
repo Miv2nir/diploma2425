@@ -127,4 +127,8 @@ def get_datastore_items_csv(request):
             'description':i.description
         })
     return Response(l)
-    
+
+@api_view(['POST'])
+def accept_csv_load(request):
+    print(request.POST.get('csv_files'))
+    return Response(status=201)
