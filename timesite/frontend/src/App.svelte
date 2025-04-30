@@ -13,15 +13,15 @@
 
   //first things first, retrieve info about the user
   const special_unit_mark=true;
-  var user_logged_in = false;
-  var project_retrieved = false;
-  var user = null;
-  var proj_uuid='';
-  var proj_obj=null;
+  var user_logged_in = $state(false);
+  var project_retrieved = $state(false);
+  var user = $state(null);
+  var proj_uuid=$state('');
+  var proj_obj=$state(null);
 
   async function pageInit() {
     user = await getRequest("/api/user/data/");
-    console.log(user);
+    console.log($state.snapshot(user));
     if (user.pk == null) {
       //user not logged in. redirect to the login page
       window.location.href = "/login?next=/edit/";
@@ -46,17 +46,18 @@
     if (proj_obj!=null) {
       project_retrieved=true;
     }
-    console.log(proj_obj);
+    console.log($state.snapshot(proj_obj));
     //assuming things went successful, update the last_edited value of the project
     await postRequest('/api/project/'+proj_uuid+'/upd_date/',csrftoken);
   }
   pageInit();
-
+  //for the matter of selecting functions
+  let selectedFunction= $state('');
 </script>
 
 {#if user_logged_in && project_retrieved}
   <span class="home-main-container">
-    <FunctionListPanel />
+    <FunctionListPanel bind:func_name={selectedFunction} />
     <MainPanel user={user} proj_obj={proj_obj} />
     <PipelinePanel user={user} />
   </span>

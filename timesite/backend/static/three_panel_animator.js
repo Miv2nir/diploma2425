@@ -27,7 +27,7 @@
         container_right.classList.remove('transitioning');
         container_main.classList.remove('transitioning');
         animate=false;
-        console.log('transitions removed');
+        //console.log('transitions removed');
     }
     function delayedRemoveTransition(){
         //console.log('aea');
