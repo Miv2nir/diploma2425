@@ -50,7 +50,7 @@ def get_user_info(request):
                 pfp_path=pfp_obj.pfp.name
         except IndexError:
             pass
-        print(type(request.user.pk))
+        #print(type(request.user.pk))
         serializer=serializers.UserExtendedSerializer(data={'pk':request.user.pk,
                                                             'username':request.user.username,
                                                             'display_name':user_detais.display_name,

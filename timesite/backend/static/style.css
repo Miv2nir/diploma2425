@@ -283,6 +283,9 @@ font-size: 1rem;
     justify-content:start;
     align-items:center;
 }
+.project-item.center {
+    justify-content: center;
+}
 .project-item.special {
     margin:0;
 }

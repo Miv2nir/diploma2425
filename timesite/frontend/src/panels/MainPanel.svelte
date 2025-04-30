@@ -10,7 +10,7 @@ import ProjectThumb from "../elements/ProjectThumb.svelte";
       <Left />
       <Right />
       <div class="underlying-container">
-        <h1>Select a function from the right panel...</h1>
+        <h1>Select a function from the left panel...</h1>
       </div>
     </div>
     <ProjectThumb user={user} project={proj_obj} is_special={special_unit_mark}/>

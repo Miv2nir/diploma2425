@@ -1,11 +1,15 @@
 <script>
+    import { render } from "svelte/server";
   import LeftDouble from "../elements/panel_buttons/LeftDouble.svelte";
   import {getRequest, postRequest} from "../lib/APICalls.js";
   //pull the list of all available functions
   //it's going to generate a list of functions in the ui basically
+  var loaders=[];
+  var renderers=[];
   async function setFunctionList(){
     const l = await getRequest('/api/functions/get_all/');
-    console.log(l.loaders[0]);
+    loaders=l.loaders;
+    renderers=l.renderers;
   }
   setFunctionList();
 
@@ -14,5 +18,10 @@
 <div class="home-container" id="container-side-1">
   <LeftDouble />
     <h2>Available Functions</h2>
-    <div class="project-item"></div>
+    {#each loaders as f}
+    <div class="project-item center"><b>{f.display_name}</b></div>
+    {/each}
+    {#each renderers as f}
+    <div class="project-item center"><b>{f.display_name}</b></div>
+    {/each}
   </div>
