@@ -5,7 +5,7 @@
   //it's going to generate a list of functions in the ui basically
   async function setFunctionList(){
     const l = await getRequest('/api/functions/get_all/');
-    console.log(l);
+    console.log(l.loaders[0]);
   }
   setFunctionList();
 

@@ -82,8 +82,9 @@ def upd_proj_date(request,id):
         return HttpResponse(status=201)
 
 def _assemble_info(r_sublist):
-    info={}
+    l=[]
     for i in r_sublist.keys():
+        info={}
         info['name']=i
         obj=r_sublist[i]()
         info['display_name']=obj.display_name
@@ -91,7 +92,8 @@ def _assemble_info(r_sublist):
         info['accepts']=obj.accepts
         info['returns']=obj.returns
         info['initial']=obj.initial
-    return info
+        l.append(info)
+    return l
     
 @api_view()
 def get_functions_all(request):
