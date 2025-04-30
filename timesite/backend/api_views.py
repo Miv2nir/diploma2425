@@ -130,5 +130,8 @@ def get_datastore_items_csv(request):
 
 @api_view(['POST'])
 def accept_csv_load(request):
-    print(request.POST.get('csv_files'))
+    dataset_id=request.POST.get('csv_files')
+    print(dataset_id)
+    data_obj=models.DataFile.objects.get(id=dataset_id)
+    print(data_obj)
     return Response(status=201)

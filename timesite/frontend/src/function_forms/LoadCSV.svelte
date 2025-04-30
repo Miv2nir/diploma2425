@@ -20,7 +20,7 @@
         <br>
         <select name="csv_files" class="selector" id="csv_files_selection">
             {#each datastore_items as d}
-            <option class="selector">{d.name}</option>
+            <option class="selector" value="{d.id}">{d.name}</option>
             {/each}
         </select>
         <br>
