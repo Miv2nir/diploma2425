@@ -112,4 +112,19 @@ def get_functions_all(request):
     l['splitters']=_assemble_info(r.splitters)
     l['models']=_assemble_info(r.models)
     return Response(l)
+
+@api_view()
+def get_datastore_items_csv(request):
+    '''
+    Retrieves a list of all CSV files uploaded into the system and belonging to a user
+    '''
+    lookup=models.DataFile.objects.filter(user=request.user,filetype='CSV')
+    l=[]
+    for i in lookup:
+        l.append({
+            'id':str(i.id),
+            'name':i.name,
+            'description':i.description
+        })
+    return Response(l)
     
