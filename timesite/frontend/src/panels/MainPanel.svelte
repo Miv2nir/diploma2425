@@ -2,6 +2,7 @@
     import Left from "../elements/panel_buttons/Left.svelte";
     import Right from "../elements/panel_buttons/Right.svelte";
 import ProjectThumb from "../elements/ProjectThumb.svelte";
+import LoadCsv from "../function_forms/LoadCSV.svelte";
     let {user,proj_obj,func_name} = $props();
     const special_unit_mark=true;
 </script>
@@ -11,7 +12,12 @@ import ProjectThumb from "../elements/ProjectThumb.svelte";
       <Right />
       <div class="underlying-container">
         <h1>Select a function from the left panel...</h1>
-        <p>{func_name}</p>
+        {#if func_name}
+        <div class="project-item center"><b>{func_name}</b></div>
+        {/if}
+        {#if func_name=='LoadCSV'}
+          <LoadCsv />
+        {/if}
       </div>
     </div>
     <ProjectThumb user={user} project={proj_obj} is_special={special_unit_mark}/>
