@@ -3,7 +3,7 @@
     import Right from "../elements/panel_buttons/Right.svelte";
     import ProjectThumb from "../elements/ProjectThumb.svelte";
     import LoadCsv from "../function_forms/LoadCSV.svelte";
-    let {user,proj_obj,func_name,form_submitted=$bindable(false)} = $props();
+    let {user,proj_obj,func_name=$bindable(''),form_submitted=$bindable(false)} = $props();
     const special_unit_mark=true;
 </script>
 <div style="display:flex; flex-direction:column; justify-content: space-around; height:90.3vh;" id='container-main-spacer'>

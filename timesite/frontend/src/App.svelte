@@ -60,8 +60,10 @@
 
 {#if user_logged_in && project_retrieved}
   <span class="home-main-container">
+    {#key form_submitted}
     <FunctionListPanel bind:func_name={func_name} />
-    <MainPanel user={user} proj_obj={proj_obj} func_name={func_name} bind:form_submitted={form_submitted}/>
+    {/key}
+    <MainPanel user={user} proj_obj={proj_obj} bind:func_name={func_name} bind:form_submitted={form_submitted}/>
     {#key form_submitted}
     <PipelinePanel bind:upd_flag={upd_flag} user={user} proj_obj={proj_obj} />
     {/key}
