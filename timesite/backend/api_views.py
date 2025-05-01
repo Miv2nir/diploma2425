@@ -145,6 +145,7 @@ def accept_csv_load(request,id,order=0):
     print(data_obj)
     #handle pipeline saving
     params={
+        ''
         'data_obj':str(data_obj.id),
         'save_as':'df' #temporary definition, should be appointed programmatically so to allow suppliment of additional
     }
@@ -155,3 +156,16 @@ def accept_csv_load(request,id,order=0):
         param_obj=models.FunctionParams(project=proj_obj,order=order,func_name='LoadCSV',info=params)
         param_obj.save()
     return Response(status=201)
+
+@api_view()
+def get_pipeline(request,id):
+    #identify project
+    try:
+        proj_obj = models.Project.objects.get(pk=id)
+    except models.Project.DoesNotExist:
+        return Response(status=404)
+    lookup=models.FunctionParams.objects.filter(project=proj_obj).order_by('order')
+    l=[]
+    for i in lookup:
+        l.append(i.func_name)
+    return Response(l)
