@@ -8,7 +8,7 @@
     import {getRequest, postRequest} from "../lib/APICalls.js";
     import Cookies from 'js-cookie';
     import { onMount } from 'svelte';
-    let {func_name=$bindable(''),proj_obj} = $props();
+    let {func_name=$bindable(''),form_submitted=$bindable(false),proj_obj} = $props();
     var datastore_items = $state();
     async function getData(){
         const l = await getRequest('/api/functions/get_csv_files/');
@@ -24,6 +24,7 @@
       await fetch(form.action, {method:'post', body: new FormData(form)});
       //discard this component for it has been used
       func_name='';
+      form_submitted=true;
     }
     
 

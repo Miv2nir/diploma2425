@@ -18,6 +18,7 @@
   var user = $state(null);
   var proj_uuid=$state('');
   var proj_obj=$state(null);
+  var upd_flag=$state(false);
   
 
   async function pageInit() {
@@ -54,13 +55,16 @@
   pageInit();
   //for the matter of selecting functions
   let func_name= $state('');
+  let form_submitted=$state(false);
 </script>
 
 {#if user_logged_in && project_retrieved}
   <span class="home-main-container">
     <FunctionListPanel bind:func_name={func_name} />
-    <MainPanel user={user} proj_obj={proj_obj} func_name={func_name} />
-    <PipelinePanel user={user} proj_obj={proj_obj} />
+    <MainPanel user={user} proj_obj={proj_obj} func_name={func_name} bind:form_submitted={form_submitted}/>
+    {#key form_submitted}
+    <PipelinePanel bind:upd_flag={upd_flag} user={user} proj_obj={proj_obj} />
+    {/key}
   </span>
   <script src="/backend/static/three_panel_animator.js"></script>
 {/if}
