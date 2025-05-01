@@ -8,7 +8,7 @@
     import {getRequest, postRequest} from "../lib/APICalls.js";
     import Cookies from 'js-cookie';
     import { onMount } from 'svelte';
-    let {func_name=$bindable('')} = $props();
+    let {func_name=$bindable(''),proj_obj} = $props();
     var datastore_items = $state();
     async function getData(){
         const l = await getRequest('/api/functions/get_csv_files/');
@@ -30,7 +30,7 @@
 </script>
 
 <div>
-<form action="/api/functions/accept_csv_load/" method="POST" id="csv_load_form" onsubmit={()=>sendForm()}>
+<form action="/api/functions/{proj_obj.id}/accept_csv_load/" method="POST" id="csv_load_form" onsubmit={()=>sendForm()}>
     <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
     <p>
         <label for="csv_files_selection">Select CSV Dataset:</label>

@@ -65,3 +65,10 @@ class ProjectPin(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     project=models.ForeignKey(Project,on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
+    
+#cache models
+class LoaderParams(models.Model):
+    project=models.ForeignKey(Project,on_delete=models.CASCADE)
+    data_obj=models.ForeignKey(DataFile,on_delete=models.CASCADE)
+    order=models.IntegerField(default=0)
+    

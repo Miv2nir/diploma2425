@@ -129,9 +129,22 @@ def get_datastore_items_csv(request):
     return Response(l)
 
 @api_view(['POST'])
-def accept_csv_load(request):
+def accept_csv_load(request,id,order=0):
+    #identify project
+    try:
+        proj_obj = models.Project.objects.get(pk=id)
+    except models.Project.DoesNotExist:
+        return Response(status=404)
+    #verify if permitted to edit
+    if request.user != proj_obj.user:
+        return Response(status=403)
+    #handle csv file
     dataset_id=request.POST.get('csv_files')
     print(dataset_id)
     data_obj=models.DataFile.objects.get(id=dataset_id)
     print(data_obj)
+    #handle pipeline saving
+    #check if exists
+    lookup=models.LoaderParams.objects.filter(project=proj_obj,data_obj=data_obj)
+    
     return Response(status=201)

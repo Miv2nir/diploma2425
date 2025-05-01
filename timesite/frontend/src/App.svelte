@@ -12,12 +12,13 @@
   import PipelinePanel from "./panels/PipelinePanel.svelte";
 
   //first things first, retrieve info about the user
-  const special_unit_mark=true;
+  //const special_unit_mark=true;
   var user_logged_in = $state(false);
   var project_retrieved = $state(false);
   var user = $state(null);
   var proj_uuid=$state('');
   var proj_obj=$state(null);
+  
 
   async function pageInit() {
     user = await getRequest("/api/user/data/");
@@ -31,7 +32,7 @@
     }
     //pull the project information
     // TODO: Pass project uuid to the app (likely as query)
-    const query_string= new URLSearchParams(window.location.search)
+    const query_string= $state(new URLSearchParams(window.location.search));
     if (query_string.has('project_id'))
     {
       proj_uuid=query_string.get('project_id');

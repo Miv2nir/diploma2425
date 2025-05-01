@@ -6,5 +6,5 @@
 </script>
 <div class="home-container" id="container-side-2">
     <RightDouble />
-    <UserThumb user={user} />
+    <h2>Pipeline</h2>
     </div>
