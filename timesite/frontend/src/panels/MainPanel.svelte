@@ -16,7 +16,7 @@
         <div class="project-item center"><b>{func_name}</b></div>
         {/if}
         {#if func_name=='LoadCSV'}
-          <LoadCsv />
+          <LoadCsv bind:func_name={func_name}/>
         {/if}
       </div>
     </div>
