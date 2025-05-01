@@ -3,6 +3,7 @@ from django.db import models
 import uuid
 
 from django.contrib.auth.models import User
+import json
 
 # Create your models here.
 class UserInfo(models.Model):
@@ -67,8 +68,13 @@ class ProjectPin(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     
 #cache models
-class LoaderParams(models.Model):
-    project=models.ForeignKey(Project,on_delete=models.CASCADE)
-    data_obj=models.ForeignKey(DataFile,on_delete=models.CASCADE)
-    order=models.IntegerField(default=0)
-    
+#class LoaderParams(models.Model):
+#    project=models.ForeignKey(Project,on_delete=models.CASCADE)
+#    data_obj=models.ForeignKey(DataFile,on_delete=models.CASCADE)
+#    order=models.IntegerField(default=0)
+
+class FunctionParams(models.Model):
+      project=models.ForeignKey(Project,on_delete=models.CASCADE)
+      order=models.IntegerField(default=0)
+      func_name=models.CharField(max_length=100)
+      info=models.JSONField()

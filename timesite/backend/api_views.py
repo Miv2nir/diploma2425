@@ -144,7 +144,14 @@ def accept_csv_load(request,id,order=0):
     data_obj=models.DataFile.objects.get(id=dataset_id)
     print(data_obj)
     #handle pipeline saving
-    #check if exists
-    lookup=models.LoaderParams.objects.filter(project=proj_obj,data_obj=data_obj)
-    
+    params={
+        'data_obj':str(data_obj.id),
+        'save_as':'df' #temporary definition, should be appointed programmatically so to allow suppliment of additional
+    }
+    try:
+        param_obj=models.FunctionParams.objects.filter(project=proj_obj,order=order)[0]
+        return Response(409) #clashing with existing object
+    except IndexError:
+        param_obj=models.FunctionParams(project=proj_obj,order=order,func_name='LoadCSV',info=params)
+        param_obj.save()
     return Response(status=201)
