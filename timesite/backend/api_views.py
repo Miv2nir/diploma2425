@@ -176,6 +176,8 @@ def accept_csv_load(request,id,order=0):
 
 @api_view()
 def get_pipeline(request,id):
+    r=registry.Registry()
+    f_list=r.get_all()
     #identify project
     try:
         proj_obj = models.Project.objects.get(pk=id)
@@ -184,5 +186,8 @@ def get_pipeline(request,id):
     lookup=models.FunctionParams.objects.filter(project=proj_obj).order_by('order')
     l=[]
     for i in lookup:
-        l.append(i.func_name)
+        l.append({
+            'name':i.func_name,
+            'display_name':f_list[i.func_name]().display_name
+            })
     return Response(l)

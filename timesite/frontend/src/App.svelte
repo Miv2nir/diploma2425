@@ -60,7 +60,7 @@
   <span class="home-main-container">
     <FunctionListPanel bind:func_name={func_name} />
     <MainPanel user={user} proj_obj={proj_obj} func_name={func_name} />
-    <PipelinePanel user={user} />
+    <PipelinePanel user={user} proj_obj={proj_obj} />
   </span>
   <script src="/backend/static/three_panel_animator.js"></script>
 {/if}
