@@ -1,7 +1,13 @@
 <script>
     import { get } from "svelte/store";
+    var form=undefined;
+    onMount(()=>{
+      form=document.getElementById('csv_load_form');
+      console.log(form);
+    })
     import {getRequest, postRequest} from "../lib/APICalls.js";
     import Cookies from 'js-cookie';
+    import { onMount } from 'svelte';
     var datastore_items = $state();
     async function getData(){
         const l = await getRequest('/api/functions/get_csv_files/');
@@ -10,10 +16,18 @@
     }
     getData();
     const csrftoken = Cookies.get('csrftoken');
+    //const form=document.getElementById('csv_load_form');
+    //console.log(form);
+    async function sendForm() {
+      console.log('sending form');
+      await fetch(form.action, {method:'post', body: new FormData(form)});
+    }
+    
+
 </script>
 
 <div>
-<form action="/api/functions/accept_csv_load/" method="POST" onsubmit={()=>{return false}}>
+<form action="/api/functions/accept_csv_load/" method="POST" id="csv_load_form" onsubmit={()=>sendForm()}>
     <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
     <p>
         <label for="csv_files_selection">Select CSV Dataset:</label>
@@ -25,7 +39,7 @@
         </select>
         <br>
         <br>
-        <button type="submit" class="login-button-primary">Save Parameters</button>
+        <button type="button" onclick={()=>sendForm()} class="login-button-primary">Save Parameters</button>
     </p>
 </form>
 </div>

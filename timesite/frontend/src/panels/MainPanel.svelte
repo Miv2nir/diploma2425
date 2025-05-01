@@ -1,8 +1,8 @@
 <script>
     import Left from "../elements/panel_buttons/Left.svelte";
     import Right from "../elements/panel_buttons/Right.svelte";
-import ProjectThumb from "../elements/ProjectThumb.svelte";
-import LoadCsv from "../function_forms/LoadCSV.svelte";
+    import ProjectThumb from "../elements/ProjectThumb.svelte";
+    import LoadCsv from "../function_forms/LoadCSV.svelte";
     let {user,proj_obj,func_name} = $props();
     const special_unit_mark=true;
 </script>
