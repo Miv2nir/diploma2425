@@ -114,6 +114,23 @@ def get_functions_all(request):
     return Response(l)
 
 @api_view()
+def get_function_info(request,func_name):
+    '''
+    Retrieves information about a specific function
+    '''
+    r=registry.Registry()
+    obj=r.get_all()[func_name]()
+    info={}
+    info['display_name']=obj.display_name
+    info['type']=obj.type
+    info['description']=obj.description
+    info['accepts']=obj.accepts
+    info['returns']=obj.returns
+    info['initial']=obj.initial
+    return Response(info)
+
+
+@api_view()
 def get_datastore_items_csv(request):
     '''
     Retrieves a list of all CSV files uploaded into the system and belonging to a user
