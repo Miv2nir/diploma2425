@@ -187,6 +187,7 @@ def get_pipeline(request,id):
     for i in lookup:
         l.append({
             'name':i.func_name,
-            'display_name':f_list[i.func_name]().display_name
+            'display_name':f_list[i.func_name]().display_name,
+            'params_id':str(i.id)
             })
     return Response(l)

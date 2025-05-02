@@ -65,7 +65,7 @@
     {/key}
     <MainPanel user={user} proj_obj={proj_obj} bind:func_obj={func_obj} bind:form_submitted={form_submitted}/>
     {#key form_submitted}
-    <PipelinePanel bind:upd_flag={upd_flag} user={user} proj_obj={proj_obj} />
+    <PipelinePanel bind:upd_flag={upd_flag} bind:func_obj={func_obj} user={user} proj_obj={proj_obj} />
     {/key}
   </span>
   <script src="/backend/static/three_panel_animator.js"></script>

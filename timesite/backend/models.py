@@ -73,8 +73,10 @@ class ProjectPin(models.Model):
 #    data_obj=models.ForeignKey(DataFile,on_delete=models.CASCADE)
 #    order=models.IntegerField(default=0)
 
+
 class FunctionParams(models.Model):
-      project=models.ForeignKey(Project,on_delete=models.CASCADE)
-      order=models.IntegerField(default=0)
-      func_name=models.CharField(max_length=100)
-      info=models.JSONField()
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    project=models.ForeignKey(Project,on_delete=models.CASCADE)
+    order=models.IntegerField(default=0)
+    func_name=models.CharField(max_length=100)
+    info=models.JSONField()
