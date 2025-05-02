@@ -2,7 +2,7 @@
     import Left from "../elements/panel_buttons/Left.svelte";
     import Right from "../elements/panel_buttons/Right.svelte";
     import ProjectThumb from "../elements/ProjectThumb.svelte";
-    import LoadCsv from "../function_forms/LoadCSV.svelte";
+    import LoadCSV from "../function_forms/LoadCSV.svelte";
     let {user,proj_obj,func_obj=$bindable(),form_submitted=$bindable(false)} = $props();
     const special_unit_mark=true;
 </script>
@@ -16,7 +16,7 @@
         <div class="project-item center"><b>{func_obj.display_name}</b></div>
         {#if func_obj.name=='LoadCSV'}
         <p>{func_obj.description}</p>
-        <LoadCsv bind:func_obj={func_obj} bind:form_submitted={form_submitted} proj_obj={proj_obj}/>
+        <LoadCSV bind:func_obj={func_obj} bind:form_submitted={form_submitted} proj_obj={proj_obj}/>
         {/if}
         {/if}
       </div>

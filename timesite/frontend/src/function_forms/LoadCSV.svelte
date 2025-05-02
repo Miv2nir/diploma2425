@@ -48,6 +48,8 @@
 </script>
 
 <div>
+
+    {#key func_obj.params_id}
 <form action="/api/functions/{proj_obj.id}/accept_csv_load/" method="POST" id="csv_load_form" onsubmit={()=>sendForm()}>
     <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
     {#if selected_data_obj}
@@ -66,9 +68,10 @@
         <button type="button" onclick={()=>sendForm()} class="login-button-primary">Save Parameters</button>
         <br>
         <br>
-        {#if selected_data_obj}
+        {#if func_obj.params_id}
         <button type="button" onclick={()=>removeFunction()} class="login-button-delete">Remove Function</button>
         {/if}
     </p>
-</form>
+</form>    
+{/key}
 </div>

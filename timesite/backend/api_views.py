@@ -199,6 +199,7 @@ def get_pipeline(request,id):
         l.append({
             'name':i.func_name,
             'display_name':f_list[i.func_name]().display_name,
+            'description':f_list[i.func_name]().description,
             'params_id':str(i.id)
             })
     return Response(l)
