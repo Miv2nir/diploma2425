@@ -191,3 +191,12 @@ def get_pipeline(request,id):
             'params_id':str(i.id)
             })
     return Response(l)
+
+@api_view()
+def get_params(request,params_id):
+    try:
+        param_obj=models.FunctionParams.objects.get(id=params_id)
+    except models.Project.DoesNotExist:
+        return Response(status=404)
+    serializer=serializers.FunctionParamsSerializer(param_obj)
+    return Response(serializer.data)

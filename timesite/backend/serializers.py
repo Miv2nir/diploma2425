@@ -27,3 +27,8 @@ class UserExtendedSerializer(serializers.Serializer):
     display_name=serializers.CharField(allow_blank=True)
     has_pfp=serializers.BooleanField()
     pfp_path=serializers.CharField()
+
+class FunctionParamsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=models.FunctionParams
+        fields=['id','project','order','func_name','info']

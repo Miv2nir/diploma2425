@@ -19,7 +19,7 @@
         'name':f.name,
         'display_name':f.display_name,
         'description':f.description,
-        'params_id':''
+        'params_id':f.params_id
         }}}><b>{f.display_name}</b></div>
     {/each}
     {/key}

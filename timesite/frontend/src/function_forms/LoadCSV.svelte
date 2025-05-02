@@ -9,6 +9,7 @@
     import Cookies from 'js-cookie';
     import { onMount } from 'svelte';
     let {func_obj=$bindable(),form_submitted=$bindable(false),proj_obj} = $props();
+    console.log(func_obj);
     var datastore_items = $state();
     async function getData(){
         const l = await getRequest('/api/functions/get_csv_files/');
@@ -16,6 +17,16 @@
         console.log(l);
     }
     getData();
+    var selected_data_obj=$state();
+    async function getParams(){
+        const l = await getRequest('/api/params/'+func_obj.params_id+'/get_params/')
+        selected_data_obj=l.info.data_obj;
+        console.log(l.info.data_obj);
+    }
+    if (func_obj.params_id){
+        console.log('Editing!');
+        getParams();
+    }
     const csrftoken = Cookies.get('csrftoken');
     //const form=document.getElementById('csv_load_form');
     //console.log(form);
@@ -36,7 +47,7 @@
     <p>
         <label for="csv_files_selection">Select CSV Dataset:</label>
         <br>
-        <select name="csv_files" class="selector" id="csv_files_selection">
+        <select name="csv_files" value={selected_data_obj} class="selector" id="csv_files_selection">
             {#each datastore_items as d}
             <option class="selector" value="{d.id}">{d.name}</option>
             {/each}
