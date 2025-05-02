@@ -162,7 +162,6 @@ def accept_csv_load(request,id,order=0):
     print(data_obj)
     #handle pipeline saving
     params={
-        ''
         'data_obj':str(data_obj.id),
         'save_as':'df' #temporary definition, should be appointed programmatically so to allow suppliment of additional
     }

@@ -13,7 +13,7 @@
   }
   setFunctionList();
   //allow for selection of functions for the main panel to update
-  let {func_name=$bindable('')} = $props();
+  let {func_obj=$bindable()} = $props();
 
 </script>
 
@@ -21,9 +21,19 @@
   <LeftDouble />
     <h2>Available Functions</h2>
     {#each loaders as f}
-    <div class="project-item center pointer" onclick={() =>{func_name=f.name}}><b>{f.display_name}</b></div>
+    <div class="project-item center pointer" onclick={() =>{func_obj={
+      'name':f.name,
+      'display_name':f.display_name,
+      'description':f.description,
+      'params_id':''
+      }}}><b>{f.display_name}</b></div>
     {/each}
     {#each renderers as f}
-    <div class="project-item center pointer" onclick={() =>{func_name=f.name}}><b>{f.display_name}</b></div>
+    <div class="project-item center pointer" onclick={() =>{func_obj={
+      'name':f.name,
+      'display_name':f.display_name,
+      'description':f.description,
+      'params_id':''
+      }}}><b>{f.display_name}</b></div>
     {/each}
   </div>
