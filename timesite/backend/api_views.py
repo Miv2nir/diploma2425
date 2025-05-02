@@ -174,6 +174,7 @@ def accept_csv_load(request,id,order=0):
             param_obj.info['data_obj']=str(data_obj.id)
             param_obj.save()
         else:
+            print('not updating')
             return Response(403) #clashing with existing object
     except IndexError:
         if updating=='update':
@@ -210,3 +211,19 @@ def get_params(request,params_id):
         return Response(status=404)
     serializer=serializers.FunctionParamsSerializer(param_obj)
     return Response(serializer.data)
+
+@api_view(['POST'])
+def delete_params(request,params_id):
+    #check if exists
+    try:
+        param_obj=models.FunctionParams.objects.get(id=params_id)
+    except models.DoesNotExist:
+        return Response(status=404)
+    #check if authorized
+    print(request.user)
+    if request.user!=param_obj.project.user:
+        return Response(status=403)
+    #finally, perform the deletion
+    param_obj.delete()
+    return Response(201)
+    
