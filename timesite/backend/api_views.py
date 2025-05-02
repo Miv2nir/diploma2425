@@ -147,6 +147,8 @@ def get_datastore_items_csv(request):
 
 @api_view(['POST'])
 def accept_csv_load(request,id,order=0):
+    updating = request.POST.get('update')
+    print(updating)
     #identify project
     try:
         proj_obj = models.Project.objects.get(pk=id)
@@ -167,10 +169,18 @@ def accept_csv_load(request,id,order=0):
     }
     try:
         param_obj=models.FunctionParams.objects.filter(project=proj_obj,order=order)[0]
-        return Response(409) #clashing with existing object
+        if updating=='update':
+            print('updating')
+            param_obj.info['data_obj']=str(data_obj.id)
+            param_obj.save()
+        else:
+            return Response(403) #clashing with existing object
     except IndexError:
-        param_obj=models.FunctionParams(project=proj_obj,order=order,func_name='LoadCSV',info=params)
-        param_obj.save()
+        if updating=='update':
+            return Response(404)
+        else:
+            param_obj=models.FunctionParams(project=proj_obj,order=order,func_name='LoadCSV',info=params)
+            param_obj.save()
     return Response(status=201)
 
 @api_view()

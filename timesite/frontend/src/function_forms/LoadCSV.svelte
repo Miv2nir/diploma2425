@@ -32,7 +32,9 @@
     //console.log(form);
     async function sendForm() {
       console.log('sending form');
-      await fetch(form.action, {method:'post', body: new FormData(form)});
+      await fetch(form.action, {method:'post',
+
+       body: new FormData(form)});
       //discard this component for it has been used
       func_obj=undefined;
       form_submitted=true;
@@ -44,6 +46,9 @@
 <div>
 <form action="/api/functions/{proj_obj.id}/accept_csv_load/" method="POST" id="csv_load_form" onsubmit={()=>sendForm()}>
     <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
+    {#if selected_data_obj}
+    <input type="hidden" name="update" value="true">
+    {/if}
     <p>
         <label for="csv_files_selection">Select CSV Dataset:</label>
         <br>
