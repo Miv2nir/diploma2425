@@ -285,8 +285,14 @@ def invoke_runtime(request,id):
             var_store[var_name_save]=func_obj.execute(var_store[var_name_load])
         elif func_obj.type=='renderer': #only outputs, does not save
             var_name_load=i.info['accept']
-            print(func_obj.execute(var_store[var_name_load]))
+            #print(func_obj.execute(var_store[var_name_load]))
+            try:
+                result_obj=models.RutimeRenderResult.objects.filter(func_params=i)[0]
+            except IndexError:
+                result_obj=models.RutimeRenderResult(func_params=i)
+            result_obj.result=func_obj.execute(var_store[var_name_load])
+            result_obj.save()
             #should go to the frontend but i need to figure out some things
             #log it into the database and let the frontend query it at leizure
-        
+
     return Response(status=200)

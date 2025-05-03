@@ -93,8 +93,10 @@ class FunctionParams(models.Model):
 #    )
 #    status=models.CharField(choic=STATUSES,default='NE')
 
-#class RutimeResult(models.Model):
-#    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+class RuntimeRenderResult(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    func_params=models.ForeignKey(FunctionParams,on_delete=models.CASCADE)
+    result=models.TextField(blank=True)
     
     
     
