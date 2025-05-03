@@ -36,12 +36,12 @@
        body: new FormData(form)});
       //discard this component for it has been used
       func_obj=undefined;
-      form_submitted=true;
+      form_submitted=!form_submitted;
     }
     async function removeFunction(){
         await postRequest('/api/params/'+func_obj.params_id+'/delete_params/',csrftoken);
         func_obj=undefined;
-        form_submitted=true;
+        form_submitted=!form_submitted;
     }
     
 
