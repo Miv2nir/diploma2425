@@ -80,3 +80,22 @@ class FunctionParams(models.Model):
     order=models.IntegerField(default=0)
     func_name=models.CharField(max_length=100)
     info=models.JSONField()
+    
+#class FunctionStatus(models.Model):
+#    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+#    func=models.OneToOneField(FunctionParams)
+#    info=models.JSONField(blank=True)
+#    STATUSES=(
+#        ('NE','Not Executed'),
+#        ('EX','Executing'),
+#        ('OK','Done'),
+#        ('ER','Errored!')
+#    )
+#    status=models.CharField(choic=STATUSES,default='NE')
+
+#class RutimeResult(models.Model):
+#    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    
+    
+    
+

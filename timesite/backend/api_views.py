@@ -259,3 +259,34 @@ def accept_renderer(request,id,order=1):
             param_obj.save()
     return Response(status=201)
     
+@api_view(['POST'])
+def invoke_runtime(request,id):
+    #identify project
+    try:
+        proj_obj = models.Project.objects.get(pk=id)
+    except models.Project.DoesNotExist:
+        return Response(status=404)
+    func_list=models.FunctionParams.objects.filter(project=proj_obj).order_by('order')
+    var_store={}
+    r=registry.Registry()
+    for i in func_list:
+        #runtime
+        #1. figure out the function type. Loaders don't accept values from var_store
+        print(i.func_name,i.info)
+        func_obj=r.get_all()[i.func_name]()
+        print(func_obj)
+        if func_obj.type=='loader': #only saves, does not accept
+            data_obj=models.DataFile.objects.get(id=i.info['data_obj'])
+            var_name_save=i.info['save_as']
+            var_store[var_name_save]=func_obj.execute(data_obj)
+        elif func_obj.type=='processor': #changes loaded data, both saves and accepts
+            var_name_load=i.info['accept']
+            var_name_save=i.info['save_as']
+            var_store[var_name_save]=func_obj.execute(var_store[var_name_load])
+        elif func_obj.type=='renderer': #only outputs, does not save
+            var_name_load=i.info['accept']
+            print(func_obj.execute(var_store[var_name_load]))
+            #should go to the frontend but i need to figure out some things
+            #log it into the database and let the frontend query it at leizure
+        
+    return Response(status=200)

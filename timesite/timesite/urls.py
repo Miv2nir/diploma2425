@@ -58,6 +58,7 @@ urlpatterns = [
     path('api/functions/<uuid:id>/accept_csv_load/',api_views.accept_csv_load),
     path('api/functions/<uuid:id>/accept_renderer/',api_views.accept_renderer),
     path('api/functions/<uuid:id>/get_pipeline/',api_views.get_pipeline),
+    path('api/functions/<uuid:id>/execute/',api_views.invoke_runtime),
     path('api/params/<uuid:params_id>/get_params/',api_views.get_params),
     path('api/params/<uuid:params_id>/delete_params/',api_views.delete_params),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

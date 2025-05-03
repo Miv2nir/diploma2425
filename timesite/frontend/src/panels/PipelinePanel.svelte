@@ -3,12 +3,17 @@
     import UserThumb from "../elements/UserThumb.svelte";
     let {upd_flag=$bindable(false),func_obj=$bindable(),user,proj_obj} = $props();
     import {getRequest, postRequest} from "../lib/APICalls.js";
+    import Cookies from 'js-cookie';
+    const csrftoken = Cookies.get('csrftoken');
     var pipeline_list=$state();
     async function getPipeline() {
         pipeline_list=await getRequest('/api/functions/'+proj_obj.id+'/get_pipeline/');
     }
     getPipeline();
-    
+    async function invokeRuntime(){
+        //the runtime order should already be on the server side at this point
+        await postRequest('/api/functions/'+proj_obj.id+'/execute/',csrftoken);
+    }
 </script>
 <div class="home-container" id="container-side-2">
     <RightDouble />
@@ -23,4 +28,7 @@
         }}}><b>{f.display_name}</b></div>
     {/each}
     {/key}
+    {#if pipeline_list != {}}
+    <button type="button" onclick={invokeRuntime} class="login-button-primary">Run</button>
+    {/if}
     </div>
