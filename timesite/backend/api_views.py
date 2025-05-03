@@ -148,7 +148,7 @@ def get_datastore_items_csv(request):
 @api_view(['POST'])
 def accept_csv_load(request,id,order=0):
     updating = request.POST.get('update')
-    print(updating)
+    print('aaa',updating)
     #identify project
     try:
         proj_obj = models.Project.objects.get(pk=id)
@@ -169,7 +169,7 @@ def accept_csv_load(request,id,order=0):
     }
     try:
         param_obj=models.FunctionParams.objects.filter(project=proj_obj,order=order)[0]
-        if updating=='update':
+        if updating=='true':
             print('updating')
             param_obj.info['data_obj']=str(data_obj.id)
             param_obj.save()
@@ -227,4 +227,35 @@ def delete_params(request,params_id):
     #finally, perform the deletion
     param_obj.delete()
     return Response(201)
+
+@api_view(['POST'])  
+def accept_renderer(request,id,order=1):
+    updating = request.POST.get('update')
+    print('aaaa',updating)
+    #identify project
+    try:
+        proj_obj = models.Project.objects.get(pk=id)
+    except models.Project.DoesNotExist:
+        return Response(status=404)
+    #verify if permitted to edit
+    if request.user != proj_obj.user:
+        return Response(status=403)
+    params={
+        'accept':'df' #temporary definition, should be appointed programmatically so to allow suppliment of additional
+    }
+    try:
+        param_obj=models.FunctionParams.objects.filter(project=proj_obj,order=order)[0]
+        if updating=='true':
+            print('updating')
+            param_obj.save()
+        else:
+            print('not updating')
+            return Response(403) #clashing with existing object
+    except IndexError:
+        if updating=='update':
+            return Response(404)
+        else:
+            param_obj=models.FunctionParams(project=proj_obj,order=order,func_name='RenderDF',info=params)
+            param_obj.save()
+    return Response(status=201)
     

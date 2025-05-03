@@ -52,7 +52,7 @@
     {#key func_obj.params_id}
 <form action="/api/functions/{proj_obj.id}/accept_csv_load/" method="POST" id="csv_load_form" onsubmit={()=>sendForm()}>
     <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
-    {#if selected_data_obj}
+    {#if func_obj.params_id}
     <input type="hidden" name="update" value="true">
     {/if}
     <p>

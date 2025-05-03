@@ -3,6 +3,7 @@
     import Right from "../elements/panel_buttons/Right.svelte";
     import ProjectThumb from "../elements/ProjectThumb.svelte";
     import LoadCSV from "../function_forms/LoadCSV.svelte";
+    import RenderDf from "../function_forms/RenderDF.svelte";
     let {user,proj_obj,func_obj=$bindable(),form_submitted=$bindable(false)} = $props();
     const special_unit_mark=true;
 </script>
@@ -14,9 +15,12 @@
         <h1>Select a function from the left panel...</h1>
         {#if func_obj}
         <div class="project-item center"><b>{func_obj.display_name}</b></div>
-        {#if func_obj.name=='LoadCSV'}
         <p>{func_obj.description}</p>
+        {#if func_obj.name=='LoadCSV'}
         <LoadCSV bind:func_obj={func_obj} bind:form_submitted={form_submitted} proj_obj={proj_obj}/>
+        {/if}
+        {#if func_obj.name=='RenderDF'}
+        <RenderDf bind:func_obj={func_obj} bind:form_submitted={form_submitted} proj_obj={proj_obj}/>
         {/if}
         {/if}
       </div>
