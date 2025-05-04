@@ -287,9 +287,9 @@ def invoke_runtime(request,id):
             var_name_load=i.info['accept']
             #print(func_obj.execute(var_store[var_name_load]))
             try:
-                result_obj=models.RutimeRenderResult.objects.filter(func_params=i)[0]
+                result_obj=models.RuntimeRenderResult.objects.filter(func_params=i)[0]
             except IndexError:
-                result_obj=models.RutimeRenderResult(func_params=i)
+                result_obj=models.RuntimeRenderResult(func_params=i)
             result_obj.result=func_obj.execute(var_store[var_name_load])
             result_obj.save()
             #should go to the frontend but i need to figure out some things
