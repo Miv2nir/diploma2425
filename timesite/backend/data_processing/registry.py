@@ -6,7 +6,8 @@ import json
 
 
 class Registry:
-    test='hi'
+    #rewrite this to have only one dictionary, multiple dicts overcomplicate things
+    #make sure that the function type is stored within the function object itself
     def __init__(self):
         self.loaders={
             'LoadCSV':LoadCSV

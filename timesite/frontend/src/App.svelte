@@ -56,6 +56,7 @@
   //for the matter of selecting functions
   let func_obj= $state();
   let form_submitted=$state(false);
+  let runtime_invoked=$state(false);
 </script>
 
 {#if user_logged_in && project_retrieved}
@@ -63,9 +64,16 @@
     {#key form_submitted}
     <FunctionListPanel bind:func_obj={func_obj} />
     {/key}
-    <MainPanel user={user} proj_obj={proj_obj} bind:func_obj={func_obj} bind:form_submitted={form_submitted}/>
+    <MainPanel user={user}
+     proj_obj={proj_obj}
+      bind:func_obj={func_obj}
+       bind:form_submitted={form_submitted}
+       bind:runtime_invoked={runtime_invoked}/>
     {#key form_submitted}
-    <PipelinePanel bind:upd_flag={upd_flag} bind:func_obj={func_obj} user={user} proj_obj={proj_obj} />
+    <PipelinePanel bind:upd_flag={upd_flag}
+     bind:func_obj={func_obj}
+      proj_obj={proj_obj} 
+      bind:runtime_invoked={runtime_invoked}/>
     {/key}
   </span>
   <script src="/backend/static/three_panel_animator.js"></script>

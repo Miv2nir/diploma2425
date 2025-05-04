@@ -294,5 +294,32 @@ def invoke_runtime(request,id):
             result_obj.save()
             #should go to the frontend but i need to figure out some things
             #log it into the database and let the frontend query it at leizure
-
     return Response(status=200)
+
+@api_view()
+def get_results(request,id):
+    #identify project
+    try:
+        proj_obj = models.Project.objects.get(pk=id)
+    except models.Project.DoesNotExist:
+        return Response(status=404)
+    func_list=models.FunctionParams.objects.filter(project=proj_obj).order_by('order')
+    #seek the result objects
+    #those are only present on renderer functions
+    response_list={}
+    r=registry.Registry()
+    r_list=r.get_all()
+    for func_params in func_list: #TODO: optimize with counting the number of renderers
+        func_obj=r_list[func_params.func_name]() #dont forget to initialize
+        if func_obj.type=='renderer':
+            try:
+                result_obj=models.RuntimeRenderResult.objects.filter(func_params=func_params)[0]
+                response_list[func_params.order]={
+                    'name':func_params.func_name,
+                    'display_name':func_obj.display_name,
+                    'resulting_html':result_obj.result
+                }
+            except IndexError:
+                #object not created yet, skipping
+                pass
+    return Response(response_list)

@@ -2,9 +2,14 @@
     import Left from "../elements/panel_buttons/Left.svelte";
     import Right from "../elements/panel_buttons/Right.svelte";
     import ProjectThumb from "../elements/ProjectThumb.svelte";
+    import ServerSideResultRender from "../elements/ServerSideResultRender.svelte";
     import LoadCSV from "../function_forms/LoadCSV.svelte";
     import RenderDf from "../function_forms/RenderDF.svelte";
-    let {user,proj_obj,func_obj=$bindable(),form_submitted=$bindable(false)} = $props();
+    let {user,
+      proj_obj,
+      func_obj=$bindable(),
+      form_submitted=$bindable(false),
+      runtime_invoked=$bindable(false)} = $props();
     const special_unit_mark=true;
 </script>
 <div style="display:flex; flex-direction:column; justify-content: space-around; height:90.3vh;" id='container-main-spacer'>
@@ -12,6 +17,10 @@
       <Left />
       <Right />
       <div class="underlying-container">
+      {#if runtime_invoked}
+      <ServerSideResultRender bind:runtime_invoked={runtime_invoked} 
+      proj_obj={proj_obj}/>
+      {:else}
         <h1>Select a function from the left panel...</h1>
         {#if func_obj}
         <div class="project-item center"><b>{func_obj.display_name}</b></div>
@@ -23,7 +32,8 @@
         <RenderDf bind:func_obj={func_obj} bind:form_submitted={form_submitted} proj_obj={proj_obj}/>
         {/if}
         {/if}
-      </div>
+        {/if}
+        </div>
     </div>
     <ProjectThumb user={user} project={proj_obj} is_special={special_unit_mark}/>
   </div>

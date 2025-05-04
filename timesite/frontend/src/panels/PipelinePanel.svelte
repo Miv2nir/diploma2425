@@ -1,7 +1,10 @@
 <script>
     import RightDouble from "../elements/panel_buttons/RightDouble.svelte";
     import UserThumb from "../elements/UserThumb.svelte";
-    let {upd_flag=$bindable(false),func_obj=$bindable(),user,proj_obj} = $props();
+    let {upd_flag=$bindable(false),
+        func_obj=$bindable(),
+        proj_obj,
+        runtime_invoked=$bindable(false)} = $props();
     import {getRequest, postRequest} from "../lib/APICalls.js";
     import Cookies from 'js-cookie';
     const csrftoken = Cookies.get('csrftoken');
@@ -13,6 +16,7 @@
     async function invokeRuntime(){
         //the runtime order should already be on the server side at this point
         await postRequest('/api/functions/'+proj_obj.id+'/execute/',csrftoken);
+        runtime_invoked=true;
     }
 </script>
 <div class="home-container" id="container-side-2">
