@@ -253,7 +253,7 @@ def accept_preprocessor(request,id,order):
     
 
 @api_view(['POST'])  
-def accept_renderer(request,id,order=1):
+def accept_renderer(request,id):
     updating = request.POST.get('update')
     print('aaaa',updating)
     #identify project
@@ -268,6 +268,13 @@ def accept_renderer(request,id,order=1):
         'accept':'df' #temporary definition, should be appointed programmatically so to allow suppliment of additional
     }
     #determine the order
+    
+    order=request.POST.get('order')
+    if order==None: #new object
+        order=len(models.FunctionParams.objects.filter(project=proj_obj))
+    else: #updating
+        pass
+    print('order:',order)
     #order=len(models.FunctionParams.objects.filter(project=proj_obj))
     try:
         param_obj=models.FunctionParams.objects.filter(project=proj_obj,order=order)[0]
