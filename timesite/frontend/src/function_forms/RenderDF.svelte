@@ -24,11 +24,17 @@
         func_obj=undefined;
         form_submitted=!form_submitted;
     }
-    
+    console.log(func_obj);
 </script>
 
 <div>
-  <p>Accepts: df</p>
+  {#if func_obj.accepts.length!=0}
+  <p>Accepts: {func_obj.accepts}</p>
+  {/if}
+  {#if func_obj.produces.length!=0}
+  <p>Produces: {func_obj.produces}</p>
+  {/if}
+  <p>Order: {func_obj.order}</p>
     <form action="/api/functions/{proj_obj.id}/accept_renderer/" method="POST" id="renderer_form" onsubmit={()=>sendForm()}>
         <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
         <button type="button" class="login-button-primary" onclick={()=>sendForm()}>Set Renderer</button>

@@ -196,11 +196,14 @@ def get_pipeline(request,id):
     lookup=models.FunctionParams.objects.filter(project=proj_obj).order_by('order')
     l=[]
     for i in lookup:
+        func_obj=f_list[i.func_name]()
         l.append({
             'name':i.func_name,
-            'display_name':f_list[i.func_name]().display_name,
-            'description':f_list[i.func_name]().description,
-            'params_id':str(i.id)
+            'display_name':func_obj.display_name,
+            'description':func_obj.description,
+            'params_id':str(i.id),
+            'accepts':func_obj.accepts,
+            'produces':func_obj.returns
             })
     return Response(l)
 

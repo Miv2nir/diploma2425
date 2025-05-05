@@ -29,8 +29,12 @@
         'display_name':f.display_name,
         'description':f.description,
         'params_id':f.params_id,
-        'order':i
-        }}}><b>{f.display_name}</b></div>
+        'order':i,
+        'accepts':f.accepts,
+        'produces':f.produces
+        }}}><b>{f.display_name}</b>
+
+        </div>
     {/each}
     {/key}
     {#if pipeline_list != {}}

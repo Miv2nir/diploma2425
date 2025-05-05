@@ -14,7 +14,7 @@ class LoadCSV:
         self.description='Loads a CSV file from the Datastore'
         self.type='loader'
         
-        self.accepts=['.csv'] #from models.DataFile
+        self.accepts=[] #from models.DataFile
         self.returns=['df']
     def execute(self,data_obj:models.DataFile):
         return pd.read_csv(data_obj.file.path)
@@ -27,7 +27,7 @@ class RenderDF:
         self.type='renderer'
         
         self.accepts=['df']
-        self.returns=['html']
+        self.returns=[]
     def execute(self,df:pd.DataFrame):
         return df.to_html()
 '''

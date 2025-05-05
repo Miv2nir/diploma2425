@@ -48,7 +48,13 @@
 </script>
 
 <div>
-<p>Produces: df</p>
+    {#if func_obj.accepts.length!=0}
+    <p>Accepts: {func_obj.accepts}</p>
+    {/if}
+    {#if func_obj.produces.length!=0}
+    <p>Produces: {func_obj.produces}</p>
+    {/if}
+<p>Order: {func_obj.order}</p>
     {#key func_obj.params_id}
 <form action="/api/functions/{proj_obj.id}/accept_csv_load/" method="POST" id="csv_load_form" onsubmit={()=>sendForm()}>
     <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
