@@ -43,7 +43,16 @@
         func_obj=undefined;
         form_submitted=!form_submitted;
     }
-    
+    async function shiftDown(){
+        await postRequest('/api/functions/'+func_obj.params_id+'/move_function_up/',csrftoken); //they're ordered in reverse, oops
+        form_submitted=!form_submitted;
+        func_obj.order++;
+    }
+    async function shiftUp(){
+        await postRequest('/api/functions/'+func_obj.params_id+'/move_function_down/',csrftoken); //they're ordered in reverse, oops
+        form_submitted=!form_submitted;
+        func_obj.order--;
+    }
 
 </script>
 
@@ -54,7 +63,13 @@
     {#if func_obj.produces.length!=0}
     <p>Produces: {func_obj.produces}</p>
     {/if}
-<p>Order: {func_obj.order}</p>
+    <div style="display: flex; justify-content:center;">
+        <img src="/backend/static/move_down_up_button.png" class="function-shift-button up" alt="Move Function Up"
+        onclick={shiftUp}>
+        <p style="margin-left:2rem; margin-right:2rem;">Order: {func_obj.order}</p>
+        <img src="/backend/static/move_down_up_button.png" class="function-shift-button" alt="Move Function Down"
+        onclick={shiftDown}>
+    </div>
     {#key func_obj.params_id}
 <form action="/api/functions/{proj_obj.id}/accept_csv_load/" method="POST" id="csv_load_form" onsubmit={()=>sendForm()}>
     <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
