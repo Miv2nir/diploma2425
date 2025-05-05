@@ -25,6 +25,7 @@
 </script>
 
 <div>
+  <p>Accepts: df</p>
     <form action="/api/functions/{proj_obj.id}/accept_renderer/" method="POST" id="renderer_form" onsubmit={()=>sendForm()}>
         <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
         <button type="button" class="login-button-primary" onclick={()=>sendForm()}>Set Renderer</button>

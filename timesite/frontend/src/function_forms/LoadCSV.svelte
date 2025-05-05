@@ -9,7 +9,7 @@
     import Cookies from 'js-cookie';
     import { onMount } from 'svelte';
     let {func_obj=$bindable(),form_submitted=$bindable(false),proj_obj} = $props();
-    console.log(func_obj);
+    //console.log(func_obj);
     var datastore_items = $state();
     async function getData(){
         const l = await getRequest('/api/functions/get_csv_files/');
@@ -48,7 +48,7 @@
 </script>
 
 <div>
-
+<p>Produces: df</p>
     {#key func_obj.params_id}
 <form action="/api/functions/{proj_obj.id}/accept_csv_load/" method="POST" id="csv_load_form" onsubmit={()=>sendForm()}>
     <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
