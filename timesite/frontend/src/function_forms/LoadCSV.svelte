@@ -79,6 +79,9 @@
         <br>
         <button type="button" onclick={()=>sendForm()} class="login-button-primary">Save Parameters</button>
         <br>
+        {#if func_obj.params_id}
+        <input type="hidden" name="order" value={func_obj.order}>
+        {/if}
         <br>
         {#if func_obj.params_id}
         <button type="button" onclick={()=>removeFunction()} class="login-button-delete">Remove Function</button>

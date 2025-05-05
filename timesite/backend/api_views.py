@@ -146,7 +146,7 @@ def get_datastore_items_csv(request):
     return Response(l)
 
 @api_view(['POST'])
-def accept_csv_load(request,id,order=0):
+def accept_csv_load(request,id):
     updating = request.POST.get('update')
     print('aaa',updating)
     #identify project
@@ -167,8 +167,17 @@ def accept_csv_load(request,id,order=0):
         'data_obj':str(data_obj.id),
         'save_as':'df' #temporary definition, should be appointed programmatically so to allow suppliment of additional
     }
+    #get order from the frontend
+    order=request.POST.get('order')
+    print('order:',order)
+    if order==None: #new object
+        order=len(models.FunctionParams.objects.filter(project=proj_obj))
+    else: #updating
+        pass
+    print('order:',order)
     try:
         param_obj=models.FunctionParams.objects.filter(project=proj_obj,order=order)[0]
+        print('param_obj',param_obj)
         if updating=='true':
             print('updating')
             param_obj.info['data_obj']=str(data_obj.id)
@@ -270,6 +279,7 @@ def accept_renderer(request,id):
     #determine the order
     
     order=request.POST.get('order')
+    print('order:',order)
     if order==None: #new object
         order=len(models.FunctionParams.objects.filter(project=proj_obj))
     else: #updating
@@ -279,15 +289,16 @@ def accept_renderer(request,id):
     try:
         param_obj=models.FunctionParams.objects.filter(project=proj_obj,order=order)[0]
         if updating=='true':
-            print('updating')
+            print('existing object, updating')
             param_obj.save()
         else:
-            print('not updating')
+            print('existing object, not updating')
             return Response(403) #clashing with existing object
     except IndexError:
         if updating=='update':
             return Response(404)
         else:
+            print('new object, creating')
             param_obj=models.FunctionParams(project=proj_obj,order=order,func_name='RenderDF',info=params)
             param_obj.save()
     return Response(status=201)
