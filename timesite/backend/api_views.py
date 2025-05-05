@@ -267,6 +267,8 @@ def accept_renderer(request,id,order=1):
     params={
         'accept':'df' #temporary definition, should be appointed programmatically so to allow suppliment of additional
     }
+    #determine the order
+    #order=len(models.FunctionParams.objects.filter(project=proj_obj))
     try:
         param_obj=models.FunctionParams.objects.filter(project=proj_obj,order=order)[0]
         if updating=='true':

@@ -44,16 +44,6 @@
         func_obj=undefined;
         form_submitted=!form_submitted;
     }
-    async function shiftDown(){
-        await postRequest('/api/functions/'+func_obj.params_id+'/move_function_up/',csrftoken); //they're ordered in reverse, oops
-        form_submitted=!form_submitted;
-        func_obj.order++;
-    }
-    async function shiftUp(){
-        await postRequest('/api/functions/'+func_obj.params_id+'/move_function_down/',csrftoken); //they're ordered in reverse, oops
-        form_submitted=!form_submitted;
-        func_obj.order--;
-    }
 
 </script>
 

@@ -3,6 +3,7 @@
     import { onMount } from 'svelte';
     import {getRequest, postRequest} from "../lib/APICalls.js";
     import Cookies from 'js-cookie';
+    import OrderButtons from "../elements/OrderButtons.svelte";
     const csrftoken = Cookies.get('csrftoken');
     var form=undefined;
     onMount(()=>{
@@ -35,7 +36,10 @@
   {#if func_obj.produces.length!=0}
   <p>Produces: {func_obj.produces}</p>
   {/if}
-  <p>Order: {func_obj.order}</p>
+  <OrderButtons bind:func_obj={func_obj}
+  bind:form_submitted={form_submitted}
+  bind:pipeline_length={pipeline_length}/>
+  <br>
   {/if}
     <form action="/api/functions/{proj_obj.id}/accept_renderer/" method="POST" id="renderer_form" onsubmit={()=>sendForm()}>
         <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
