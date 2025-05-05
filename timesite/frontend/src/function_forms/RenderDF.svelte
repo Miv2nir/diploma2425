@@ -28,6 +28,7 @@
 </script>
 
 <div>
+  {#if func_obj.params_id}
   {#if func_obj.accepts.length!=0}
   <p>Accepts: {func_obj.accepts}</p>
   {/if}
@@ -35,6 +36,7 @@
   <p>Produces: {func_obj.produces}</p>
   {/if}
   <p>Order: {func_obj.order}</p>
+  {/if}
     <form action="/api/functions/{proj_obj.id}/accept_renderer/" method="POST" id="renderer_form" onsubmit={()=>sendForm()}>
         <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
         <button type="button" class="login-button-primary" onclick={()=>sendForm()}>Set Renderer</button>

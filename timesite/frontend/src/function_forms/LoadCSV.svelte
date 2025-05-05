@@ -8,6 +8,7 @@
     import {getRequest, postRequest} from "../lib/APICalls.js";
     import Cookies from 'js-cookie';
     import { onMount } from 'svelte';
+    import OrderButtons from "../elements/OrderButtons.svelte";
     let {func_obj=$bindable(),form_submitted=$bindable(false),proj_obj} = $props();
     //console.log(func_obj);
     var datastore_items = $state();
@@ -57,19 +58,18 @@
 </script>
 
 <div>
+    {#if func_obj.params_id}
     {#if func_obj.accepts.length!=0}
     <p>Accepts: {func_obj.accepts}</p>
     {/if}
     {#if func_obj.produces.length!=0}
     <p>Produces: {func_obj.produces}</p>
     {/if}
-    <div style="display: flex; justify-content:center;">
-        <img src="/backend/static/move_down_up_button.png" class="function-shift-button up" alt="Move Function Up"
-        onclick={shiftUp}>
-        <p style="margin-left:2rem; margin-right:2rem;">Order: {func_obj.order}</p>
-        <img src="/backend/static/move_down_up_button.png" class="function-shift-button" alt="Move Function Down"
-        onclick={shiftDown}>
-    </div>
+
+    <OrderButtons bind:func_obj={func_obj}
+    bind:form_submitted={form_submitted}/>
+    {/if}
+
     {#key func_obj.params_id}
 <form action="/api/functions/{proj_obj.id}/accept_csv_load/" method="POST" id="csv_load_form" onsubmit={()=>sendForm()}>
     <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
