@@ -3,7 +3,7 @@
     var form=undefined;
     onMount(()=>{
       form=document.getElementById('csv_load_form');
-      console.log(form);
+      //console.log(form);
     })
     import {getRequest, postRequest} from "../lib/APICalls.js";
     import Cookies from 'js-cookie';
@@ -14,17 +14,17 @@
     async function getData(){
         const l = await getRequest('/api/functions/get_csv_files/');
         datastore_items=l;
-        console.log(l);
+        //console.log(l);
     }
     getData();
     var selected_data_obj=$state();
     async function getParams(){
         const l = await getRequest('/api/params/'+func_obj.params_id+'/get_params/');
         selected_data_obj=l.info.data_obj;
-        console.log(l.info.data_obj);
+        //console.log(l.info.data_obj);
     }
     if (func_obj.params_id){
-        console.log('Editing!');
+        //console.log('Editing!');
         getParams();
     }
     const csrftoken = Cookies.get('csrftoken');

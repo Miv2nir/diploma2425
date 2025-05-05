@@ -7,8 +7,10 @@
     var form=undefined;
     onMount(()=>{
       form=document.getElementById('renderer_form');
-      console.log(form);
+      //console.log(form);
     })
+    //get order
+    var order = $state(func_obj.order+1);
     async function sendForm() {
       console.log('sending form');
       await fetch(form.action, {method:'post',
@@ -22,6 +24,7 @@
         func_obj=undefined;
         form_submitted=!form_submitted;
     }
+    
 </script>
 
 <div>

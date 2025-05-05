@@ -23,12 +23,13 @@
     <RightDouble />
     <h2>Pipeline</h2>
     {#key upd_flag}
-    {#each pipeline_list as f }
+    {#each pipeline_list as f,i }
     <div class="project-item center pointer" onclick={() =>{func_obj={
         'name':f.name,
         'display_name':f.display_name,
         'description':f.description,
-        'params_id':f.params_id
+        'params_id':f.params_id,
+        'order':i
         }}}><b>{f.display_name}</b></div>
     {/each}
     {/key}
