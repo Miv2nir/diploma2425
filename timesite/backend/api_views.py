@@ -366,3 +366,48 @@ def get_results(request,id):
                 #object not created yet, skipping
                 pass
     return Response(response_list)
+
+#they just want your hands moving up & down :D
+
+@api_view(['POST'])
+def move_function_up(request,func_id):
+    #identify project
+    params_obj=models.FunctionParams.objects.get(id=func_id)
+    proj_obj=params_obj.project
+    #verify if permitted to edit
+    if request.user != proj_obj.user:
+        return Response(status=403)
+    #get the target function
+    params_obj=models.FunctionParams.objects.get(id=func_id)
+    try:
+        next_params_obj=models.FunctionParams.objects.filter(project=proj_obj,order=params_obj.order+1)[0]
+    except IndexError:
+        #no superseeding function found
+        return Response(status=200)
+    next_params_obj.order-=1
+    next_params_obj.save()
+    params_obj.order+=1
+    params_obj.save()
+    return Response(status=201)
+    
+
+@api_view(['POST'])
+def move_function_down(request,func_id):
+    #identify project
+    params_obj=models.FunctionParams.objects.get(id=func_id)
+    proj_obj=params_obj.project
+    #verify if permitted to edit
+    if request.user != proj_obj.user:
+        return Response(status=403)
+    #get the target function
+    try:
+        previous_params_obj=models.FunctionParams.objects.filter(project=proj_obj,order=params_obj.order-1)[0]
+    except IndexError:
+        #no superseeding function found
+        return Response(status=200)
+    previous_params_obj.order+=1
+    previous_params_obj.save()
+    params_obj.order-=1
+    params_obj.save()
+    return Response(status=201)
+    
