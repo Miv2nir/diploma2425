@@ -81,17 +81,17 @@ class FunctionParams(models.Model):
     func_name=models.CharField(max_length=100)
     info=models.JSONField()
     
-#class FunctionStatus(models.Model):
-#    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-#    func=models.OneToOneField(FunctionParams)
-#    info=models.JSONField(blank=True)
-#    STATUSES=(
-#        ('NE','Not Executed'),
-#        ('EX','Executing'),
-#        ('OK','Done'),
-#        ('ER','Errored!')
-#    )
-#    status=models.CharField(choic=STATUSES,default='NE')
+class FunctionStatus(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    func=models.OneToOneField(FunctionParams,on_delete=models.CASCADE)
+    info=models.JSONField(blank=True,default=dict)
+    STATUSES=(
+        ('NE','Not Executed'),
+        ('EX','Executing'),
+        ('OK','Done'),
+        ('ER','Errored!')
+    )
+    status=models.CharField(choices=STATUSES,default='NE')
 
 class RuntimeRenderResult(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

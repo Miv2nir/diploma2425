@@ -275,14 +275,28 @@ def invoke_runtime(request,id):
         print(i.func_name,i.info)
         func_obj=r.get_all()[i.func_name]()
         print(func_obj)
+        try:
+            func_status=models.FunctionStatus.objects.filter(func=i)[0]
+        except IndexError:
+            func_status=models.FunctionStatus(func=i)
+        #mark as being executed
+        func_status.status='EX'
+        func_status.save()
         if func_obj.type=='loader': #only saves, does not accept
             data_obj=models.DataFile.objects.get(id=i.info['data_obj'])
             var_name_save=i.info['save_as']
             var_store[var_name_save]=func_obj.execute(data_obj)
+            func_status.info={
+                'saved_as':var_name_save
+            }
         elif func_obj.type=='processor': #changes loaded data, both saves and accepts
             var_name_load=i.info['accept']
             var_name_save=i.info['save_as']
             var_store[var_name_save]=func_obj.execute(var_store[var_name_load])
+            func_status.info={
+                'loaded':var_name_load,
+                'saved_as':var_name_save
+            }
         elif func_obj.type=='renderer': #only outputs, does not save
             var_name_load=i.info['accept']
             #print(func_obj.execute(var_store[var_name_load]))
@@ -292,8 +306,13 @@ def invoke_runtime(request,id):
                 result_obj=models.RuntimeRenderResult(func_params=i)
             result_obj.result=func_obj.execute(var_store[var_name_load])
             result_obj.save()
+            func_status.info={
+                'loaded':var_name_load
+            }
             #should go to the frontend but i need to figure out some things
             #log it into the database and let the frontend query it at leizure
+        func_status.status='OK'
+        func_status.save()
     return Response(status=200)
 
 @api_view()
