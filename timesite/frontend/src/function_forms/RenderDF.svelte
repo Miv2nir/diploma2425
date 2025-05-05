@@ -1,5 +1,5 @@
 <script>
-    let {func_obj=$bindable(),form_submitted=$bindable(false),proj_obj} = $props();
+    let {func_obj=$bindable(),form_submitted=$bindable(false),proj_obj,pipeline_length=$bindable(0)} = $props();
     import { onMount } from 'svelte';
     import {getRequest, postRequest} from "../lib/APICalls.js";
     import Cookies from 'js-cookie';

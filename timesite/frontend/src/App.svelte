@@ -19,7 +19,7 @@
   var proj_uuid=$state('');
   var proj_obj=$state(null);
   var upd_flag=$state(false);
-  
+  var pipeline_length=$state(0);
 
   async function pageInit() {
     user = await getRequest("/api/user/data/");
@@ -68,12 +68,14 @@
      proj_obj={proj_obj}
       bind:func_obj={func_obj}
        bind:form_submitted={form_submitted}
-       bind:runtime_invoked={runtime_invoked}/>
+       bind:runtime_invoked={runtime_invoked}
+       bind:pipeline_length={pipeline_length}/>
     {#key form_submitted}
     <PipelinePanel bind:upd_flag={upd_flag}
      bind:func_obj={func_obj}
       proj_obj={proj_obj} 
-      bind:runtime_invoked={runtime_invoked}/>
+      bind:runtime_invoked={runtime_invoked}
+      bind:pipeline_length={pipeline_length}/>
     {/key}
   </span>
   <script src="/backend/static/three_panel_animator.js"></script>

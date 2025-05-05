@@ -4,20 +4,30 @@
     let {upd_flag=$bindable(false),
         func_obj=$bindable(),
         proj_obj,
-        runtime_invoked=$bindable(false)} = $props();
+        runtime_invoked=$bindable(false),
+        pipeline_length=$bindable(0)} = $props();
     import {getRequest, postRequest} from "../lib/APICalls.js";
     import Cookies from 'js-cookie';
+    import {writable} from 'svelte/store';
     const csrftoken = Cookies.get('csrftoken');
     var pipeline_list=$state();
+    //var pipeline_length=writable(0);
+    //var pipeline_length=$state();
     async function getPipeline() {
         pipeline_list=await getRequest('/api/functions/'+proj_obj.id+'/get_pipeline/');
+        //console.log(pipeline_list);
+        //pipeline_length.set(pipeline_list.length);
+        pipeline_length=pipeline_list.length;
     }
+
+
     getPipeline();
     async function invokeRuntime(){
         //the runtime order should already be on the server side at this point
         await postRequest('/api/functions/'+proj_obj.id+'/execute/',csrftoken);
         runtime_invoked=true;
     }
+
 </script>
 <div class="home-container" id="container-side-2">
     <RightDouble />

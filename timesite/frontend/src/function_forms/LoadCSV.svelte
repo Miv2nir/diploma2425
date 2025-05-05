@@ -9,7 +9,7 @@
     import Cookies from 'js-cookie';
     import { onMount } from 'svelte';
     import OrderButtons from "../elements/OrderButtons.svelte";
-    let {func_obj=$bindable(),form_submitted=$bindable(false),proj_obj} = $props();
+    let {func_obj=$bindable(),form_submitted=$bindable(false),proj_obj,pipeline_length=$bindable(0)} = $props();
     //console.log(func_obj);
     var datastore_items = $state();
     async function getData(){
@@ -67,7 +67,8 @@
     {/if}
 
     <OrderButtons bind:func_obj={func_obj}
-    bind:form_submitted={form_submitted}/>
+    bind:form_submitted={form_submitted}
+    bind:pipeline_length={pipeline_length}/>
     {/if}
 
     {#key func_obj.params_id}

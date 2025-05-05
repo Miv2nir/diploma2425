@@ -9,7 +9,8 @@
       proj_obj,
       func_obj=$bindable(),
       form_submitted=$bindable(false),
-      runtime_invoked=$bindable(false)} = $props();
+      runtime_invoked=$bindable(false),
+      pipeline_length=$bindable(0)} = $props();
     const special_unit_mark=true;
 </script>
 <div style="display:flex; flex-direction:column; justify-content: space-around; height:90.3vh;" id='container-main-spacer'>
@@ -26,10 +27,16 @@
         <div class="project-item center"><b>{func_obj.display_name}</b></div>
         <p>{func_obj.description}</p>
         {#if func_obj.name=='LoadCSV'}
-        <LoadCSV bind:func_obj={func_obj} bind:form_submitted={form_submitted} proj_obj={proj_obj}/>
+        <LoadCSV bind:func_obj={func_obj}
+         bind:form_submitted={form_submitted}
+          proj_obj={proj_obj}
+          bind:pipeline_length={pipeline_length}/>
         {/if}
         {#if func_obj.name=='RenderDF'}
-        <RenderDf bind:func_obj={func_obj} bind:form_submitted={form_submitted} proj_obj={proj_obj}/>
+        <RenderDf bind:func_obj={func_obj}
+         bind:form_submitted={form_submitted}
+          proj_obj={proj_obj}
+          bind:pipeline_length={pipeline_length}/>
         {/if}
         {/if}
         {/if}
