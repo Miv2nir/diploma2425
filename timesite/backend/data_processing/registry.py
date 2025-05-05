@@ -15,7 +15,9 @@ class Registry:
         self.renderers={
             'RenderDF':RenderDF
         }
-        self.processors={}
+        self.processors={
+            'DropColumns':DropColumns
+        }
         self.splitters={}
         self.models={}
     def get_all(self):

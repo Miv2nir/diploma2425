@@ -18,7 +18,19 @@ class LoadCSV:
         self.returns=['df']
     def execute(self,data_obj:models.DataFile):
         return pd.read_csv(data_obj.file.path)
-    
+
+class DropColumns:
+    def __init__(self):
+        self.initial=False
+        self.display_name='Drop Columns'
+        self.description='Drops columns from a dataframe by their names'
+        self.type='processor'
+        
+        self.accepts=['df']
+        self.returns=['df']
+    def execute(self,df:pd.DataFrame,columns:list):
+        return df.drop(columns=columns)
+
 class RenderDF:
     def __init__(self):
         self.initial=False

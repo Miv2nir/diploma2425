@@ -231,6 +231,27 @@ def delete_params(request,params_id):
     param_obj.delete()
     return Response(201)
 
+@api_view(['POST'])
+def accept_preprocessor(request,id,order):
+    updating = request.POST.get('update')
+    #identify project
+    try:
+        proj_obj = models.Project.objects.get(pk=id)
+    except models.Project.DoesNotExist:
+        return Response(status=404)
+    #verify if permitted to edit
+    if request.user != proj_obj.user:
+        return Response(status=403)
+    params={
+        'accept':'df',
+        'produce':'df',
+        'in_place':True
+    }
+    #try:
+    #    param_obj=models.FunctionParams.objects.filter(project=proj_obj,order=order)[0]
+    #need to do order setting first 
+    
+
 @api_view(['POST'])  
 def accept_renderer(request,id,order=1):
     updating = request.POST.get('update')
