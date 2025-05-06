@@ -23,7 +23,7 @@
 
   async function pageInit() {
     user = await getRequest("/api/user/data/");
-    console.log($state.snapshot(user));
+    //console.log($state.snapshot(user));
     if (user.pk == null) {
       //user not logged in. redirect to the login page
       window.location.href = "/login?next=/edit/";
@@ -48,7 +48,7 @@
     if (proj_obj!=null) {
       project_retrieved=true;
     }
-    console.log($state.snapshot(proj_obj));
+    //console.log($state.snapshot(proj_obj));
     //assuming things went successful, update the last_edited value of the project
     await postRequest('/api/project/'+proj_uuid+'/upd_date/',csrftoken);
   }

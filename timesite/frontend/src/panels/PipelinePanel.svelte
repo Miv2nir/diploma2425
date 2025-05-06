@@ -11,23 +11,31 @@
     import {writable} from 'svelte/store';
     const csrftoken = Cookies.get('csrftoken');
     var pipeline_list=$state();
+    var renderer_present=$state(false);
     //var pipeline_length=writable(0);
     //var pipeline_length=$state();
     async function getPipeline() {
         pipeline_list=await getRequest('/api/functions/'+proj_obj.id+'/get_pipeline/');
         //console.log(pipeline_list);
+        //console.log(pipeline_list);
         //pipeline_length.set(pipeline_list.length);
         pipeline_length=pipeline_list.length;
+        for (var i in pipeline_list){
+            if (pipeline_list[i].type=='renderer'){
+                //console.log(pipeline_list[i].type);
+                renderer_present=true;
+                break;
+            }
+        }
+        //console.log(renderer_present);
     }
-
-
     getPipeline();
     async function invokeRuntime(){
         //the runtime order should already be on the server side at this point
+        //shouldn't be awaited actually
         await postRequest('/api/functions/'+proj_obj.id+'/execute/',csrftoken);
         runtime_invoked=true;
     }
-
 </script>
 <div class="home-container" id="container-side-2">
     <RightDouble />
@@ -47,7 +55,9 @@
         </div>
     {/each}
     {/key}
-    {#if pipeline_list != {}}
+    {#if renderer_present==true}
     <button type="button" onclick={invokeRuntime} class="login-button-primary">Run</button>
+    {:else}
+    <p>Add a renderer to run the pipeline.</p>
     {/if}
     </div>
