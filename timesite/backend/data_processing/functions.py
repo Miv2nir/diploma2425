@@ -29,6 +29,7 @@ class DropColumns:
         self.accepts=['df']
         self.returns=['df']
     def execute(self,df:pd.DataFrame,columns:list):
+        
         return df.drop(columns=columns)
 
 class RenderDF:

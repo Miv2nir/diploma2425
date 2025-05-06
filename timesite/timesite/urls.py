@@ -57,6 +57,7 @@ urlpatterns = [
     path('api/functions/get_csv_files/',api_views.get_datastore_items_csv),
     path('api/functions/<uuid:id>/accept_csv_load/',api_views.accept_csv_load),
     path('api/functions/<uuid:id>/accept_renderer/',api_views.accept_renderer),
+    path('api/functions/<uuid:id>/accept_processor/',api_views.accept_processor),
     path('api/functions/<uuid:id>/get_pipeline/',api_views.get_pipeline),
     path('api/functions/<uuid:id>/get_results/',api_views.get_results),
     path('api/functions/<uuid:id>/execute/',api_views.invoke_runtime),

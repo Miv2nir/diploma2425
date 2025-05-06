@@ -4,6 +4,7 @@
     import ProjectThumb from "../elements/ProjectThumb.svelte";
     import ServerSideResultRender from "../elements/ServerSideResultRender.svelte";
     import LoadCSV from "../function_forms/LoadCSV.svelte";
+    import DropColumns from "../function_forms/DropColumns.svelte";
     import RenderDf from "../function_forms/RenderDF.svelte";
     let {user,
       proj_obj,
@@ -27,6 +28,12 @@
         <p>{func_obj.description}</p>
         {#if func_obj.name=='LoadCSV'}
         <LoadCSV bind:func_obj={func_obj}
+         bind:form_submitted={form_submitted}
+          proj_obj={proj_obj}
+          bind:pipeline_length={pipeline_length}/>
+        {/if}
+        {#if func_obj.name=='DropColumns'}
+        <DropColumns bind:func_obj={func_obj}
          bind:form_submitted={form_submitted}
           proj_obj={proj_obj}
           bind:pipeline_length={pipeline_length}/>

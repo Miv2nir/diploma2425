@@ -109,6 +109,7 @@ def get_functions_all(request):
     #l['models']=r.models.keys()
     l['loaders']=_assemble_info(r.loaders)
     l['renderers']=_assemble_info(r.renderers)
+    l['processors']=_assemble_info(r.processors)
     l['splitters']=_assemble_info(r.splitters)
     l['models']=_assemble_info(r.models)
     return Response(l)
@@ -248,7 +249,7 @@ def delete_params(request,params_id):
     return Response(201)
 
 @api_view(['POST'])
-def accept_preprocessor(request,id,order):
+def accept_processor(request,id):
     updating = request.POST.get('update')
     #identify project
     try:
@@ -260,12 +261,33 @@ def accept_preprocessor(request,id,order):
         return Response(status=403)
     params={
         'accept':'df',
-        'produce':'df',
+        'save_as':'df',
         'in_place':True
     }
-    #try:
-    #    param_obj=models.FunctionParams.objects.filter(project=proj_obj,order=order)[0]
-    #need to do order setting first 
+    order=request.POST.get('order')
+    print('order:',order)
+    if order==None: #new object
+        order=len(models.FunctionParams.objects.filter(project=proj_obj))
+    else: #updating
+        pass
+    print('order:',order)
+    #order=len(models.FunctionParams.objects.filter(project=proj_obj))
+    try:
+        param_obj=models.FunctionParams.objects.filter(project=proj_obj,order=order)[0]
+        if updating=='true':
+            print('existing object, updating')
+            param_obj.save()
+        else:
+            print('existing object, not updating')
+            return Response(403) #clashing with existing object
+    except IndexError:
+        if updating=='update':
+            return Response(404)
+        else:
+            print('new object, creating')
+            param_obj=models.FunctionParams(project=proj_obj,order=order,func_name='DropColumns',info=params)
+            param_obj.save()
+    return Response(status=201)
     
 
 @api_view(['POST'])  
