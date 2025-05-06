@@ -36,8 +36,10 @@ let {
 <p>Running!</p>
 {:else}
 {#each render as i}
-    <div style="display:flex;justify-content:center;margin-top:1rem;">
-        {@html i}
+    <div style="display:flex;justify-content:center;flex-direction:column;align-items:center;">
+        <div>
+            {@html i}
+        </div>
     </div>
 {/each}
 {/if}

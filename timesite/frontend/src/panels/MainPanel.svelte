@@ -17,7 +17,7 @@
     <div class="home-container center" id="container-main" style="margin-bottom:1rem;">
       <Left />
       <Right />
-      <div class="underlying-container">
+      <div class="underlying-container" style="height:80vh;">
       {#if runtime_invoked}
       <ServerSideResultRender bind:runtime_invoked={runtime_invoked} 
       proj_obj={proj_obj}/>

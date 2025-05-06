@@ -41,7 +41,10 @@ class RenderDF:
         self.accepts=['df']
         self.returns=[]
     def execute(self,df:pd.DataFrame):
-        return df.to_html()
+        html = df.to_html()+'<br>' #get the main thing
+        #create shape
+        shape_html='<p>'+str(df.shape[0])+' rows, '+str(df.shape[1])+' columns'+'</p>\n'
+        return shape_html+html
 '''
 #leaving out the constructor intentionally so to not nuke the memory of the host on every api call
 class LoadCSV:
