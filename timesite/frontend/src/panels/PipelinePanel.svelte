@@ -1,4 +1,5 @@
 <script>
+    import { run } from "svelte/legacy";
     import RightDouble from "../elements/panel_buttons/RightDouble.svelte";
     import UserThumb from "../elements/UserThumb.svelte";
     let {upd_flag=$bindable(false),
@@ -56,7 +57,11 @@
     {/each}
     {/key}
     {#if renderer_present==true}
+    {#if runtime_invoked}
+    <button type="button" onclick={()=>{runtime_invoked=false;}} class="login-button-secondary">Reset</button>
+    {:else}
     <button type="button" onclick={invokeRuntime} class="login-button-primary">Run</button>
+    {/if}
     {:else}
     <p>Add a renderer to run the pipeline.</p>
     {/if}

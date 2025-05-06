@@ -11,7 +11,6 @@
       form_submitted=$bindable(false),
       runtime_invoked=$bindable(false),
       pipeline_length=$bindable(0)} = $props();
-    const special_unit_mark=true;
 </script>
 <div style="display:flex; flex-direction:column; justify-content: space-around; height:90.3vh;" id='container-main-spacer'>
     <div class="home-container center" id="container-main" style="margin-bottom:1rem;">
