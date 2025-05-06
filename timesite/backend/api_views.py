@@ -234,10 +234,16 @@ def delete_params(request,params_id):
         return Response(status=404)
     #check if authorized
     print(request.user)
+    proj_obj=param_obj.project
+    old_order=param_obj.order
     if request.user!=param_obj.project.user:
         return Response(status=403)
     #finally, perform the deletion
     param_obj.delete()
+    #move the remaining objects back
+    for i in models.FunctionParams.objects.filter(project=proj_obj,order__gt=old_order):
+        i.order-=1
+        i.save()
     return Response(201)
 
 @api_view(['POST'])
