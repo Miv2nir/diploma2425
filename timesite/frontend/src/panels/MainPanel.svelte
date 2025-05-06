@@ -42,5 +42,5 @@
         {/if}
         </div>
     </div>
-    <ProjectThumb user={user} project={proj_obj} is_special={special_unit_mark}/>
+    <ProjectThumb user={user} project={proj_obj}/>
   </div>

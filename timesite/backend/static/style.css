@@ -283,14 +283,29 @@ font-size: 1rem;
     justify-content:start;
     align-items:center;
 }
+.project-item-editor {
+    height: 3.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    border: solid;
+    border-radius: 0.7rem;
+    border-width: 0.1rem;
+    border-color: var(--border-color);
+    background-color: var(--highlight-color);
+    box-shadow: 5px 5px 5px 1px var(--shadow-color);
+    overflow: hidden;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content:start;
+    align-items:center;
+    margin:0;
+}
 .project-item.center {
     justify-content: center;
 }
 .project-item.pointer {
     cursor: pointer;
-}
-.project-item.special {
-    margin:0;
 }
 .project-item:hover {
     background-color: var(--selection-color);
