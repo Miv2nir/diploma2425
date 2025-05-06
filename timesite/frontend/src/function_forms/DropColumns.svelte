@@ -45,7 +45,7 @@
         <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
         <label for="csv_files_selection">Define column names, separated by comma:</label>
         <br>
-        <input type="text" name="columns" class="login-input-box" id="text_columns_definitions">
+        <input type="text" name="text_params" class="login-input-box" id="text_columns_definitions">
         <br>
         <br>
         <button type="button" class="login-button-primary" onclick={()=>sendForm()}>Set Renderer</button>

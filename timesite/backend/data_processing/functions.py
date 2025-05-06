@@ -28,8 +28,8 @@ class DropColumns:
         
         self.accepts=['df']
         self.returns=['df']
-    def execute(self,df:pd.DataFrame,columns:list):
-        
+    def execute(self,df:pd.DataFrame,columns:str):
+        columns_list=str.split('.')
         return df.drop(columns=columns)
 
 class RenderDF:

@@ -259,10 +259,13 @@ def accept_processor(request,id):
     #verify if permitted to edit
     if request.user != proj_obj.user:
         return Response(status=403)
+    params_string=request.POST.get('text_params')
     params={
         'accept':'df',
         'save_as':'df',
-        'in_place':True
+        'in_place':True,
+        'params_type':'str',
+        'params':params_string
     }
     order=request.POST.get('order')
     print('order:',order)
@@ -365,7 +368,8 @@ def invoke_runtime(request,id):
         elif func_obj.type=='processor': #changes loaded data, both saves and accepts
             var_name_load=i.info['accept']
             var_name_save=i.info['save_as']
-            var_store[var_name_save]=func_obj.execute(var_store[var_name_load])
+            text_params=i.info['params']
+            var_store[var_name_save]=func_obj.execute(var_store[var_name_load],text_params)
             func_status.info={
                 'loaded':var_name_load,
                 'saved_as':var_name_save
