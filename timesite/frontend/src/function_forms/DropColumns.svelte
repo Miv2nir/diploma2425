@@ -11,6 +11,7 @@
       //console.log(form);
     })
     //get order
+    var func_params=$state('');
     var order = $state(func_obj.order+1);
     async function sendForm() {
       console.log('sending form');
@@ -24,6 +25,15 @@
         await postRequest('/api/params/'+func_obj.params_id+'/delete_params/',csrftoken);
         func_obj=undefined;
         form_submitted=!form_submitted;
+    }
+    async function getParams(){
+        const l = await getRequest('/api/params/'+func_obj.params_id+'/get_params/');
+        //console.log(l.info.params);
+        func_params=l.info.params;
+    }
+    if (func_obj.params_id){
+        //console.log('Editing!');
+        getParams();
     }
     console.log(func_obj);
 </script>
@@ -45,7 +55,7 @@
         <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
         <label for="csv_files_selection">Define column names, separated by comma:</label>
         <br>
-        <input type="text" name="text_params" class="login-input-box" id="text_columns_definitions">
+        <input type="text" name="text_params" value={func_params} class="login-input-box" id="text_columns_definitions">
         <br>
         <br>
         <button type="button" class="login-button-primary" onclick={()=>sendForm()}>Set Renderer</button>
@@ -57,5 +67,7 @@
     {#if func_obj.params_id}
     <br>
     <button type="button" onclick={()=>removeFunction()} class="login-button-delete">Remove Function</button>
+    <br>
+    <br>
     {/if}
 </div>
