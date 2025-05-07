@@ -20,16 +20,20 @@
                 <!--div style="min-width: 0.1rem; background-color: var(--border-color);"></div-->
                 <div class="home-container half">
                     <div class="underlying-container">
-                        <a href="../"  class="fancy-underline back-text">Go Back</a>
+                        <a href="../../"  class="fancy-underline back-text">Go Back</a>
                         <!--span onclick="window.history.go(-1); return false;" class="fancy-underline back-text">Go Back</span-->
                         <!--h1>{{user}}'s Profile Page</h1-->
                         <img src="{{user|get_pfp}}" class="pfp-profile">
                         <h2 class="text-containered" style="margin-top: 0.5rem; margin-bottom: 0rem;">{{user|get_display_name}}
                         </h2>
+                        {%if is_author%}
                         <a href="edit/" class="fancy-underline subtitle">Edit Profile</a>
+                        {%else%}
+                        <br>
+                        {%endif%}
                         <div class="hr"></div>
                         <br>
-                        <form action="/profile/" class="search-form" method="post">
+                        <form action="/profile/{{user}}/" class="search-form" method="post">
                             {% csrf_token %}
                             {{ form.search }}
                             <button class="search-button" type="submit">🔍</button>
@@ -37,7 +41,11 @@
                         {%if prompt %}
                         <h2>Results for {{prompt}}:</h2>
                         {%else%}
+                        {%if is_author%}
                         <h2>Your Projects:</h2>
+                        {%else%}
+                        <h2>{{user|get_display_name}}'s Projects:</h2>
+                        {%endif%}
                         {%endif%}
                         {% for item in lookup %}
                         {% include 'prefabs/project_thumb.html' %}

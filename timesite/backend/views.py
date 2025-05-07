@@ -6,7 +6,7 @@ import uuid
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 
-from django.http import HttpResponse, HttpResponseRedirect, FileResponse, JsonResponse, HttpResponseNotAllowed
+from django.http import HttpResponse, HttpResponseRedirect,HttpResponseForbidden, FileResponse, JsonResponse, HttpResponseNotAllowed
 import backend.forms as forms
 import backend.models as models
 from backend.functions import *
@@ -99,24 +99,37 @@ def profile_page_redirect(request):
     return HttpResponseRedirect('/profile/'+username+'/')
 @login_required
 def profile_page(request,username):
+    is_author=(request.user.username==username)
+    user_obj=User.objects.filter(username=username)[0]
     if request.method == 'POST':
         form = forms.SearchForm(request.POST)
         if form.is_valid():
             prompt=form.cleaned_data['search']
-            return HttpResponseRedirect('/profile/?prompt='+prompt)
+            return HttpResponseRedirect('/profile/'+username+'/?prompt='+prompt)
         else:
-            return HttpResponseRedirect('/profile/')
+            return HttpResponseRedirect('/profile/'+username+'/')
     form=forms.SearchForm(initial={'search':request.GET.get('prompt','')})
     prompt=request.GET.get('prompt','')
-    if prompt:
-        lookup=models.Project.objects.filter(user=request.user,name__icontains=prompt).order_by('-last_edited')
-        #get user's stuff
-    else:
-        lookup=models.Project.objects.filter(user=request.user).order_by('-last_edited')
-    return render(request,'backend/profile_page.html',{'user':request.user,'lookup':lookup,'form':form,'prompt':prompt})
+    if is_author:
+        #lookup should include private and unlisted projects
+        if prompt:
+            lookup=models.Project.objects.filter(user=user_obj,name__icontains=prompt).order_by('-last_edited')
+            #get user's stuff
+        else:
+            lookup=models.Project.objects.filter(user=user_obj).order_by('-last_edited')
+    else:  
+        #only output public ones
+        if prompt:
+            lookup=models.Project.objects.filter(user=user_obj,name__icontains=prompt,access='A').order_by('-last_edited')
+            #get user's stuff
+        else:
+            lookup=models.Project.objects.filter(user=user_obj,access='A').order_by('-last_edited')
+    return render(request,'backend/profile_page.html',{'user':user_obj,'lookup':lookup,'form':form,'prompt':prompt,'is_author':is_author})
 
 @login_required
-def profile_page_edit(request):
+def profile_page_edit(request,username):
+    if username!=request.user.username:
+        return HttpResponseForbidden()
     user_obj=request.user
     #retrieve the additional info object
     try:
