@@ -10,6 +10,7 @@
     import {getRequest, postRequest} from "../lib/APICalls.js";
     import Cookies from 'js-cookie';
     import {writable} from 'svelte/store';
+    import PipelineFuncVarDisplay from "../elements/PipelineFuncVarDisplay.svelte";
     const csrftoken = Cookies.get('csrftoken');
     var pipeline_list=$state();
     var renderer_present=$state(false);
@@ -51,8 +52,12 @@
         'order':i,
         'accepts':f.accepts,
         'produces':f.produces
-        }}}><b>{f.display_name}</b>
-
+        };console.log(f.accepts);}}>
+        <div>
+            
+            <b>{f.display_name}</b>
+            <PipelineFuncVarDisplay f={f} />
+        </div>
         </div>
     {/each}
     {/key}
