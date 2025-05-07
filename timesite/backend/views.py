@@ -94,7 +94,11 @@ def home(request):
     return render(request,'backend/home.html',{'user':request.user,'project_pins':project_pins,'data_obj':data_obj})
 
 @login_required
-def profile_page(request):
+def profile_page_redirect(request):
+    username=request.user.username
+    return HttpResponseRedirect('/profile/'+username+'/')
+@login_required
+def profile_page(request,username):
     if request.method == 'POST':
         form = forms.SearchForm(request.POST)
         if form.is_valid():
