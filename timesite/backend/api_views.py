@@ -15,6 +15,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 import json
+
+from time import sleep
 #TODO: rewrite login_required to dump a 401 if user not authorized
 # the frontend will need to preserve the url and redirect to /login with query being the current logged in page
 
@@ -348,7 +350,7 @@ def invoke_runtime(request,id):
     var_store={}
     r=registry.Registry()
     for i in func_list:
-        #runtime
+        #runtime logic goes here
         #1. figure out the function type. Loaders don't accept values from var_store
         print(i.func_name,i.info)
         func_obj=r.get_all()[i.func_name]()
@@ -392,6 +394,8 @@ def invoke_runtime(request,id):
             #log it into the database and let the frontend query it at leizure
         func_status.status='OK'
         func_status.save()
+        #for the purposes of testing the RuntimeQueryer.svelte
+        sleep(5)
     return Response(status=200)
 
 @api_view()

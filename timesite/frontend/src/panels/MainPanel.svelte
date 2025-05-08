@@ -25,7 +25,10 @@
       <ServerSideResultRender bind:runtime_invoked={runtime_invoked} 
       proj_obj={proj_obj}/>
       {:else}
-      <RuntimeQueryer />
+      <RuntimeQueryer 
+      bind:runtime_invoked={runtime_invoked}
+      bind:runtime_finished={runtime_finished}
+      proj_obj={proj_obj}/>
       {/if}
       {:else}
         <h1>Select a function from the left panel...</h1>
