@@ -349,6 +349,13 @@ def invoke_runtime(request,id):
     func_list=models.FunctionParams.objects.filter(project=proj_obj).order_by('order')
     var_store={}
     r=registry.Registry()
+    #before this, remove all the log objects
+    for i in func_list:
+        try:
+            status_obj=i.functionstatus
+            status_obj.delete()
+        except ObjectDoesNotExist:
+            pass
     for i in func_list:
         #runtime logic goes here
         #1. figure out the function type. Loaders don't accept values from var_store
@@ -362,6 +369,7 @@ def invoke_runtime(request,id):
         #mark as being executed
         func_status.status='EX'
         func_status.save()
+        sleep(1.5)
         if func_obj.type=='loader': #only saves, does not accept
             data_obj=models.DataFile.objects.get(id=i.info['data_obj'])
             var_name_save=i.info['save_as']
@@ -395,7 +403,7 @@ def invoke_runtime(request,id):
         func_status.status='OK'
         func_status.save()
         #for the purposes of testing the RuntimeQueryer.svelte
-        sleep(5)
+        sleep(1.5)
     return Response(status=200)
 
 @api_view()

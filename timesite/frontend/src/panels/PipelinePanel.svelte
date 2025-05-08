@@ -105,7 +105,7 @@
         <p>{@html warning}</p>
         {:else}
             {#if runtime_invoked}
-            <button type="button" onclick={()=>{runtime_invoked=false;}} class="login-button-secondary">Reset</button>
+            <button type="button" onclick={()=>{runtime_invoked=false; runtime_finished=false;}} class="login-button-secondary">Reset</button>
             {:else}
             <button type="button" onclick={invokeRuntime} class="login-button-primary">Run</button>
         {/if}
