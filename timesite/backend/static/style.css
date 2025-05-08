@@ -157,6 +157,7 @@ a {
 }
 .underlying-container {
     height: 90vh;
+    overflow-x: hidden;
     overflow-y: auto;
 }
 .underlying-container.half {

@@ -74,6 +74,8 @@
 </script>
 <div class="home-container" id="container-side-2">
     <RightDouble />
+    <div class="underlying-container">
+
     <h2>Pipeline</h2>
     {#key upd_flag}
     {#each pipeline_list as f,i }
@@ -107,4 +109,5 @@
     {:else}
     <p>Add a renderer to run the pipeline.</p>
     {/if}
+</div>
     </div>

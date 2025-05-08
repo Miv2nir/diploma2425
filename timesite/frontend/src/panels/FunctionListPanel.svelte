@@ -21,6 +21,7 @@
 
 <div class="home-container" id="container-side-1">
   <LeftDouble />
+  <div class="underlying-container">
     <h2>Available Functions</h2>
     {#each loaders as f}
     <div class="project-item center pointer" onclick={() =>{func_obj={
@@ -47,3 +48,4 @@
       }}}><b>{f.display_name}</b></div>
     {/each}
   </div>
+</div>
