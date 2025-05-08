@@ -11,6 +11,7 @@
       func_obj=$bindable(),
       form_submitted=$bindable(false),
       runtime_invoked=$bindable(false),
+      runtime_finished=$bindable(false),
       pipeline_length=$bindable(0)} = $props();
 </script>
 <div style="display:flex; flex-direction:column; justify-content: space-around; height:90.3vh;" id='container-main-spacer'>

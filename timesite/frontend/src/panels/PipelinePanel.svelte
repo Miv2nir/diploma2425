@@ -6,6 +6,7 @@
         func_obj=$bindable(),
         proj_obj,
         runtime_invoked=$bindable(false),
+        runtime_finished=$bindable(false),
         pipeline_length=$bindable(0)} = $props();
     import {getRequest, postRequest} from "../lib/APICalls.js";
     import Cookies from 'js-cookie';
@@ -68,8 +69,11 @@
     async function invokeRuntime(){
         //the runtime order should already be on the server side at this point
         //shouldn't be awaited actually
-        await postRequest('/api/functions/'+proj_obj.id+'/execute/',csrftoken);
-        runtime_invoked=true;
+        //await postRequest('/api/functions/'+proj_obj.id+'/execute/',csrftoken);
+        var runtime_promise=postRequest('/api/functions/'+proj_obj.id+'/execute/',csrftoken);
+        runtime_invoked=true; //sets the main panel to render the waiting parts
+        await runtime_promise;
+        runtime_finished=true; //sets the main panel to render results
     }
 </script>
 <div class="home-container" id="container-side-2">

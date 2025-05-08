@@ -53,10 +53,11 @@
     await postRequest('/api/project/'+proj_uuid+'/upd_date/',csrftoken);
   }
   pageInit();
-  //for the matter of selecting functions
+  //stuff for components to update each other
   let func_obj= $state();
   let form_submitted=$state(false);
   let runtime_invoked=$state(false);
+  let runtime_finished=$state(false);
 </script>
 
 {#if user_logged_in && project_retrieved}
@@ -69,12 +70,14 @@
       bind:func_obj={func_obj}
        bind:form_submitted={form_submitted}
        bind:runtime_invoked={runtime_invoked}
+       bind:runtime_finished={runtime_finished}
        bind:pipeline_length={pipeline_length}/>
     {#key form_submitted}
     <PipelinePanel bind:upd_flag={upd_flag}
      bind:func_obj={func_obj}
       proj_obj={proj_obj} 
       bind:runtime_invoked={runtime_invoked}
+      bind:runtime_finished={runtime_finished}
       bind:pipeline_length={pipeline_length}/>
     {/key}
   </span>
