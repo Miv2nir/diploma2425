@@ -20,6 +20,20 @@
     <p>Running!</p>
     <br>
     {#each status as i}
-        {i.func_name} - {i.status}<br>
+        {i.func_name} -
+        {#if i.status=='NE'}
+        <span>Queued</span>
+        {/if}
+        {#if i.status=='EX'}
+        <span>Executing</span>
+        {/if}
+        {#if i.status=='OK'}
+        <span>Done</span>
+        {/if}
+        {#if i.status=='ER'}
+        <span>Errored</span>
+        <!--should query and print the error as well as hault the execution-->
+        {/if}
+        <br>
     {/each}
 </div>
