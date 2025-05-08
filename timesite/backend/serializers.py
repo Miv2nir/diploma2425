@@ -32,3 +32,8 @@ class FunctionParamsSerializer(serializers.ModelSerializer):
     class Meta:
         model=models.FunctionParams
         fields=['id','project','order','func_name','info']
+
+class FunctionStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=models.FunctionStatus
+        fields=['func','info','status']

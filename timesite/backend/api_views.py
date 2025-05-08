@@ -9,6 +9,8 @@ import backend.data_processing.registry as registry
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
 
+from django.core.exceptions import ObjectDoesNotExist
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -391,6 +393,27 @@ def invoke_runtime(request,id):
         func_status.status='OK'
         func_status.save()
     return Response(status=200)
+
+@api_view()
+def get_runtime_status(request,id):
+    #identify project
+    try:
+        proj_obj = models.Project.objects.get(pk=id)
+    except models.Project.DoesNotExist:
+        return Response(status=404)
+    func_list=models.FunctionParams.objects.filter(project=proj_obj).order_by('order')
+    #seek out the status objects
+    status_list=[]
+    for i in func_list:
+        try:
+            s=serializers.FunctionStatusSerializer(i.functionstatus).data
+            s['func_name']=i.func_name
+            status_list.append(s)
+        except ObjectDoesNotExist:
+            pass
+    print(status_list)
+    #serialize the list
+    return Response(status_list)
 
 @api_view()
 def get_results(request,id):

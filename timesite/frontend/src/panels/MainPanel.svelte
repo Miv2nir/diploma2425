@@ -6,6 +6,7 @@
     import LoadCSV from "../function_forms/LoadCSV.svelte";
     import DropColumns from "../function_forms/DropColumns.svelte";
     import RenderDf from "../function_forms/RenderDF.svelte";
+    import RuntimeQueryer from "../elements/RuntimeQueryer.svelte";
     let {user,
       proj_obj,
       func_obj=$bindable(),
@@ -24,7 +25,7 @@
       <ServerSideResultRender bind:runtime_invoked={runtime_invoked} 
       proj_obj={proj_obj}/>
       {:else}
-      <p>Running!</p>
+      <RuntimeQueryer />
       {/if}
       {:else}
         <h1>Select a function from the left panel...</h1>
