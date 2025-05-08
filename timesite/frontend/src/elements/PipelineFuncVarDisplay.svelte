@@ -1,6 +1,6 @@
 <script>
     let {f}=$props();
-    console.log(f);
+    //console.log(f);
 </script>
 
 <br>

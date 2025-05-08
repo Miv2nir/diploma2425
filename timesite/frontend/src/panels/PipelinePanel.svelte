@@ -14,9 +14,40 @@
     const csrftoken = Cookies.get('csrftoken');
     var pipeline_list=$state();
     var renderer_present=$state(false);
+    var warning=$state('');
     //var pipeline_length=writable(0);
     //var pipeline_length=$state();
-    async function getPipeline() {
+    function validatePipeline(){ //called from getPipeline btw
+        //this function goes over the constructed pipeline, checking the variable names
+        //if some function accepts the wrong variable (like if it doesn't exist)
+        //block the run function
+
+        //for the time being, this will only check for the presence of requested values
+        var var_store=new Set();
+        console.log('validating');
+        console.log(pipeline_list);
+        for (var i in pipeline_list){
+            console.log(var_store);
+            //verify if consumed variables exist
+            for (var j in pipeline_list[i].accepts){
+                const accepted_var = pipeline_list[i].accepts[j]
+                if (!(var_store.has(accepted_var))){
+                    warning+=('['+
+                    pipeline_list[i].name+
+                    ', pos.'+
+                    String(i)+
+                    ']: '+
+                    accepted_var+
+                    ' is not defined!<br>')
+                    console.log(warning);
+                }
+            }
+            //append all created variables
+            const produces = new Set(pipeline_list[i].produces);
+            var_store=var_store.union(produces);
+        }
+    }
+    async function getPipeline() { //gets called upon pipeline update essentially
         pipeline_list=await getRequest('/api/functions/'+proj_obj.id+'/get_pipeline/');
         //console.log(pipeline_list);
         //console.log(pipeline_list);
@@ -30,8 +61,10 @@
             }
         }
         //console.log(renderer_present);
+        validatePipeline();
     }
     getPipeline();
+
     async function invokeRuntime(){
         //the runtime order should already be on the server side at this point
         //shouldn't be awaited actually
@@ -62,11 +95,15 @@
     {/each}
     {/key}
     {#if renderer_present==true}
-    {#if runtime_invoked}
-    <button type="button" onclick={()=>{runtime_invoked=false;}} class="login-button-secondary">Reset</button>
-    {:else}
-    <button type="button" onclick={invokeRuntime} class="login-button-primary">Run</button>
-    {/if}
+        {#if warning}
+        <p>{@html warning}</p>
+        {:else}
+            {#if runtime_invoked}
+            <button type="button" onclick={()=>{runtime_invoked=false;}} class="login-button-secondary">Reset</button>
+            {:else}
+            <button type="button" onclick={invokeRuntime} class="login-button-primary">Run</button>
+        {/if}
+        {/if}
     {:else}
     <p>Add a renderer to run the pipeline.</p>
     {/if}
