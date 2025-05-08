@@ -58,15 +58,15 @@
     return 1;
   }
   else {
-    //return (-0.005*window.outerWidth)+4.5;
-    return ((-0.002)*window.outerWidth + 3);
+    return ((-0.002)*window.outerWidth+3);
+    //return ((-0.002)*window.outerWidth + 3);
   }
 }
 function rescaler(){
     login_box.style.scale = rescaler_calc();
     console.log(rescaler_calc());
   }
-window.onresize = rescaler;
-//fire the function on page load, otherwise it doesnt do anything on mobile unless form fields are interacted with
-rescaler();
+  //fire the function on page load, otherwise it doesnt do anything on mobile unless form fields are interacted with
+  rescaler();
+  window.onresize = rescaler;
 </script>
