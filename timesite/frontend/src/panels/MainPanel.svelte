@@ -20,12 +20,17 @@
       <Right />
       <div class="underlying-container" style="height:80vh;">
       {#if runtime_invoked}
+      {#if runtime_finished}
       <ServerSideResultRender bind:runtime_invoked={runtime_invoked} 
       proj_obj={proj_obj}/>
+      {:else}
+      <p>Running!</p>
+      {/if}
       {:else}
         <h1>Select a function from the left panel...</h1>
         {#if func_obj}
         <div class="project-item center"><b>{func_obj.display_name}</b></div>
+        <!--function forms invokation (should probably rewrite into a separate component)-->
         <p>{func_obj.description}</p>
         {#if func_obj.name=='LoadCSV'}
         <LoadCSV bind:func_obj={func_obj}
