@@ -349,11 +349,13 @@ def invoke_runtime(request,id):
     func_list=models.FunctionParams.objects.filter(project=proj_obj).order_by('order')
     var_store={}
     r=registry.Registry()
-    #before this, remove all the log objects
+    #before this, remove all the log objects and create new ones
     for i in func_list:
         try:
             status_obj=i.functionstatus
             status_obj.delete()
+            #making a new one
+            models.FunctionStatus(func=i).save()
         except ObjectDoesNotExist:
             pass
     for i in func_list:
