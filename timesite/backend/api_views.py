@@ -372,38 +372,46 @@ def invoke_runtime(request,id):
         func_status.status='EX'
         func_status.save()
         sleep(1.5)
-        if func_obj.type=='loader': #only saves, does not accept
-            data_obj=models.DataFile.objects.get(id=i.info['data_obj'])
-            var_name_save=i.info['save_as']
-            var_store[var_name_save]=func_obj.execute(data_obj)
+        try:
+            if func_obj.type=='loader': #only saves, does not accept
+                data_obj=models.DataFile.objects.get(id=i.info['data_obj'])
+                var_name_save=i.info['save_as']
+                var_store[var_name_save]=func_obj.execute(data_obj)
+                func_status.info={
+                    'saved_as':var_name_save
+                }
+            elif func_obj.type=='processor': #changes loaded data, both saves and accepts
+                var_name_load=i.info['accept']
+                var_name_save=i.info['save_as']
+                text_params=i.info['params']
+                var_store[var_name_save]=func_obj.execute(var_store[var_name_load],text_params)
+                func_status.info={
+                    'loaded':var_name_load,
+                    'saved_as':var_name_save
+                }
+            elif func_obj.type=='renderer': #only outputs, does not save
+                var_name_load=i.info['accept']
+                #print(func_obj.execute(var_store[var_name_load]))
+                try:
+                    result_obj=models.RuntimeRenderResult.objects.filter(func_params=i)[0]
+                except IndexError:
+                    result_obj=models.RuntimeRenderResult(func_params=i)
+                result_obj.result=func_obj.execute(var_store[var_name_load])
+                result_obj.save()
+                func_status.info={
+                    'loaded':var_name_load
+                }
+                #should go to the frontend but i need to figure out some things
+                #log it into the database and let the frontend query it at leizure
+            func_status.status='OK'
+            func_status.save()
+        except Exception as e: 
+            func_status.status='ER'
             func_status.info={
-                'saved_as':var_name_save
+                'error':repr(e)
             }
-        elif func_obj.type=='processor': #changes loaded data, both saves and accepts
-            var_name_load=i.info['accept']
-            var_name_save=i.info['save_as']
-            text_params=i.info['params']
-            var_store[var_name_save]=func_obj.execute(var_store[var_name_load],text_params)
-            func_status.info={
-                'loaded':var_name_load,
-                'saved_as':var_name_save
-            }
-        elif func_obj.type=='renderer': #only outputs, does not save
-            var_name_load=i.info['accept']
-            #print(func_obj.execute(var_store[var_name_load]))
-            try:
-                result_obj=models.RuntimeRenderResult.objects.filter(func_params=i)[0]
-            except IndexError:
-                result_obj=models.RuntimeRenderResult(func_params=i)
-            result_obj.result=func_obj.execute(var_store[var_name_load])
-            result_obj.save()
-            func_status.info={
-                'loaded':var_name_load
-            }
-            #should go to the frontend but i need to figure out some things
-            #log it into the database and let the frontend query it at leizure
-        func_status.status='OK'
-        func_status.save()
+            func_status.save()
+            return Response(status=500)
         #for the purposes of testing the RuntimeQueryer.svelte
         sleep(1.5)
     return Response(status=200)
