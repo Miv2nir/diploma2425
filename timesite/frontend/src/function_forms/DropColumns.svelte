@@ -53,6 +53,9 @@
   {/if}
     <form action="/api/functions/{proj_obj.id}/accept_processor/" method="POST" id="processor_form" onsubmit={()=>sendForm()}>
         <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
+        {#if func_obj.params_id}
+        <input type="hidden" name="update" value="true">
+        {/if}
         <label for="csv_files_selection">Define column names, separated by comma:</label>
         <br>
         <input type="text" name="text_params" value={func_params} class="login-input-box" id="text_columns_definitions">

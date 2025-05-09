@@ -255,6 +255,7 @@ def delete_params(request,params_id):
 @api_view(['POST'])
 def accept_processor(request,id):
     updating = request.POST.get('update')
+    print(updating)
     #identify project
     try:
         proj_obj = models.Project.objects.get(pk=id)
@@ -283,6 +284,7 @@ def accept_processor(request,id):
         param_obj=models.FunctionParams.objects.filter(project=proj_obj,order=order)[0]
         if updating=='true':
             print('existing object, updating')
+            param_obj.info=params
             param_obj.save()
         else:
             print('existing object, not updating')
