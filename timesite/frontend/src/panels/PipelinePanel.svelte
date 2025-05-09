@@ -72,7 +72,15 @@
         //await postRequest('/api/functions/'+proj_obj.id+'/execute/',csrftoken);
         var runtime_promise=postRequest('/api/functions/'+proj_obj.id+'/execute/',csrftoken);
         runtime_invoked=true; //sets the main panel to render the waiting parts
-        await runtime_promise;
+        const runtime_result= await runtime_promise;
+        if (runtime_result instanceof Error){
+            console.log(runtime_result.message);
+            if(runtime_result.message.search('500') != -1){
+                //500 error on this api endpoint should indicate runtime failure
+                //the cause is logged in function statuses
+                console.log('handling 500');
+            }
+        }
         runtime_finished=true; //sets the main panel to render results
     }
     async function getLastResult(){

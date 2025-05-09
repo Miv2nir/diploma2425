@@ -30,6 +30,6 @@ export async function getRequest(url) {
       //return json;
     } catch (error) {
       console.error(error.message);
-      return null;
+      return error;
     }
   }
