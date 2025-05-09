@@ -7,6 +7,7 @@
         proj_obj,
         runtime_invoked=$bindable(false),
         runtime_error=$bindable({}),
+        runtime_errored=$bindable(false),
         runtime_finished=$bindable(false),
         pipeline_length=$bindable(0)} = $props();
     import {getRequest, postRequest} from "../lib/APICalls.js";
@@ -68,8 +69,6 @@
     getPipeline();
 
     async function invokeRuntime(){
-        //jic
-        runtime_error={};
         //the runtime order should already be on the server side at this point
         //shouldn't be awaited actually
         //await postRequest('/api/functions/'+proj_obj.id+'/execute/',csrftoken);
@@ -92,6 +91,8 @@
                             'position':parseInt(i)+1
                         }
                         console.log(status[i].info.error);
+                        runtime_errored=true;
+                        break;
                     }
                 }
             }
@@ -135,7 +136,9 @@
             {#if runtime_invoked}
             <button type="button" onclick={()=>{runtime_invoked=false;
                  runtime_finished=false;
-                 runtime_error={}}} class="login-button-secondary">Reset</button>
+                 runtime_error={};
+                 runtime_errored=false;
+                 }} class="login-button-secondary">Reset</button>
             {:else}
             <button type="button" onclick={invokeRuntime} class="login-button-primary">Run</button>
             <br>

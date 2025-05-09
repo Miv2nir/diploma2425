@@ -13,6 +13,7 @@
       form_submitted=$bindable(false),
       runtime_invoked=$bindable(false),
       runtime_error=$bindable({}),
+      runtime_errored=$bindable(false),
       runtime_finished=$bindable(false),
       pipeline_length=$bindable(0)} = $props();
 </script>
@@ -23,7 +24,7 @@
       <div class="underlying-container" style="height:80vh;">
       {#if runtime_invoked}
         {#if runtime_finished}
-          {#if runtime_error}
+          {#if !runtime_errored}
           <ServerSideResultRender bind:runtime_invoked={runtime_invoked} 
           proj_obj={proj_obj}/>
           {:else}
