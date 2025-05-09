@@ -75,6 +75,11 @@
         await runtime_promise;
         runtime_finished=true; //sets the main panel to render results
     }
+    async function getLastResult(){
+        //similar in behavior to that of invokeRuntime but instead it just goes for the last results
+        runtime_invoked=true;
+        runtime_finished=true;
+    }
 </script>
 <div class="home-container" id="container-side-2">
     <RightDouble />
@@ -108,6 +113,9 @@
             <button type="button" onclick={()=>{runtime_invoked=false; runtime_finished=false;}} class="login-button-secondary">Reset</button>
             {:else}
             <button type="button" onclick={invokeRuntime} class="login-button-primary">Run</button>
+            <br>
+            <br>
+            <button type="button" onclick={getLastResult} class="login-button-secondary">Show Last Result</button>
         {/if}
         {/if}
     {:else}
