@@ -6,6 +6,7 @@
         func_obj=$bindable(),
         proj_obj,
         runtime_invoked=$bindable(false),
+        runtime_error=$bindable({}),
         runtime_finished=$bindable(false),
         pipeline_length=$bindable(0)} = $props();
     import {getRequest, postRequest} from "../lib/APICalls.js";
@@ -67,6 +68,8 @@
     getPipeline();
 
     async function invokeRuntime(){
+        //jic
+        runtime_error={};
         //the runtime order should already be on the server side at this point
         //shouldn't be awaited actually
         //await postRequest('/api/functions/'+proj_obj.id+'/execute/',csrftoken);
@@ -79,6 +82,18 @@
                 //500 error on this api endpoint should indicate runtime failure
                 //the cause is logged in function statuses
                 console.log('handling 500');
+                //get pipeline status
+                var status=await getRequest('/api/functions/'+proj_obj.id+'/get_runtime_status/');
+                for (var i in status){
+                    if (status[i].status=="ER"){
+                        runtime_error={
+                            'func_name':status[i].func_name,
+                            'error':status[i].info.error,
+                            'position':parseInt(i)+1
+                        }
+                        console.log(status[i].info.error);
+                    }
+                }
             }
         }
         runtime_finished=true; //sets the main panel to render results
@@ -118,7 +133,9 @@
         <p>{@html warning}</p>
         {:else}
             {#if runtime_invoked}
-            <button type="button" onclick={()=>{runtime_invoked=false; runtime_finished=false;}} class="login-button-secondary">Reset</button>
+            <button type="button" onclick={()=>{runtime_invoked=false;
+                 runtime_finished=false;
+                 runtime_error={}}} class="login-button-secondary">Reset</button>
             {:else}
             <button type="button" onclick={invokeRuntime} class="login-button-primary">Run</button>
             <br>

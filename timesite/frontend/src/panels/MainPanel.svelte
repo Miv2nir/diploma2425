@@ -12,6 +12,7 @@
       func_obj=$bindable(),
       form_submitted=$bindable(false),
       runtime_invoked=$bindable(false),
+      runtime_error=$bindable({}),
       runtime_finished=$bindable(false),
       pipeline_length=$bindable(0)} = $props();
 </script>
@@ -21,15 +22,24 @@
       <Right />
       <div class="underlying-container" style="height:80vh;">
       {#if runtime_invoked}
-      {#if runtime_finished}
-      <ServerSideResultRender bind:runtime_invoked={runtime_invoked} 
-      proj_obj={proj_obj}/>
-      {:else}
-      <RuntimeQueryer 
-      bind:runtime_invoked={runtime_invoked}
-      bind:runtime_finished={runtime_finished}
-      proj_obj={proj_obj}/>
-      {/if}
+        {#if runtime_finished}
+          {#if runtime_error}
+          <ServerSideResultRender bind:runtime_invoked={runtime_invoked} 
+          proj_obj={proj_obj}/>
+          {:else}
+          <div>
+            <br>
+            Error in function {runtime_error.func_name} at position {runtime_error.position}!<br><br>
+            {runtime_error.error}<br><br>
+            Consider changing the function parameters to remedy this issue.
+          </div>
+          {/if}
+        {:else}
+        <RuntimeQueryer 
+        bind:runtime_invoked={runtime_invoked}
+        bind:runtime_finished={runtime_finished}
+        proj_obj={proj_obj}/>
+        {/if}
       {:else}
         <h1>Select a function from the left panel...</h1>
         {#if func_obj}

@@ -57,6 +57,7 @@
   let func_obj= $state();
   let form_submitted=$state(false);
   let runtime_invoked=$state(false);
+  let runtime_error=$state({});
   let runtime_finished=$state(false);
 </script>
 
@@ -70,6 +71,7 @@
       bind:func_obj={func_obj}
        bind:form_submitted={form_submitted}
        bind:runtime_invoked={runtime_invoked}
+       bind:runtime_error={runtime_error}
        bind:runtime_finished={runtime_finished}
        bind:pipeline_length={pipeline_length}/>
     {#key form_submitted}
@@ -77,6 +79,7 @@
      bind:func_obj={func_obj}
       proj_obj={proj_obj} 
       bind:runtime_invoked={runtime_invoked}
+      bind:runtime_error={runtime_error}
       bind:runtime_finished={runtime_finished}
       bind:pipeline_length={pipeline_length}/>
     {/key}
