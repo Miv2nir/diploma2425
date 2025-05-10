@@ -512,3 +512,12 @@ font-size: 1rem;
 .function-shift-button.up {
     transform: scaleY(-1);
 }
+.radio-spread {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    justify-self: center;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+}
