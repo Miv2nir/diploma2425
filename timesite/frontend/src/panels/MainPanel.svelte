@@ -42,7 +42,7 @@
         proj_obj={proj_obj}/>
         {/if}
       {:else}
-        <h1>Select a function from the left panel...</h1>
+        <h1 style="padding-left: 3rem; padding-right:3rem;">Select a function from the left panel...</h1>
         {#if func_obj}
         <div class="project-item center"><b>{func_obj.display_name}</b></div>
         <!--function forms invokation (should probably rewrite into a separate component)-->

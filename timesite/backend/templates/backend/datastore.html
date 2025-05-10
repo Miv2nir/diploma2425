@@ -29,7 +29,7 @@
     <span class="home-main-container">
         <div class="home-container" id="container-side-1">
             {%include 'prefabs/sidepanel_button_left_double.html' %}
-            <h2>Recent projects</h2>
+            <h2 style="padding-left: 0.2rem; padding-right: 0.2rem;">Recent projects</h2>
             {% for item in user|get_projects %}
             {%include 'prefabs/project_thumb.html'%}
             {%endfor%}
