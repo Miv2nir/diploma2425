@@ -373,6 +373,9 @@ def invoke_runtime(request,id):
         proj_obj = models.Project.objects.get(pk=id)
     except models.Project.DoesNotExist:
         return Response(status=404)
+    #verify if permitted to edit (non-authors should only be able to get the results)
+    if request.user != proj_obj.user:
+        return Response(status=403)
     func_list=models.FunctionParams.objects.filter(project=proj_obj).order_by('order')
     var_store={}
     r=registry.Registry()
