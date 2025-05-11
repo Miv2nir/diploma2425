@@ -17,6 +17,7 @@
   var project_retrieved = $state(false);
   var user = $state(null);
   var author = $state(null);
+  var is_author = $state(false);
   var proj_uuid=$state('');
   var proj_obj=$state(null);
   var upd_flag=$state(false);
@@ -52,6 +53,8 @@
     if (proj_obj!=null) {
       project_retrieved=true;
     }
+    is_author=(user.pk===author.pk);
+    console.log(is_author);
     //console.log($state.snapshot(proj_obj));
     //assuming things went successful, update the last_edited value of the project
     await postRequest('/api/project/'+proj_uuid+'/upd_date/',csrftoken);
@@ -69,9 +72,11 @@
 {#if user_logged_in && project_retrieved}
   <span class="home-main-container">
     {#key form_submitted}
-    <FunctionListPanel bind:func_obj={func_obj} />
+    <FunctionListPanel bind:func_obj={func_obj} 
+    is_author={is_author}/>
     {/key}
     <MainPanel author={author}
+    is_author={is_author}
      proj_obj={proj_obj}
       bind:func_obj={func_obj}
        bind:form_submitted={form_submitted}
@@ -82,6 +87,7 @@
        bind:pipeline_length={pipeline_length}/>
     {#key form_submitted}
     <PipelinePanel bind:upd_flag={upd_flag}
+    is_author={is_author}
      bind:func_obj={func_obj}
       proj_obj={proj_obj} 
       bind:runtime_invoked={runtime_invoked}

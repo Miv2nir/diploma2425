@@ -2,6 +2,9 @@
     import { render } from "svelte/server";
   import LeftDouble from "../elements/panel_buttons/LeftDouble.svelte";
   import {getRequest, postRequest} from "../lib/APICalls.js";
+  let {func_obj=$bindable(),
+    is_author=$bindable(false)
+  } = $props();
   //pull the list of all available functions
   //it's going to generate a list of functions in the ui basically
   var loaders=$state([]);
@@ -15,13 +18,13 @@
   }
   setFunctionList();
   //allow for selection of functions for the main panel to update
-  let {func_obj=$bindable()} = $props();
 
 </script>
 
 <div class="home-container" id="container-side-1">
   <LeftDouble />
   <div class="underlying-container">
+    {#if is_author}
     <h2>Available Functions</h2>
     {#each loaders as f}
     <div class="project-item center pointer" onclick={() =>{func_obj={
@@ -47,5 +50,8 @@
       'params_id':''
       }}}><b>{f.display_name}</b></div>
     {/each}
+    {:else}
+    <h1>Description</h1>
+    {/if}
   </div>
 </div>

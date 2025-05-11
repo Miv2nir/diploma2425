@@ -4,6 +4,7 @@
     import UserThumb from "../elements/UserThumb.svelte";
     let {upd_flag=$bindable(false),
         func_obj=$bindable(),
+        is_author=$bindable(),
         proj_obj,
         runtime_invoked=$bindable(false),
         runtime_error=$bindable({}),
@@ -12,7 +13,6 @@
         pipeline_length=$bindable(0)} = $props();
     import {getRequest, postRequest} from "../lib/APICalls.js";
     import Cookies from 'js-cookie';
-    import {writable} from 'svelte/store';
     import PipelineFuncVarDisplay from "../elements/PipelineFuncVarDisplay.svelte";
     const csrftoken = Cookies.get('csrftoken');
     var pipeline_list=$state();
@@ -112,15 +112,18 @@
     <h2>Pipeline</h2>
     {#key upd_flag}
     {#each pipeline_list as f,i }
-    <div class="project-item center pointer" onclick={() =>{func_obj={
-        'name':f.name,
-        'display_name':f.display_name,
-        'description':f.description,
-        'params_id':f.params_id,
-        'order':i,
-        'accepts':f.accepts,
-        'produces':f.produces
-        };console.log(f.accepts);}}>
+    <div class="project-item center pointer" onclick={() =>{
+        if (is_author){
+            func_obj={
+                'name':f.name,
+                'display_name':f.display_name,
+                'description':f.description,
+                'params_id':f.params_id,
+                'order':i,
+                'accepts':f.accepts,
+                'produces':f.produces
+            };console.log(f.accepts);
+        }}}>
         <div>
             
             <b>{f.display_name}</b>
@@ -140,9 +143,11 @@
                  runtime_errored=false;
                  }} class="login-button-secondary">Reset</button>
             {:else}
+            {#if is_author}
             <button type="button" onclick={invokeRuntime} class="login-button-primary">Run</button>
             <br>
             <br>
+            {/if}
             <button type="button" onclick={getLastResult} class="login-button-secondary">Show Last Result</button>
         {/if}
         {/if}

@@ -14,6 +14,7 @@
       runtime_invoked=$bindable(false),
       runtime_error=$bindable({}),
       runtime_errored=$bindable(false),
+      is_author=$bindable(false),
       runtime_finished=$bindable(false),
       pipeline_length=$bindable(0)} = $props();
 </script>

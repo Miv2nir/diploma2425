@@ -14,6 +14,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from django.contrib.auth.models import User
 import json
 
 from time import sleep
@@ -66,6 +67,7 @@ def get_user_info(request):
     
 @api_view()
 def get_specific_user_info(request,pk):
+    user=User.objects.get(pk=pk)
     try:
         user_detais=models.UserInfo.objects.get(pk=pk)
     except models.UserInfo.DoesNotExist:
@@ -73,14 +75,14 @@ def get_specific_user_info(request,pk):
     has_pfp=False
     pfp_path=''
     try:
-        pfp_obj=models.UserPFP.objects.filter(user=request.user)[0]
+        pfp_obj=models.UserPFP.objects.filter(user=user)[0]
         if pfp_obj.pfp:
             has_pfp=True
             pfp_path=pfp_obj.pfp.name
     except IndexError:
         pass
-    serializer=serializers.UserExtendedSerializer(data={'pk':request.user.pk,
-                                                        'username':request.user.username,
+    serializer=serializers.UserExtendedSerializer(data={'pk':user.pk,
+                                                        'username':user.username,
                                                         'display_name':user_detais.display_name,
                                                         'has_pfp':has_pfp,'pfp_path':pfp_path})
     is_valid = serializer.is_valid()
