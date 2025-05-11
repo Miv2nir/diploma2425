@@ -18,7 +18,7 @@ let {
         console.log(request);
         if (request){
             for (var i in request){
-                console.log(request[i].resulting_html);
+                //console.log(request[i].resulting_html);
                 render.push({
                     'html':request[i].resulting_html,
                     'order':i
@@ -34,6 +34,7 @@ let {
         }
         //set selection on the first item in tabs
         selected_render=tabs[0].target;
+        //document.getElementById(tabs[0].div_id).classList.add('pressed');
         //if (request) {
         //    //not empty
         //    render=request;
@@ -42,9 +43,19 @@ let {
         //check whether it got the results back, if not, wait 1 second and query again
         //if the result is obtained, update render state and hault
     }
+    async function doStuff(){
+        //idk fsr i cant seem to work with tabs if i dont do it
+        //or mb im just dumb
+        //probably the latter lmao
+        await queryResults();
+        console.log(tabs);
+    }
     onMount(()=>{
-        queryResults();
-    });
+        doStuff();
+        
+    })
+
+    //onclick thingy
 
 </script>
 
@@ -54,11 +65,20 @@ let {
 {:else}
 <p>Execution has finished!</p>
 <br>
-<div class="tab-array">
+<div class="tab-array" id="tab_array">
     {#each tabs as item}
-    <div class=tab id={item.div_id} onclick={()=>{
+    <div class={{'tab pressed':(item.target==selected_render),'tab':(item.target!=selected_render)}} id={item.div_id} onclick={()=>{
         selected_render=item.target;
         console.log(selected_render);
+        //logic for handling the pressed button visuals
+        /*for (var i in tabs){
+            if (tabs[i]==item){
+                document.getElementById(tabs[i].div_id).classList.add('pressed');
+            }
+            else{
+                document.getElementById(tabs[i].div_id).classList.remove('pressed');
+            }
+        }*/
     }}>{item.text}</div>
     {/each}
 </div>
