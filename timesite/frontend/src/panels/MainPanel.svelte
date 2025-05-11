@@ -43,7 +43,11 @@
         proj_obj={proj_obj}/>
         {/if}
       {:else}
-        <h1 style="padding-left: 3rem; padding-right:3rem;">Select a function from the left panel...</h1>
+      {#if is_author}
+        <h1 style="padding-left: 3rem; padding-right:3rem;">Select a function to view from the side panels...</h1>
+        {:else}
+        <h1 style="padding-left: 3rem; padding-right:3rem;">Select a function from the right panel to examine...</h1>
+        {/if}
         {#if func_obj}
         <div class="project-item center"><b>{func_obj.display_name}</b></div>
         <!--function forms invokation (should probably rewrite into a separate component)-->
@@ -52,19 +56,22 @@
         <LoadCSV bind:func_obj={func_obj}
          bind:form_submitted={form_submitted}
           proj_obj={proj_obj}
-          bind:pipeline_length={pipeline_length}/>
+          bind:pipeline_length={pipeline_length}
+          bind:is_author={is_author}/>
         {/if}
         {#if func_obj.name=='DropColumns'}
         <DropColumns bind:func_obj={func_obj}
          bind:form_submitted={form_submitted}
           proj_obj={proj_obj}
-          bind:pipeline_length={pipeline_length}/>
+          bind:pipeline_length={pipeline_length}
+          bind:is_author={is_author}/>
         {/if}
         {#if func_obj.name=='RenderDF'}
         <RenderDf bind:func_obj={func_obj}
          bind:form_submitted={form_submitted}
           proj_obj={proj_obj}
-          bind:pipeline_length={pipeline_length}/>
+          bind:pipeline_length={pipeline_length}
+          bind:is_author={is_author}/>
         {/if}
         {/if}
         {/if}

@@ -9,7 +9,11 @@
     import Cookies from 'js-cookie';
     import { onMount } from 'svelte';
     import OrderButtons from "../elements/OrderButtons.svelte";
-    let {func_obj=$bindable(),form_submitted=$bindable(false),proj_obj,pipeline_length=$bindable(0)} = $props();
+    let {func_obj=$bindable(),
+        form_submitted=$bindable(false),
+        is_author=$bindable(false),
+        proj_obj,
+        pipeline_length=$bindable(0)} = $props();
     //console.log(func_obj);
     var datastore_items = $state();
     async function getData(){
@@ -55,10 +59,11 @@
     {#if func_obj.produces.length!=0}
     <p>Produces: {func_obj.produces}</p>
     {/if}
-
+    {#if is_author}
     <OrderButtons bind:func_obj={func_obj}
     bind:form_submitted={form_submitted}
     bind:pipeline_length={pipeline_length}/>
+    {/if}
     {/if}
 
     {#key func_obj.params_id}
@@ -70,21 +75,25 @@
     <p>
         <label for="csv_files_selection">Select CSV Dataset:</label>
         <br>
-        <select name="csv_files" value={selected_data_obj} class="selector" id="csv_files_selection">
+        <select name="csv_files" disabled={!is_author} value={selected_data_obj} class="selector" id="csv_files_selection">
             {#each datastore_items as d}
             <option class="selector" value="{d.id}">{d.name}</option>
             {/each}
         </select>
         <br>
         <br>
+        {#if is_author}
         <button type="button" onclick={()=>sendForm()} class="login-button-primary">Save Parameters</button>
+        {/if}
         <br>
         {#if func_obj.params_id}
         <input type="hidden" name="order" value={func_obj.order}>
         {/if}
         <br>
+        {#if is_author}
         {#if func_obj.params_id}
         <button type="button" onclick={()=>removeFunction()} class="login-button-delete">Remove Function</button>
+        {/if}
         {/if}
     </p>
 </form>    

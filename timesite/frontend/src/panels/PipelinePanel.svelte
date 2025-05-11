@@ -113,7 +113,6 @@
     {#key upd_flag}
     {#each pipeline_list as f,i }
     <div class="project-item center pointer" onclick={() =>{
-        if (is_author){
             func_obj={
                 'name':f.name,
                 'display_name':f.display_name,
@@ -123,7 +122,7 @@
                 'accepts':f.accepts,
                 'produces':f.produces
             };console.log(f.accepts);
-        }}}>
+        }}>
         <div>
             
             <b>{f.display_name}</b>
