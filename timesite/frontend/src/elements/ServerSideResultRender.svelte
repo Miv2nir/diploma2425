@@ -6,6 +6,7 @@ let {
     runtime_invoked=$bindable(false),
     proj_obj
     } = $props();
+    var selected_render=$state('');
     var render=$state([]);
     var tabs=$state([]);
     var request;
@@ -18,11 +19,21 @@ let {
         if (request){
             for (var i in request){
                 console.log(request[i].resulting_html);
-                render.push(request[i].resulting_html);
-                tabs.push('<div class="tab" id="'+request[i].name+'_'+String(i)+'">\
-                    '+request[i].name+'@'+String(i)+'</div>');
+                render.push({
+                    'html':request[i].resulting_html,
+                    'order':i
+                });
+                //tabs.push('<div class="tab" id="'+request[i].name+'_'+String(i)+'">\
+                //    '+request[i].name+'@'+String(i)+'</div>');
+                tabs.push({
+                    'div_id':request[i].name+'_'+String(i),
+                    'text':request[i].name+' @ '+String(i),
+                    'target':i
+                });
             }
         }
+        //set selection on the first item in tabs
+        selected_render=tabs[0].target;
         //if (request) {
         //    //not empty
         //    render=request;
@@ -45,17 +56,22 @@ let {
 <br>
 <div class="tab-array">
     {#each tabs as item}
-        {@html item}
+    <div class=tab id={item.div_id} onclick={()=>{
+        selected_render=item.target;
+        console.log(selected_render);
+    }}>{item.text}</div>
     {/each}
-
 </div>
 <div class="hr"></div>
 {#each render as i}
+    {#if i.order==selected_render}
+        
     <div style="display:flex;justify-content:center;flex-direction:column;align-items:center;">
         <div>
-            {@html i}
+            {@html i.html}
         </div>
     </div>
+    {/if}
 {/each}
 {/if}
 </div>
