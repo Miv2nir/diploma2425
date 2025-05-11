@@ -56,21 +56,23 @@ class DataFileForm(forms.ModelForm):
     #description=forms.CharField(required=False)
     class Meta:
         model= models.DataFile
-        fields=['file','name','description']
+        fields=['file','name','description','display_in_guest_mode']
         widgets = {
             'file':forms.FileInput(attrs={'onchange':'updateLabel();'}),
             'name':forms.TextInput(attrs={'placeholder': 'File Name','class': 'login-input-box'}),
-            'description':forms.Textarea(attrs={'placeholder':'Description','class':'login-input-box'})
+            'description':forms.Textarea(attrs={'placeholder':'Description','class':'login-input-box'}),
+            'display_in_guest_mode':forms.CheckboxInput()
         }
 
 class DataFileUPDForm(forms.ModelForm):
     #description=forms.CharField(required=False)
     class Meta:
         model= models.DataFile
-        fields=['name','description']
+        fields=['name','description','display_in_guest_mode']
         widgets = {
             'name':forms.TextInput(attrs={'placeholder': 'File Name','class': 'login-input-box'}),
-            'description':forms.Textarea(attrs={'placeholder':'Description','class':'login-input-box'})
+            'description':forms.Textarea(attrs={'placeholder':'Description','class':'login-input-box'}),
+            'display_in_guest_mode':forms.CheckboxInput()
         }
 
 class ProjectPinForm(forms.Form):

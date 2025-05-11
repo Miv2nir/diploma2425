@@ -54,7 +54,7 @@ class DataFile(models.Model):
     name=models.CharField(max_length=100)
     description=models.TextField(null=True,blank=True)
     last_edited=models.DateTimeField(auto_now=True)
-    
+    display_in_guest_mode=models.BooleanField(default=False)
     def __str__(self):
         return self.name
     
