@@ -40,12 +40,17 @@
 
 <div>
   {#if func_obj.params_id}
+  <p>
   {#if func_obj.accepts.length!=0}
-  <p>Accepts: {func_obj.accepts}</p>
+    <span>Accepts: {func_obj.accepts}</span>
   {/if}
   {#if func_obj.produces.length!=0}
-  <p>Produces: {func_obj.produces}</p>
+    {#if func_obj.accepts.length!=0}
+    <span>;</span>
+    {/if}
+    <span>Produces: {func_obj.produces}</span>
   {/if}
+  </p>
   <OrderButtons bind:func_obj={func_obj}
   bind:form_submitted={form_submitted}
   bind:pipeline_length={pipeline_length}/>
