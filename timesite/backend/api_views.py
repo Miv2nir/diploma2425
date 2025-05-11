@@ -373,7 +373,7 @@ def invoke_runtime(request,id):
         #mark as being executed
         func_status.status='EX'
         func_status.save()
-        sleep(1.5)
+        #sleep(1.5)
         try:
             if func_obj.type=='loader': #only saves, does not accept
                 data_obj=models.DataFile.objects.get(id=i.info['data_obj'])
@@ -415,7 +415,7 @@ def invoke_runtime(request,id):
             func_status.save()
             return Response(status=500)
         #for the purposes of testing the RuntimeQueryer.svelte
-        sleep(1.5)
+        #sleep(1.5)
     return Response(status=200)
 
 @api_view()
