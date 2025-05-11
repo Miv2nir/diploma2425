@@ -63,8 +63,10 @@
   }
 }
 function rescaler(){
+  setTimeout(()=>{
     login_box.style.scale = rescaler_calc();
     console.log(rescaler_calc());
+  },50)
   }
   //fire the function on page load, otherwise it doesnt do anything on mobile unless form fields are interacted with
   rescaler();

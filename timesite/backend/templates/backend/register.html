@@ -58,10 +58,12 @@
       return ((-0.002)*window.outerWidth + 3);
     }
   }
-  function rescaler(){
-      login_box.style.scale = rescaler_calc();
-      console.log(rescaler_calc());
-    }
+function rescaler(){
+  setTimeout(()=>{
+    login_box.style.scale = rescaler_calc();
+    console.log(rescaler_calc());
+  },50)
+  }
     rescaler();
     window.onresize = rescaler;
   </script>
