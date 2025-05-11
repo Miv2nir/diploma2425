@@ -52,10 +52,19 @@ let {
     }
     onMount(()=>{
         doStuff();
-        
     })
 
-    //onclick thingy
+    //tabs thingy
+    /*const onload=el=>{
+        console.log('hi');
+        //consdocument.getElementById('separator');
+        if (el.offsetWidth<el.scrollWidth){
+            document.getElementById('separator').style.display='none';
+        }
+        else{
+            document.getElementById('separator').style.display='block';
+        }
+    }*/
 
 </script>
 
@@ -81,8 +90,8 @@ let {
         }*/
     }}>{item.text}</div>
     {/each}
+    <div class="hr" id="separator" style="position:absolute;bottom:0; width:100%;"></div>
 </div>
-<div class="hr"></div>
 {#each render as i}
     {#if i.order==selected_render}
         
