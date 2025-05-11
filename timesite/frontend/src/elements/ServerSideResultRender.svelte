@@ -27,7 +27,7 @@ let {
                 //    '+request[i].name+'@'+String(i)+'</div>');
                 tabs.push({
                     'div_id':request[i].name+'_'+String(i),
-                    'text':request[i].name+' @ '+String(i),
+                    'text':request[i].name+' @ '+String(parseInt(i)+1),
                     'target':i
                 });
             }
