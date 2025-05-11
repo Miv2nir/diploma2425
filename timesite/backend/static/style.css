@@ -521,3 +521,13 @@ font-size: 1rem;
     text-align: center;
     gap: 1rem;
 }
+.tab {
+    border:solid;
+    border-color: var(--border-color);
+}
+.tab-array {
+    display:flex;
+    flex-direction: row;
+    justify-content: start;
+
+}

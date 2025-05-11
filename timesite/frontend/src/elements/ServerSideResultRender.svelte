@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from "svelte";
 import {getRequest, postRequest} from "../lib/APICalls.js";
 //upon invoking this component, request runtime results from the database
 let {
@@ -6,6 +7,7 @@ let {
     proj_obj
     } = $props();
     var render=$state([]);
+    var tabs=$state([]);
     var request;
     async function queryResults() {
         request=await getRequest('/api/functions/'+proj_obj.id+'/get_results/');
@@ -17,6 +19,8 @@ let {
             for (var i in request){
                 console.log(request[i].resulting_html);
                 render.push(request[i].resulting_html);
+                tabs.push('<div class="tab" id="'+request[i].name+'_'+String(i)+'">\
+                    '+request[i].name+'@'+String(i)+'</div>');
             }
         }
         //if (request) {
@@ -27,7 +31,9 @@ let {
         //check whether it got the results back, if not, wait 1 second and query again
         //if the result is obtained, update render state and hault
     }
-    queryResults();
+    onMount(()=>{
+        queryResults();
+    });
 
 </script>
 
@@ -35,6 +41,15 @@ let {
     {#if !render}
 <p>Running!</p>
 {:else}
+<p>Execution has finished!</p>
+<br>
+<div class="tab-array">
+    {#each tabs as item}
+        {@html item}
+    {/each}
+
+</div>
+<div class="hr"></div>
 {#each render as i}
     <div style="display:flex;justify-content:center;flex-direction:column;align-items:center;">
         <div>
