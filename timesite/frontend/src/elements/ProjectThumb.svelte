@@ -1,7 +1,7 @@
 <script>
     //export let user;
     //export let project;
-    let {user,project} = $props();
+    let {author,project} = $props();
 
 </script>
 
@@ -13,7 +13,7 @@
     {/if}
     <div style="text-align: start;">
         <h3 style="margin-bottom: 0; margin-top: 0;">{project.name}</h3>
-        By {user.display_name}
+        By {author.display_name}
     </div>
     <!--p style="position:absolute; right:5%;">Exit</p-->
     <a href="/projects/{project.id}/" style="position:absolute;right:2%; max-width:10rem;">

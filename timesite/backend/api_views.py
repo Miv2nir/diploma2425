@@ -63,6 +63,31 @@ def get_user_info(request):
         if not is_valid:
             print('serializer',serializer.errors)
         return JsonResponse(serializer.data)
+    
+@api_view()
+def get_specific_user_info(request,pk):
+    try:
+        user_detais=models.UserInfo.objects.get(pk=pk)
+    except models.UserInfo.DoesNotExist:
+        return Response(status=404)
+    has_pfp=False
+    pfp_path=''
+    try:
+        pfp_obj=models.UserPFP.objects.filter(user=request.user)[0]
+        if pfp_obj.pfp:
+            has_pfp=True
+            pfp_path=pfp_obj.pfp.name
+    except IndexError:
+        pass
+    serializer=serializers.UserExtendedSerializer(data={'pk':request.user.pk,
+                                                        'username':request.user.username,
+                                                        'display_name':user_detais.display_name,
+                                                        'has_pfp':has_pfp,'pfp_path':pfp_path})
+    is_valid = serializer.is_valid()
+    if not is_valid:
+        print('serializer',serializer.errors)
+    return Response(serializer.data)
+    
 
 def upd_proj_date(request,id):
     '''

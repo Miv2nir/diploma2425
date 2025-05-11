@@ -53,6 +53,7 @@ urlpatterns = [
     path('api/project/<uuid:id>/',api_views.get_project),
     path('api/project/<uuid:id>/upd_date/', api_views.upd_proj_date),
     path('api/user/data/',api_views.get_user_info),
+    path('api/user/data/<int:pk>/',api_views.get_specific_user_info),
     path('api/functions/get_all/',api_views.get_functions_all),
     path('api/functions/<str:func_name>/get_info/',api_views.get_function_info),
     path('api/functions/get_csv_files/',api_views.get_datastore_items_csv),

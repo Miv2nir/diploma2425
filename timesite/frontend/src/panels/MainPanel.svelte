@@ -7,7 +7,7 @@
     import DropColumns from "../function_forms/DropColumns.svelte";
     import RenderDf from "../function_forms/RenderDF.svelte";
     import RuntimeQueryer from "../elements/RuntimeQueryer.svelte";
-    let {user,
+    let {author,
       proj_obj,
       func_obj=$bindable(),
       form_submitted=$bindable(false),
@@ -69,5 +69,5 @@
         {/if}
         </div>
     </div>
-    <ProjectThumb user={user} project={proj_obj}/>
+    <ProjectThumb author={author} project={proj_obj}/>
   </div>

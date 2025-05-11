@@ -16,6 +16,7 @@
   var user_logged_in = $state(false);
   var project_retrieved = $state(false);
   var user = $state(null);
+  var author = $state(null);
   var proj_uuid=$state('');
   var proj_obj=$state(null);
   var upd_flag=$state(false);
@@ -45,6 +46,9 @@
     
     //retrieve project info
     proj_obj = await getRequest('/api/project/'+proj_uuid+'/');
+    //get author information
+    author=await getRequest('/api/user/data/'+proj_obj.user+'/');
+    console.log(author);
     if (proj_obj!=null) {
       project_retrieved=true;
     }
@@ -67,7 +71,7 @@
     {#key form_submitted}
     <FunctionListPanel bind:func_obj={func_obj} />
     {/key}
-    <MainPanel user={user}
+    <MainPanel author={author}
      proj_obj={proj_obj}
       bind:func_obj={func_obj}
        bind:form_submitted={form_submitted}
