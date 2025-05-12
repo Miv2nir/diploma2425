@@ -13,13 +13,15 @@ class Registry:
             'LoadCSV':LoadCSV
         }
         self.renderers={
-            'RenderDF':RenderDF
+            'RenderDF':RenderDF,
+            'DownloadDF':DownloadDF
         }
         self.processors={
             'DropColumns':DropColumns
         }
         self.splitters={}
         self.models={}
+
     def get_all(self):
         l={}
         all_functions=[self.loaders,self.renderers,self.processors,self.splitters,self.models]

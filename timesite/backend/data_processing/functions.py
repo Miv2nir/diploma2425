@@ -1,6 +1,6 @@
 import pandas as pd
 import backend.models as models
-
+from timesite.settings import MEDIA_ROOT
 '''
 self.initial - declares whether the function is the leading function in a pipeline
 self.type - self-referential property declaring its subclass. To be replaced with smth better most likely.
@@ -46,6 +46,22 @@ class RenderDF:
         #create shape
         shape_html='<p>'+str(df.shape[0])+' rows, '+str(df.shape[1])+' columns'+'</p>\n'
         return shape_html+html
+class DownloadDF:
+    def __init__(self):
+        self.initial=False
+        self.display_name='Download Dataframe'
+        self.description='Provides with a link for a dataset download.'
+        self.type='downloader'
+        
+        self.accepts=['df']
+        self.returns=[]
+    def execute(self,df:pd.DataFrame,params={}):
+        #TODO: somehow return a file download to the frontend
+        #expecting params object to have
+        #index flag
+        #name of the file = smth about function parameters
+        df.to_csv(MEDIA_ROOT+'temp/',index=params['index'])
+        return True
 '''
 #leaving out the constructor intentionally so to not nuke the memory of the host on every api call
 class LoadCSV:
