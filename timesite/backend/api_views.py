@@ -177,6 +177,18 @@ def get_datastore_items_csv(request):
         })
     return Response(l)
 
+@api_view()
+def get_foreign_datastore_item(request,func_id):
+    '''
+    Retrieves a name of a datastore item used in a pipeline for the guest mode
+    '''
+    func_obj=models.FunctionParams.objects.get(id=func_id)
+    data_obj=models.DataFile.objects.get(id=func_obj.info['data_obj'])
+    if data_obj.display_in_guest_mode:
+        return Response(data_obj.name)
+    else:
+        return Response(status=403)
+
 @api_view(['POST'])
 def accept_csv_load(request,id):
     updating = request.POST.get('update')
