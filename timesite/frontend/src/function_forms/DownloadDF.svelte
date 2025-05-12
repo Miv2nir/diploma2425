@@ -1,9 +1,9 @@
 <script>
     let {func_obj=$bindable(),
-      form_submitted=$bindable(false),
-      proj_obj,
-      is_author=$bindable(false),
-      pipeline_length=$bindable(0)} = $props();
+    form_submitted=$bindable(false),
+    proj_obj,
+    is_author=$bindable(false),
+    pipeline_length=$bindable(0)} = $props();
     import { onMount } from 'svelte';
     import {getRequest, postRequest} from "../lib/APICalls.js";
     import Cookies from 'js-cookie';
@@ -50,6 +50,10 @@
     <form action="/api/functions/{proj_obj.id}/accept_renderer/" method="POST" id="renderer_form" onsubmit={()=>sendForm()}>
         <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
         <input type="hidden" name="func_name" value="{func_obj.name}">
+        <label for="index_toggle">Write row names (index):</label>
+        <input type="checkbox" name="index_toggle" id='index_toggle'>
+        <br>
+        <br>
         {#if is_author}
         <button type="button" class="login-button-primary" onclick={()=>sendForm()}>Set Renderer</button>
         {/if}

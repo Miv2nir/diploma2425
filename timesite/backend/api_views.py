@@ -357,6 +357,9 @@ def accept_renderer(request,id):
         'params':params_dict
     }
     #determine the object
+    func_name=request.POST.get('func_name')
+    if func_name=='DownloadDF':
+        pass
     #DownloadDF needs a reference onto the function object for setting the file name
     
     
@@ -381,54 +384,10 @@ def accept_renderer(request,id):
             return Response(404)
         else:
             print('new object, creating')
-            param_obj=models.FunctionParams(project=proj_obj,order=order,func_name='RenderDF',info=params)
+            param_obj=models.FunctionParams(project=proj_obj,order=order,func_name=func_name,info=params)
             param_obj.save()
     return Response(status=201)
     
-@api_view(['POST'])  
-def accept_downloader(request,id):
-    updating = request.POST.get('update')
-    print('aaaa',updating)
-    #identify project
-    try:
-        proj_obj = models.Project.objects.get(pk=id)
-    except models.Project.DoesNotExist:
-        return Response(status=404)
-    #verify if permitted to edit
-    if request.user != proj_obj.user:
-        return Response(status=403)
-    params_dict={}
-    params={
-        'accept':'df', #temporary definition, should be appointed programmatically so to allow suppliment of additional
-        'params_type':'dict',
-        'params':params_dict
-    }
-    #determine the order
-    
-    order=request.POST.get('order')
-    print('order:',order)
-    if order==None: #new object
-        order=len(models.FunctionParams.objects.filter(project=proj_obj))
-    else: #updating
-        pass
-    print('order:',order)
-    #order=len(models.FunctionParams.objects.filter(project=proj_obj))
-    try:
-        param_obj=models.FunctionParams.objects.filter(project=proj_obj,order=order)[0]
-        if updating=='true':
-            print('existing object, updating')
-            param_obj.save()
-        else:
-            print('existing object, not updating')
-            return Response(403) #clashing with existing object
-    except IndexError:
-        if updating=='update':
-            return Response(404)
-        else:
-            print('new object, creating')
-            param_obj=models.FunctionParams(project=proj_obj,order=order,func_name='RenderDF',info=params)
-            param_obj.save()
-    return Response(status=201)
 
 @api_view(['POST'])
 def invoke_runtime(request,id):

@@ -6,6 +6,7 @@
     import LoadCSV from "../function_forms/LoadCSV.svelte";
     import DropColumns from "../function_forms/DropColumns.svelte";
     import RenderDf from "../function_forms/RenderDF.svelte";
+    import DownloadDf from "../function_forms/DownloadDF.svelte";
     import RuntimeQueryer from "../elements/RuntimeQueryer.svelte";
     let {author,
       proj_obj,
@@ -68,6 +69,13 @@
         {/if}
         {#if func_obj.name=='RenderDF'}
         <RenderDf bind:func_obj={func_obj}
+         bind:form_submitted={form_submitted}
+          proj_obj={proj_obj}
+          bind:pipeline_length={pipeline_length}
+          bind:is_author={is_author}/>
+        {/if}
+        {#if func_obj.name=='DownloadDF'}
+        <DownloadDf bind:func_obj={func_obj}
          bind:form_submitted={form_submitted}
           proj_obj={proj_obj}
           bind:pipeline_length={pipeline_length}
