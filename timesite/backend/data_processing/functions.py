@@ -50,13 +50,16 @@ class FillNA:
             for i in df.columns:
                 mean_value=df[i].mean()
                 df[i].fillna(value=mean_value,inplace=True)
-            #value fill will replace all nans with a specific value (not implemented)
         elif params['fill_mode']=='ffill':
             #forward fill - propagate last values to next valid
             df.ffill(inplace=True)
         elif params['fill_mode']=='bfill':
             #backward fill - propagate next valid values backwards until the last valid
             df.bfill(inplace=True)
+        elif params['fill_mode']=='value':
+            #value fill will replace all nans with a specific value
+            value_number=params['value']
+            df.fillna(value=value_number,inplace=True)
         return df
 
 class RenderDF:

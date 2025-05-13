@@ -16,6 +16,7 @@
     })
     var func_params=$state();
     var mode_selection=$state('');
+    var value_number=$state(0.0);
     //var is_value=$state()
     async function sendForm() {
       console.log('sending form');
@@ -34,7 +35,10 @@
         const l = await getRequest('/api/params/'+func_obj.params_id+'/get_params/');
         console.log(l.info.params);
         func_params=l.info.params;
-        mode_selection=func_params['fill_mode']
+        mode_selection=func_params['fill_mode'];
+        if (mode_selection=='value'){
+            value_number=parseFloat(func_params['value']);
+        }
     }
     if (func_obj.params_id){
         //console.log('Editing!');
@@ -71,12 +75,18 @@
         {/if}
         <label for="fill_mode">Select fill mode:</label>
         <br>
-        <select name="fill_mode" class="selector" value={mode_selection} disabled={!is_author}>
+        <select name="fill_mode" class="selector" bind:value={mode_selection} disabled={!is_author}>
             <option class='selector' value='average'>Average Fill (based on column values)</option>
-            <!--option class='selector' value='value'>Fill with set value</option-->
+            <option class='selector' value='value'>Fill with set value</option>
             <option class='selector' value='ffill'>Propagate valid values forward</option>
             <option class='selector' value='bfill'>Propagate valid values backward</option>
         </select>
+        {#if mode_selection=='value'}
+        <br>
+        <br>
+        <label for='value_definition'>Define the value to set in the NaN fields:</label>
+        <input type='number' name='fill_value' value={value_number} class="login-input-box" step='0.001' id='value_definition'>
+        {/if}
         <br>
         <br>
         {#if is_author}

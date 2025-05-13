@@ -321,6 +321,7 @@ def accept_processor(request,id):
         params_dict={'fill_mode':request.POST.get('fill_mode')}
         if request.POST.get('fill_mode')=='value':
             pass #save the value
+            params_dict['value']=request.POST.get('fill_value')
     else:
         params_dict={}
     params={
