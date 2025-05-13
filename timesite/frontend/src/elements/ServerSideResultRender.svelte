@@ -15,12 +15,13 @@ let {
         //the above code will wait for the end of the query process
         //also it doesn't represent the actual end of the execution!!!!!
         //for now check if there is at least one renderer who has finished
-        console.log(request);
+        //console.log(request);
         if (request){
             for (var i in request){
-                //console.log(request[i].resulting_html);
+                console.log(request[i]);
                 render.push({
-                    'html':request[i].resulting_html,
+                    'name':request[i].name,
+                    'output':request[i].resulting_html,
                     'order':i
                 });
                 //tabs.push('<div class="tab" id="'+request[i].name+'_'+String(i)+'">\
@@ -96,9 +97,16 @@ let {
     {#if i.order==selected_render}
         
     <div style="display:flex;justify-content:center;flex-direction:column;align-items:center;">
+        {#if i.name==='DownloadDF'}
         <div>
-            {@html i.html}
+            <p>Your file is ready to download!</p>
+            <a href="/{i.output}"><button type="button" class="login-button-primary">Download file</button></a>
         </div>
+        {:else}
+        <div>
+            {@html i.output}
+        </div>
+        {/if}
     </div>
     {/if}
 {/each}
