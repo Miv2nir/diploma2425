@@ -41,7 +41,7 @@ class RenderDF:
         
         self.accepts=['df']
         self.returns=[]
-    def execute(self,df:pd.DataFrame):
+    def execute(self,df:pd.DataFrame,params={}):
         html = df.to_html()+'<br>' #get the main thing
         #create shape
         shape_html='<p>'+str(df.shape[0])+' rows, '+str(df.shape[1])+' columns'+'</p>\n'
@@ -51,17 +51,21 @@ class DownloadDF:
         self.initial=False
         self.display_name='Download Dataframe'
         self.description='Provides with a link for a dataset download.'
-        self.type='downloader'
+        self.type='renderer'
         
         self.accepts=['df']
         self.returns=[]
     def execute(self,df:pd.DataFrame,params={}):
+        print('params:',params)
         #TODO: somehow return a file download to the frontend
         #expecting params object to have
         #index flag
+        index=False
+        if params['index']=='on':
+            index=True
         #name of the file = smth about function parameters
-        df.to_csv(MEDIA_ROOT+'temp/',index=params['index'])
-        return True
+        df.to_csv(MEDIA_ROOT+'temp/'+params['params_id']+'.csv',index=index)
+        return MEDIA_ROOT+'temp/'+params['params_id']+'.csv'
 '''
 #leaving out the constructor intentionally so to not nuke the memory of the host on every api call
 class LoadCSV:

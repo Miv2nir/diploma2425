@@ -425,7 +425,7 @@ def invoke_runtime(request,id):
         #1. figure out the function type. Loaders don't accept values from var_store
         print(i.func_name,i.info)
         func_obj=r.get_all()[i.func_name]()
-        print(func_obj)
+        print('Func_Obj:',func_obj)
         try:
             func_status=models.FunctionStatus.objects.filter(func=i)[0]
         except IndexError:
@@ -453,12 +453,17 @@ def invoke_runtime(request,id):
                 }
             elif func_obj.type=='renderer': #only outputs, does not save
                 var_name_load=i.info['accept']
+                try:
+                    params=i.info['params']
+                except KeyError:
+                    params={}
                 #print(func_obj.execute(var_store[var_name_load]))
                 try:
                     result_obj=models.RuntimeRenderResult.objects.filter(func_params=i)[0]
                 except IndexError:
                     result_obj=models.RuntimeRenderResult(func_params=i)
-                result_obj.result=func_obj.execute(var_store[var_name_load])
+                print('test',func_obj)
+                result_obj.result=func_obj.execute(var_store[var_name_load],params)
                 result_obj.save()
                 func_status.info={
                     'loaded':var_name_load
