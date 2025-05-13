@@ -313,9 +313,14 @@ def accept_processor(request,id):
         return Response(status=403)
     #determine the object
     func_name=request.POST.get('func_name')
+    print(func_name)
     if func_name=='DropColumns':
         params_string=request.POST.get('text_params')
         params_dict={'text_params':params_string}
+    elif func_name=='FillNA':
+        params_dict={'fill_mode':request.POST.get('fill_mode')}
+        if request.POST.get('fill_mode')=='value':
+            pass #save the value
     else:
         params_dict={}
     params={
@@ -347,7 +352,7 @@ def accept_processor(request,id):
             return Response(404)
         else:
             print('new object, creating')
-            param_obj=models.FunctionParams(project=proj_obj,order=order,func_name='DropColumns',info=params)
+            param_obj=models.FunctionParams(project=proj_obj,order=order,func_name=func_name,info=params)
             param_obj.save()
     return Response(status=201)
     

@@ -14,10 +14,9 @@
       form=document.getElementById('processor_form');
       //console.log(form);
     })
-    //get order
     var func_params=$state();
-    var text_params=$state('');
-    var order = $state(func_obj.order+1);
+    var mode_selection=$state('');
+    //var is_value=$state()
     async function sendForm() {
       console.log('sending form');
       await fetch(form.action, {method:'post',
@@ -35,7 +34,7 @@
         const l = await getRequest('/api/params/'+func_obj.params_id+'/get_params/');
         console.log(l.info.params);
         func_params=l.info.params;
-        text_params=func_params['text_params'];
+        mode_selection=func_params['fill_mode']
     }
     if (func_obj.params_id){
         //console.log('Editing!');
@@ -43,36 +42,41 @@
     }
     console.log(func_obj);
 </script>
-
 <div>
-  {#if func_obj.params_id}
-  <p>
-  {#if func_obj.accepts.length!=0}
-    <span>Accepts: {func_obj.accepts}</span>
-  {/if}
-  {#if func_obj.produces.length!=0}
-    {#if func_obj.accepts.length!=0}
-    <span>;</span>
+
+    {#if func_obj.params_id}
+    <p>
+        {#if func_obj.accepts.length!=0}
+        <span>Accepts: {func_obj.accepts}</span>
+        {/if}
+        {#if func_obj.produces.length!=0}
+        {#if func_obj.accepts.length!=0}
+        <span>;</span>
+        {/if}
+        <span>Produces: {func_obj.produces}</span>
+        {/if}
+    </p>
+    {#if is_author}
+    <OrderButtons bind:func_obj={func_obj}
+    bind:form_submitted={form_submitted}
+    bind:pipeline_length={pipeline_length}/>
     {/if}
-    <span>Produces: {func_obj.produces}</span>
-  {/if}
-  </p>
-  {#if is_author}
-  <OrderButtons bind:func_obj={func_obj}
-  bind:form_submitted={form_submitted}
-  bind:pipeline_length={pipeline_length}/>
-  {/if}
-  <br>
-  {/if}
-    <form action="/api/functions/{proj_obj.id}/accept_processor/" method="POST" id="processor_form" onsubmit={()=>sendForm()}>
+    <br>
+    {/if}
+        <form action="/api/functions/{proj_obj.id}/accept_processor/" method="POST" id="processor_form" onsubmit={()=>sendForm()}>
         <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
         <input type="hidden" name="func_name" value="{func_obj.name}">
         {#if func_obj.params_id}
         <input type="hidden" name="update" value="true">
         {/if}
-        <label for="text_columns_definitions">Define column names, separated by comma:</label>
+        <label for="fill_mode">Select fill mode:</label>
         <br>
-        <input type="text" disabled={!is_author} name="text_params" value={text_params} class="login-input-box" id="text_columns_definitions">
+        <select name="fill_mode" class="selector" value={mode_selection} disabled={!is_author}>
+            <option class='selector' value='average'>Average Fill (based on column values)</option>
+            <!--option class='selector' value='value'>Fill with set value</option-->
+            <option class='selector' value='ffill'>Propagate valid values forward</option>
+            <option class='selector' value='bfill'>Propagate valid values backward</option>
+        </select>
         <br>
         <br>
         {#if is_author}
