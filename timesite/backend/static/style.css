@@ -1,6 +1,7 @@
 :root {
     font-size: 20px;
     font-family: 'Open Sans';
+    /*
     --bg-color: #f7efff;
     --highlight-color: white;
     --highlight-color-hover: #f0f7fe;
@@ -9,6 +10,15 @@
     --border-color: #8712fe;
     --hover-color: #a752fc;
     --shadow-color: #c497f0;
+    */
+    --bg-color: #eff5ff;
+    --highlight-color: white;
+    --highlight-color-hover: #f0f7fe;
+    --selection-color: #edf7ff;
+    --selection-color-list: #eef6fc;
+    --border-color: #1222fe;
+    --hover-color: #5552fc;
+    --shadow-color: #9798f0;
     --error-text-color: red;
     --status-text-color: #1dbe1d;
     --text-color: black;
