@@ -311,13 +311,19 @@ def accept_processor(request,id):
     #verify if permitted to edit
     if request.user != proj_obj.user:
         return Response(status=403)
-    params_string=request.POST.get('text_params')
+    #determine the object
+    func_name=request.POST.get('func_name')
+    if func_name=='DropColumns':
+        params_string=request.POST.get('text_params')
+        params_dict={'text_params':params_string}
+    else:
+        params_dict={}
     params={
         'accept':'df',
         'save_as':'df',
         'in_place':True,
-        'params_type':'str',
-        'params':params_string
+        'params_type':'dict',
+        'params':params_dict
     }
     order=request.POST.get('order')
     print('order:',order)
@@ -453,8 +459,11 @@ def invoke_runtime(request,id):
             elif func_obj.type=='processor': #changes loaded data, both saves and accepts
                 var_name_load=i.info['accept']
                 var_name_save=i.info['save_as']
-                text_params=i.info['params']
-                var_store[var_name_save]=func_obj.execute(var_store[var_name_load],text_params)
+                try:
+                    params=i.info['params']
+                except KeyError:
+                    params={}
+                var_store[var_name_save]=func_obj.execute(var_store[var_name_load],params)
                 func_status.info={
                     'loaded':var_name_load,
                     'saved_as':var_name_save

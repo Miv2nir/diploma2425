@@ -28,19 +28,27 @@ class DropColumns:
         
         self.accepts=['df']
         self.returns=['df']
-    def execute(self,df:pd.DataFrame,columns:str):
-        columns_list=str.split('.')
-        return df.drop(columns=columns)
+    def execute(self,df:pd.DataFrame,params={}):
+        columns=params['text_params']
+        columns_list=columns.split(',')
+        return df.drop(columns=columns_list)
 
 class FillNA:
     def __init__(self):
         self.initial=False
         self.display_name='Fill NaN'
         self.description='Fills all of the NaN values in accordance to a specified method'
+        
         self.type='processor'
         self.accepts=['df']
         self.returns=['df']
-    def execute(self,df:pd.DataFrame):
+    def execute(self,df:pd.DataFrame,params={}):
+        #expected values
+        #medhot: value fill, ffill, bfill, average fill
+        #average fill - calculate averages in columns and fill them out (main method used)
+        #value fill will replace all nans with a specific value
+        #forward fill - propagate last values to next valid
+        #backward fill - propagate next valid values backwards until the last valid
         pass
 
 class RenderDF:

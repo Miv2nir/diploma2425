@@ -15,7 +15,8 @@
       //console.log(form);
     })
     //get order
-    var func_params=$state('');
+    var func_params=$state();
+    var text_params=$state('');
     var order = $state(func_obj.order+1);
     async function sendForm() {
       console.log('sending form');
@@ -32,8 +33,9 @@
     }
     async function getParams(){
         const l = await getRequest('/api/params/'+func_obj.params_id+'/get_params/');
-        //console.log(l.info.params);
+        console.log(l.info.params);
         func_params=l.info.params;
+        text_params=func_params['text_params'];
     }
     if (func_obj.params_id){
         //console.log('Editing!');
@@ -64,12 +66,13 @@
   {/if}
     <form action="/api/functions/{proj_obj.id}/accept_processor/" method="POST" id="processor_form" onsubmit={()=>sendForm()}>
         <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
+        <input type="hidden" name="func_name" value="{func_obj.name}">
         {#if func_obj.params_id}
         <input type="hidden" name="update" value="true">
         {/if}
         <label for="csv_files_selection">Define column names, separated by comma:</label>
         <br>
-        <input type="text" disabled={!is_author} name="text_params" value={func_params} class="login-input-box" id="text_columns_definitions">
+        <input type="text" disabled={!is_author} name="text_params" value={text_params} class="login-input-box" id="text_columns_definitions">
         <br>
         <br>
         {#if is_author}
