@@ -45,11 +45,19 @@ class FillNA:
     def execute(self,df:pd.DataFrame,params={}):
         #expected values
         #medhot: value fill, ffill, bfill, average fill
-        #average fill - calculate averages in columns and fill them out (main method used)
-        #value fill will replace all nans with a specific value
-        #forward fill - propagate last values to next valid
-        #backward fill - propagate next valid values backwards until the last valid
-        pass
+        if params['fill_mode']=='average':
+            #average fill - calculate averages in columns and fill them out (main method used)
+            for i in df.columns:
+                mean_value=df[i].mean()
+                df[i].fillna(value=mean_value,inplace=True)
+            #value fill will replace all nans with a specific value (not implemented)
+        elif params['fill_mode']=='ffill':
+            #forward fill - propagate last values to next valid
+            df.ffill(inplace=True)
+        elif params['fill_mode']=='bfill':
+            #backward fill - propagate next valid values backwards until the last valid
+            df.bfill(inplace=True)
+        return df
 
 class RenderDF:
     def __init__(self):
