@@ -358,11 +358,16 @@ def accept_renderer(request,id):
     }
     #determine the object
     func_name=request.POST.get('func_name')
-    if func_name=='DownloadDF':
-        pass
     #DownloadDF needs a reference onto the function object for setting the file name
+    def download_df_treatment(params_dict,param_obj):
+        if func_name=='DownloadDF':
+            params_dict['params_id']=str(param_obj.id)
+        return params_dict
+    #handle the rest of the form
+    if func_name=='DownloadDF':
+        params_dict['index']=request.POST.get('index_toggle')
     
-    
+    #determine function order
     order=request.POST.get('order')
     print('order:',order)
     if order==None: #new object
@@ -375,6 +380,8 @@ def accept_renderer(request,id):
         param_obj=models.FunctionParams.objects.filter(project=proj_obj,order=order)[0]
         if updating=='true':
             print('existing object, updating')
+            params_dict=download_df_treatment(params_dict,param_obj)
+            param_obj.info=params
             param_obj.save()
         else:
             print('existing object, not updating')
@@ -385,6 +392,8 @@ def accept_renderer(request,id):
         else:
             print('new object, creating')
             param_obj=models.FunctionParams(project=proj_obj,order=order,func_name=func_name,info=params)
+            params_dict=download_df_treatment(params_dict,param_obj)
+            param_obj.info=params
             param_obj.save()
     return Response(status=201)
     

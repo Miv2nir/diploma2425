@@ -16,6 +16,8 @@
     })
     //get order
     var order = $state(func_obj.order+1);
+    var func_params=$state();
+    var func_index=$state(false);
     async function sendForm() {
       console.log('sending form');
       await fetch(form.action, {method:'post',
@@ -28,6 +30,16 @@
         await postRequest('/api/params/'+func_obj.params_id+'/delete_params/',csrftoken);
         func_obj=undefined;
         form_submitted=!form_submitted;
+    }
+    async function getParams(){
+        const l = await getRequest('/api/params/'+func_obj.params_id+'/get_params/');
+        func_params=l.info.params;
+        console.log(func_params['index']);
+        func_index=func_params['index'];
+    }
+    if (func_obj.params_id){
+        //console.log('Editing!');
+        getParams();
     }
     console.log(func_obj);
 </script>
@@ -50,8 +62,11 @@
     <form action="/api/functions/{proj_obj.id}/accept_renderer/" method="POST" id="renderer_form" onsubmit={()=>sendForm()}>
         <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
         <input type="hidden" name="func_name" value="{func_obj.name}">
+        {#if func_obj.params_id}
+        <input type="hidden" name="update" value="true">
+        {/if}
         <label for="index_toggle">Write row names (index):</label>
-        <input type="checkbox" name="index_toggle" id='index_toggle'>
+        <input type="checkbox" name="index_toggle" id='index_toggle' checked={func_index}>
         <br>
         <br>
         {#if is_author}
