@@ -32,6 +32,17 @@ class DropColumns:
         columns_list=str.split('.')
         return df.drop(columns=columns)
 
+class FillNA:
+    def __init__(self):
+        self.initial=False
+        self.display_name='Fill NaN'
+        self.description='Fills all of the NaN values in accordance to a specified method'
+        self.type='processor'
+        self.accepts=['df']
+        self.returns=['df']
+    def execute(self,df:pd.DataFrame):
+        pass
+
 class RenderDF:
     def __init__(self):
         self.initial=False

@@ -12,19 +12,19 @@ class Registry:
         self.loaders={
             'LoadCSV':LoadCSV
         }
+        self.processors={
+            'DropColumns':DropColumns,
+            'FillNA':FillNA
+        }
         self.renderers={
             'RenderDF':RenderDF,
             'DownloadDF':DownloadDF
         }
-        self.processors={
-            'DropColumns':DropColumns
-        }
-        self.splitters={}
         self.models={}
 
     def get_all(self):
         l={}
-        all_functions=[self.loaders,self.renderers,self.processors,self.splitters,self.models]
+        all_functions=[self.loaders,self.processors,self.renderers,self.models]
         for i in all_functions:
             for j in i.keys():
                 l[j]=i[j]

@@ -143,7 +143,7 @@ def get_functions_all(request):
     l['loaders']=_assemble_info(r.loaders)
     l['renderers']=_assemble_info(r.renderers)
     l['processors']=_assemble_info(r.processors)
-    l['splitters']=_assemble_info(r.splitters)
+    #l['splitters']=_assemble_info(r.splitters)
     l['models']=_assemble_info(r.models)
     return Response(l)
 
