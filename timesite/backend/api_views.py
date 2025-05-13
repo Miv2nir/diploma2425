@@ -16,6 +16,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth.models import User
 import json
+from timesite.settings import MEDIA_ROOT
+import pathlib
 
 from time import sleep
 #TODO: rewrite login_required to dump a 401 if user not authorized
@@ -280,10 +282,16 @@ def delete_params(request,params_id):
     #check if authorized
     print(request.user)
     proj_obj=param_obj.project
+    #log the order to shift other functions accordingly
     old_order=param_obj.order
     if request.user!=param_obj.project.user:
         return Response(status=403)
     #finally, perform the deletion
+    if param_obj.func_name=='DownloadDF':
+        path_to_file=MEDIA_ROOT+'temp/'+str(param_obj.id)+'.csv'
+        target_file=pathlib.Path(path_to_file)
+        target_file.unlink(missing_ok=True)
+        print(path_to_file)
     param_obj.delete()
     #move the remaining objects back
     for i in models.FunctionParams.objects.filter(project=proj_obj,order__gt=old_order):
