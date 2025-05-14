@@ -19,6 +19,8 @@ import json
 from timesite.settings import MEDIA_ROOT
 import pathlib
 
+import traceback
+
 from time import sleep
 #TODO: rewrite login_required to dump a 401 if user not authorized
 # the frontend will need to preserve the url and redirect to /login with query being the current logged in page
@@ -322,6 +324,13 @@ def accept_processor(request,id):
         if request.POST.get('fill_mode')=='value':
             pass #save the value
             params_dict['value']=request.POST.get('fill_value')
+    elif func_name=='GetQuantile':
+        #params_dict['quantile']=request.POST.get('q')
+        #params_dict['numeric_only']=request.POST.get('numeric_only')
+        params_dict={
+            'quantile':request.POST.get('q'),
+            'numeric_only':request.POST.get('numeric_only')
+        }
     else:
         params_dict={}
     params={
@@ -496,6 +505,7 @@ def invoke_runtime(request,id):
             func_status.status='OK'
             func_status.save()
         except Exception as e: 
+            print(traceback.format_exc())
             func_status.status='ER'
             func_status.info={
                 'error':repr(e)

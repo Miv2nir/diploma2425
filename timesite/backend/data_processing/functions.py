@@ -79,7 +79,20 @@ class DropNA:
     def execute(self,df:pd.DataFrame,params={}):
         df.dropna(axis=0,inplace=True)
         return df
-
+class GetQuantile:
+    def __init__(self):
+        self.initial=False
+        self.display_name='Quantile'
+        self.description='Calculates quantile of a dataset'
+        self.type='processor'
+        self.accepts=['df']
+        self.returns=['df']
+    def execute(self,df:pd.DataFrame,params={}):
+        quantile=float(params['quantile'])
+        numeric_only=params['numeric_only']
+        #method=params['method']
+        return df.quantile(quantile,numeric_only=numeric_only).to_frame()
+        
 class RenderDF:
     def __init__(self):
         self.initial=False

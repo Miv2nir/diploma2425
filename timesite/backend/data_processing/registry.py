@@ -15,7 +15,8 @@ class Registry:
         self.processors={
             'DropColumns':DropColumns,
             'FillNA':FillNA,
-            'DropNA':DropNA
+            'DropNA':DropNA,
+            'GetQuantile':GetQuantile
         }
         self.renderers={
             'RenderDF':RenderDF,
