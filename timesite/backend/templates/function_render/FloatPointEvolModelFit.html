@@ -1,0 +1,12 @@
+{% load filters %}
+<div>
+    <h3>Calculated Parameters:</h3>
+    {%for item in models_params%}
+    <div>
+        <h3>{{item}}:</h3>
+        {%for i in models_params|get_item:item %}
+        <p>{{i}}: {{models_params|get_item:item|get_item:i}}</p>
+        {%endfor%}
+    </div>
+    {%endfor%}
+</div>

@@ -4,7 +4,9 @@ from timesite.settings import MEDIA_ROOT
 
 from statsmodels.tsa.ar_model import AutoReg
 import numpy as np
+from django.template.loader import render_to_string
 
+import os
 from backend.data_processing.supplied_models import *
 '''
 self.initial - declares whether the function is the leading function in a pipeline
@@ -152,9 +154,13 @@ class FloatPointEvolModelFit:
         #returns models_params
         #somehow should also make a render of an output
         return models_params
-    def render(self,execution_result={}):
+    def render(self,execution_result):
         #produce a representation for the result object
-        return str(execution_result)
+        #return str(execution_result)
+        print(os.getcwd())
+        return render_to_string('function_render/FloatPointEvolModelFit.html',{
+            'models_params':execution_result
+        })
 '''
 #leaving out the constructor intentionally so to not nuke the memory of the host on every api call
 class LoadCSV:
