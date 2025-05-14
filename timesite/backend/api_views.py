@@ -471,6 +471,7 @@ def accept_model(request,id):
     if func_name=='FloatPointEvolModelFit':
         #one part of the integrated model work, produces a dictionary with parameters
         params_dict={
+            'chosen_column':request.POST.get('chosen_column'),
             'p':request.POST.get('p'),
             'q':request.POST.get('q'),
             'jump_threshold':request.POST.get('jump_threshold')

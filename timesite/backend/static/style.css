@@ -86,6 +86,9 @@ a {
 .login-input-box.small{
     width: 30%;
 }
+.login-input-box.smaller{
+    width: 10%;
+}
 
 .login-button-primary {
     width: 80%;
