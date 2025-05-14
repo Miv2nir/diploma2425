@@ -1,6 +1,11 @@
 import pandas as pd
 import backend.models as models
 from timesite.settings import MEDIA_ROOT
+
+from statsmodels.tsa.ar_model import AutoReg
+import numpy as np
+
+from backend.data_processing.supplied_models import *
 '''
 self.initial - declares whether the function is the leading function in a pipeline
 self.type - self-referential property declaring its subclass. To be replaced with smth better most likely.
@@ -96,6 +101,29 @@ class DownloadDF:
         #name of the file = smth about function parameters
         df.to_csv(MEDIA_ROOT+'temp/'+params['params_id']+'.csv',index=index)
         return MEDIA_ROOT+'temp/'+params['params_id']+'.csv'
+    
+class FloatPointEvolModelFit:
+    def __init__(self):
+        self.initial=False
+        self.display_name='Floating Point Evolution Model Fitting'
+        self.description='Math Model defining Evolution of a Floating Point through utilization of several processes.\
+            This function is required for the execution of the model.'
+        self.type='model'
+        self.accepts=['df']
+        self.returns=['models_params']
+    def execute(self,df:pd.DataFrame,params={}):
+        #tenor is a column from a dataset
+        chosen_column=params['chosen_column']
+        #tenor = df[chosen_column]
+        tenor = chosen_column
+        #p,q,dist,jump_threshold - all need to appear in a form on the frontend
+        p=params['p']
+        q=params['q']
+        dist=params['dist'] #set up presets for it
+        jump_threshold=params['jump_threshold']
+        models_params=calibrate_models(df,tenor,p,q,dist,jump_threshold)
+        #returns models_params
+        return models_params
 '''
 #leaving out the constructor intentionally so to not nuke the memory of the host on every api call
 class LoadCSV:
