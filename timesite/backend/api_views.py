@@ -345,8 +345,8 @@ def accept_processor(request,id):
     else:
         params_dict={}
     params={
-        'accept':'df',
-        'save_as':'df',
+        'accept':request.POST.get('load_var_name'),
+        'save_as':request.POST.get('save_var_name'),
         'in_place':True,
         'params_type':'dict',
         'params':params_dict

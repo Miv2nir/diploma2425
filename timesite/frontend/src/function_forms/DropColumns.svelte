@@ -17,7 +17,8 @@
     //get order
     var func_params=$state();
     var text_params=$state('');
-    var order = $state(func_obj.order+1);
+    var save_var_name=$state('df');
+    var load_var_name=$state('df');
     async function sendForm() {
       console.log('sending form');
       await fetch(form.action, {method:'post',
@@ -36,6 +37,9 @@
         console.log(l.info.params);
         func_params=l.info.params;
         text_params=func_params['text_params'];
+        save_var_name=func_obj.produces;
+        load_var_name=func_obj.accepts;
+
     }
     if (func_obj.params_id){
         //console.log('Editing!');
@@ -70,9 +74,17 @@
         {#if func_obj.params_id}
         <input type="hidden" name="update" value="true">
         {/if}
+        <label for="var_name">Load the DataFrame under the following name:</label>
+        <input type="text" class="login-input-box" id="var_name" name="load_var_name" value={load_var_name}>
+        <br>
+        <br>
         <label for="text_columns_definitions">Define column names, separated by comma:</label>
         <br>
         <input type="text" disabled={!is_author} name="text_params" value={text_params} class="login-input-box" id="text_columns_definitions">
+        <br>
+        <br>
+        <label for="var_name">Save the DataFrame as:</label>
+        <input type="text" class="login-input-box" id="var_name" name="save_var_name" value={save_var_name}>
         <br>
         <br>
         {#if is_author}
