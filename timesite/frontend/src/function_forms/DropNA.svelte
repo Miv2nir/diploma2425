@@ -69,11 +69,11 @@
         <input type="hidden" name="update" value="true">
         {/if}
         <label for="var_name">Load DataFrame from:</label>
-        <input type="text" class="login-input-box small" id="var_name" name="load_var_name" value={load_var_name}>
+        <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="load_var_name" value={load_var_name}>
         <br>
         <br>
         <label for="var_name">Store changes as:</label>
-        <input type="text" class="login-input-box small" id="var_name" name="save_var_name" value={save_var_name}>
+        <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="save_var_name" value={save_var_name}>
         <br>
         <br>
         {#if is_author}

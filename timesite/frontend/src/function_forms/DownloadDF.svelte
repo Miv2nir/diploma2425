@@ -68,11 +68,11 @@
         <input type="hidden" name="update" value="true">
         {/if}
         <label for="var_name">Load  DataFrame from:</label>
-        <input type="text" class="login-input-box small" id="var_name" name="load_var_name" value={load_var_name}>
+        <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="load_var_name" value={load_var_name}>
         <br>
         <br>
         <label for="index_toggle">Write row names (index):</label>
-        <input type="checkbox" style="transform:scale(1.5);" name="index_toggle" id='index_toggle' checked={func_index}>
+        <input type="checkbox" disabled={!is_author} style="transform:scale(1.5);" name="index_toggle" id='index_toggle' checked={func_index}>
         <br>
         <br>
         {#if is_author}

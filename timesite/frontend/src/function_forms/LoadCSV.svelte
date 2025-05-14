@@ -97,7 +97,7 @@
         <br>
         <br>
         <label for="var_name">Store DataFrame as:</label>
-        <input type="text" class="login-input-box small" id="var_name" name="var_name" value={save_var_name}>
+        <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="var_name" value={save_var_name}>
         <br>
         <br>
         {#if is_author}
