@@ -256,6 +256,10 @@ def get_pipeline(request,id):
     l=[]
     for i in lookup:
         func_obj=f_list[i.func_name]()
+        try:
+            produces=i.info['save_as']
+        except KeyError:
+            produces=func_obj.returns
         l.append({
             'name':i.func_name,
             'display_name':func_obj.display_name,
@@ -263,7 +267,7 @@ def get_pipeline(request,id):
             'description':func_obj.description,
             'params_id':str(i.id),
             'accepts':func_obj.accepts,
-            'produces':func_obj.returns
+            'produces':produces
             })
     return Response(l)
 

@@ -56,7 +56,7 @@
         func_obj=undefined;
         form_submitted=!form_submitted;
     }
-
+    $inspect(func_obj).with(console.trace);
 </script>
 
 <div>
