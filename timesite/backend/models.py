@@ -16,6 +16,8 @@ class UserInfo(models.Model):
 class UserPFP(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     pfp=models.ImageField(null=True,blank=True,upload_to='user_pfps/')
+    def __str__(self):
+        return str(self.user)+"'s PFP object"
 
 class ProjectTag(models.Model):
     user=models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
@@ -66,7 +68,8 @@ class ProjectPin(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     project=models.ForeignKey(Project,on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
-    
+    def __str__(self):
+        return 'Pin of project '+str(self.project)+' for '+str(self.user)
 #cache models
 #class LoaderParams(models.Model):
 #    project=models.ForeignKey(Project,on_delete=models.CASCADE)
@@ -80,6 +83,8 @@ class FunctionParams(models.Model):
     order=models.IntegerField(default=0)
     func_name=models.CharField(max_length=100)
     info=models.JSONField()
+    def __str__(self):
+        return 'Function Parameters for '+self.func_name+' in '+str(self.project)
     
 class FunctionStatus(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -92,12 +97,16 @@ class FunctionStatus(models.Model):
         ('ER','Errored!')
     )
     status=models.CharField(choices=STATUSES,default='NE')
+    def __str__(self):
+        return 'Runtime status for '+str(self.func)
 
 class RuntimeRenderResult(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     func_params=models.ForeignKey(FunctionParams,on_delete=models.CASCADE)
     result=models.TextField(blank=True)
     #file=models.FileField(upload_to='temp/',blank=True,null=True)
+    def __str__(self):
+        return 'Results for '+str(self.func_params)
 
     
     
