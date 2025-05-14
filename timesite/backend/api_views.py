@@ -211,10 +211,14 @@ def accept_csv_load(request,id):
     data_obj=models.DataFile.objects.get(id=dataset_id)
     print('test',request.POST.get('var_name'))
     #handle pipeline saving
+    if request.POST.get('var_name'):
+        save_as=request.POST.get('var_name')
+    else:
+        save_as='df'
     params={
         'data_obj':str(data_obj.id),
         #'save_as':'df' #temporary definition, should be appointed programmatically so to allow suppliment of additional
-        'save_as':request.POST.get('var_name')
+        'save_as':save_as
     }
     #get order from the frontend
     order=request.POST.get('order')
@@ -300,7 +304,7 @@ def delete_params(request,params_id):
     if request.user!=param_obj.project.user:
         return Response(status=403)
     #finally, perform the deletion
-    if param_obj.func_name=='DownloadDF':
+    if param_obj.func_name=='DownloadDF': #nuke the file if exists
         path_to_file=MEDIA_ROOT+'temp/'+str(param_obj.id)+'.csv'
         target_file=pathlib.Path(path_to_file)
         target_file.unlink(missing_ok=True)
@@ -344,9 +348,17 @@ def accept_processor(request,id):
         }
     else:
         params_dict={}
+    if request.POST.get('load_var_name'):
+        accept=request.POST.get('load_var_name')
+    else:
+        accept='df'
+    if request.POST.get('save_var_name'):
+        save_as=request.POST.get('save_var_name')
+    else:
+        save_as='df'
     params={
-        'accept':request.POST.get('load_var_name'),
-        'save_as':request.POST.get('save_var_name'),
+        'accept':accept,
+        'save_as':save_as,
         'in_place':True,
         'params_type':'dict',
         'params':params_dict
@@ -391,9 +403,12 @@ def accept_renderer(request,id):
     if request.user != proj_obj.user:
         return Response(status=403)
     params_dict={}
-    print(request.POST.get('load_var_name'))
+    if request.POST.get('load_var_name'):
+        accept=request.POST.get('load_var_name')
+    else:
+        accept='df'
     params={
-        'accept':request.POST.get('load_var_name'), #temporary definition, should be appointed programmatically so to allow suppliment of additional
+        'accept':accept, #temporary definition, should be appointed programmatically so to allow suppliment of additional
         'params_type':'dict',
         'params':params_dict
     }
