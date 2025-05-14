@@ -18,6 +18,8 @@
     //var is_value=$state()
     var value_number=$state(0.0);
     var numeric_only=$state(false);
+    var save_var_name=$state('quant');
+    var load_var_name=$state('df');
     async function sendForm() {
       console.log('sending form');
       await fetch(form.action, {method:'post',
@@ -37,6 +39,8 @@
         func_params=l.info.params;
         value_number=parseFloat(func_params['quantile']);
         numeric_only=func_params['numeric_only'];
+        save_var_name=func_obj.produces;
+        load_var_name=func_obj.accepts;
     }
     if (func_obj.params_id){
         //console.log('Editing!');
@@ -71,12 +75,22 @@
         {#if func_obj.params_id}
         <input type="hidden" name="update" value="true">
         {/if}
+        <label for="var_name">Load DataFrame from:</label>
+        <input type="text" class="login-input-box small" id="var_name" name="load_var_name" value={load_var_name}>
+        <br>
+        <br>
         <label for='value_definition'>Define the quantile value:</label>
         <input type='number' name='q' value={value_number} class="login-input-box" step='0.01' id='value_definition'>
         <br>
         <br>
         <label for="index_toggle">Numeric Values Only:</label>
         <input type="checkbox" style="transform:scale(1.5);" name="numeric_only" id='numeric_toggle' checked={numeric_only}>
+        <br>
+        <br>
+        <label for="var_name">Store changes as:</label>
+        <input type="text" class="login-input-box small" id="var_name" name="save_var_name" value={save_var_name}>
+        <br>
+        <br>
         {#if is_author}
         <br>
         <br>

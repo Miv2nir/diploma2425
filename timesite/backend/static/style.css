@@ -83,6 +83,9 @@ a {
     color: black;
     border-color: black;
 }
+.login-input-box.small{
+    width: 30%;
+}
 
 .login-button-primary {
     width: 80%;

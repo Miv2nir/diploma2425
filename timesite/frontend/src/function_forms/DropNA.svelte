@@ -14,6 +14,8 @@
       form=document.getElementById('processor_form');
       //console.log(form);
     })
+    var save_var_name=$state('df');
+    var load_var_name=$state('df');
     async function sendForm() {
       console.log('sending form');
       await fetch(form.action, {method:'post',
@@ -26,6 +28,17 @@
         await postRequest('/api/params/'+func_obj.params_id+'/delete_params/',csrftoken);
         func_obj=undefined;
         form_submitted=!form_submitted;
+    }
+      async function getParams(){
+        const l = await getRequest('/api/params/'+func_obj.params_id+'/get_params/');
+        //console.log(l.info.params);
+        save_var_name=func_obj.produces;
+        load_var_name=func_obj.accepts;
+
+    }
+    if (func_obj.params_id){
+        //console.log('Editing!');
+        getParams();
     }
 </script>
 
@@ -52,6 +65,17 @@
     <form action="/api/functions/{proj_obj.id}/accept_processor/" method="POST" id="processor_form" onsubmit={()=>sendForm()}>
         <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
         <input type="hidden" name="func_name" value="{func_obj.name}">
+        {#if func_obj.params_id}
+        <input type="hidden" name="update" value="true">
+        {/if}
+        <label for="var_name">Load DataFrame from:</label>
+        <input type="text" class="login-input-box small" id="var_name" name="load_var_name" value={load_var_name}>
+        <br>
+        <br>
+        <label for="var_name">Store changes as:</label>
+        <input type="text" class="login-input-box small" id="var_name" name="save_var_name" value={save_var_name}>
+        <br>
+        <br>
         {#if is_author}
         <button type="button" class="login-button-primary" onclick={()=>sendForm()}>Set Procesor</button>
         {/if}

@@ -17,6 +17,8 @@
     var func_params=$state();
     var mode_selection=$state('');
     var value_number=$state(0.0);
+    var save_var_name=$state('df');
+    var load_var_name=$state('df');
     //var is_value=$state()
     async function sendForm() {
       console.log('sending form');
@@ -39,6 +41,8 @@
         if (mode_selection=='value'){
             value_number=parseFloat(func_params['value']);
         }
+        save_var_name=func_obj.produces;
+        load_var_name=func_obj.accepts;
     }
     if (func_obj.params_id){
         //console.log('Editing!');
@@ -73,6 +77,10 @@
         {#if func_obj.params_id}
         <input type="hidden" name="update" value="true">
         {/if}
+        <label for="var_name">Load DataFrame from:</label>
+        <input type="text" class="login-input-box small" id="var_name" name="load_var_name" value={load_var_name}>
+        <br>
+        <br>
         <label for="fill_mode">Select fill mode:</label>
         <br>
         <select name="fill_mode" class="selector" bind:value={mode_selection} disabled={!is_author}>
@@ -87,6 +95,10 @@
         <label for='value_definition'>Define the value to set in the NaN fields:</label>
         <input type='number' name='fill_value' value={value_number} class="login-input-box" step='0.001' id='value_definition'>
         {/if}
+        <br>
+        <br>
+        <label for="var_name">Store changes as:</label>
+        <input type="text" class="login-input-box small" id="var_name" name="save_var_name" value={save_var_name}>
         <br>
         <br>
         {#if is_author}
