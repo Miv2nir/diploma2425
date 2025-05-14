@@ -32,22 +32,24 @@
         for (var i in pipeline_list){
             console.log(var_store);
             //verify if consumed variables exist
-            for (var j in pipeline_list[i].accepts){
-                const accepted_var = pipeline_list[i].accepts[j]
-                if (!(var_store.has(accepted_var))){
-                    warning+=('['+
-                    pipeline_list[i].name+
-                    ', pos.'+
-                    String(i)+
-                    ']: '+
-                    accepted_var+
-                    ' is not defined!<br>')
-                    console.log(warning);
-                }
+            console.log(pipeline_list[i]);
+            const accepted_var = pipeline_list[i].accepts
+            console.log(accepted_var);
+            if (!(var_store.has(accepted_var)) && (accepted_var.length!=0)){
+                warning+=('['+
+                pipeline_list[i].name+
+                ', pos.'+
+                String(i)+
+                ']: '+
+                accepted_var+
+                ' is not defined!<br>')
+                console.log(warning);
             }
             //append all created variables
-            const produces = new Set(pipeline_list[i].produces);
-            var_store=var_store.union(produces);
+            const produces = pipeline_list[i].produces;
+            console.log(produces);
+            var_store=var_store.add(produces);
+
         }
     }
     async function getPipeline() { //gets called upon pipeline update essentially
