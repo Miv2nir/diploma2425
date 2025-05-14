@@ -14,7 +14,8 @@ class Registry:
         }
         self.processors={
             'DropColumns':DropColumns,
-            'FillNA':FillNA
+            'FillNA':FillNA,
+            'DropNA':DropNA
         }
         self.renderers={
             'RenderDF':RenderDF,

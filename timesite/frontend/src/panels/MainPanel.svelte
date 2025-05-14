@@ -9,6 +9,7 @@
     import DownloadDf from "../function_forms/DownloadDF.svelte";
     import RuntimeQueryer from "../elements/RuntimeQueryer.svelte";
     import FillNa from "../function_forms/FillNA.svelte";
+    import DropNa from "../function_forms/DropNA.svelte";
     let {author,
       proj_obj,
       func_obj=$bindable(),
@@ -70,6 +71,13 @@
         {/if}
         {#if func_obj.name=='FillNA'}
         <FillNa bind:func_obj={func_obj}
+         bind:form_submitted={form_submitted}
+          proj_obj={proj_obj}
+          bind:pipeline_length={pipeline_length}
+          bind:is_author={is_author}/>
+        {/if}
+        {#if func_obj.name=='DropNA'}
+        <DropNa bind:func_obj={func_obj}
          bind:form_submitted={form_submitted}
           proj_obj={proj_obj}
           bind:pipeline_length={pipeline_length}

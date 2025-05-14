@@ -67,6 +67,19 @@ class FillNA:
             df.fillna(value=value_number,inplace=True)
         return df
 
+class DropNA:
+    def __init__(self):
+        self.initial=False
+        self.display_name='Drop NaN'
+        self.description='Drops rows containing NaN values'
+        
+        self.type='processor'
+        self.accepts=['df']
+        self.returns=['df']
+    def execute(self,df:pd.DataFrame,params={}):
+        df.dropna(axis=0,inplace=True)
+        return df
+
 class RenderDF:
     def __init__(self):
         self.initial=False
@@ -105,9 +118,9 @@ class DownloadDF:
 class FloatPointEvolModelFit:
     def __init__(self):
         self.initial=False
-        self.display_name='Floating Point Evolution Model Fitting'
+        self.display_name='Floating Point Evolution Model: Fitting'
         self.description='Math Model defining Evolution of a Floating Point through utilization of several processes.\
-            This function is required for the execution of the model.'
+            This function is required for the execution of the model. Requires a dataset containing values per day.'
         self.type='model'
         self.accepts=['df']
         self.returns=['models_params']
