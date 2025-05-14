@@ -17,7 +17,7 @@
     //console.log(func_obj);
     var datastore_items = $state();
     var guest_mode_name=$state('');
-    var var_name=$state('df');
+    var save_var_name=$state('df');
     async function getData(){
         const l = await getRequest('/api/functions/get_csv_files/');
         datastore_items=l;
@@ -32,6 +32,7 @@
         const l = await getRequest('/api/params/'+func_obj.params_id+'/get_params/');
         selected_data_obj=l.info.data_obj;
         //console.log(l.info.data_obj);
+        save_var_name=func_obj.produces;
     }
     if (func_obj.params_id){
         //console.log('Editing!');
@@ -96,7 +97,7 @@
         <br>
         <br>
         <label for="var_name">Save the DataFrame as:</label>
-        <input type="text" class="login-input-box" id="var_name" name="var_name" value={var_name}>
+        <input type="text" class="login-input-box" id="var_name" name="var_name" value={save_var_name}>
         <br>
         <br>
         {#if is_author}

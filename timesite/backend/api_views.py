@@ -260,13 +260,18 @@ def get_pipeline(request,id):
             produces=i.info['save_as']
         except KeyError:
             produces=func_obj.returns
+            
+        try:
+            accepts=i.info['accept']
+        except KeyError:
+            accepts=func_obj.accepts
         l.append({
             'name':i.func_name,
             'display_name':func_obj.display_name,
             'type':func_obj.type,
             'description':func_obj.description,
             'params_id':str(i.id),
-            'accepts':func_obj.accepts,
+            'accepts':accepts,
             'produces':produces
             })
     return Response(l)
@@ -386,8 +391,9 @@ def accept_renderer(request,id):
     if request.user != proj_obj.user:
         return Response(status=403)
     params_dict={}
+    print(request.POST.get('load_var_name'))
     params={
-        'accept':'df', #temporary definition, should be appointed programmatically so to allow suppliment of additional
+        'accept':request.POST.get('load_var_name'), #temporary definition, should be appointed programmatically so to allow suppliment of additional
         'params_type':'dict',
         'params':params_dict
     }
