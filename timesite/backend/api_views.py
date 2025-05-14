@@ -591,7 +591,25 @@ def invoke_runtime(request,id):
                 func_status.info={
                     'loaded':var_name_load
                 }
-                
+            elif func_obj.type=='model':#performs manipulations with data and produces a result
+                var_name_load=i.info['accept']
+                var_name_save=i.info['save_as']
+                try:
+                    params=i.info['params']
+                except KeyError:
+                    params={}
+                try:
+                    result_obj=models.RuntimeRenderResult.objects.filter(func_params=i)[0]
+                except IndexError:
+                    result_obj=models.RuntimeRenderResult(func_params=i)
+                    
+                var_store[var_name_save]=func_obj.execute(var_store[var_name_load],params)
+                result_obj.result=func_obj.render(var_store[var_name_save])
+                result_obj.save()
+                func_status.info={
+                    'loaded':var_name_load,
+                    'saved_as':var_name_save
+                }
             
             func_status.status='OK'
             func_status.save()
@@ -643,7 +661,7 @@ def get_results(request,id):
     r_list=r.get_all()
     for func_params in func_list: #TODO: optimize with counting the number of renderers
         func_obj=r_list[func_params.func_name]() #dont forget to initialize
-        if func_obj.type=='renderer':
+        if func_obj.type=='renderer' or func_obj.type=='model':
             try:
                 result_obj=models.RuntimeRenderResult.objects.filter(func_params=func_params)[0]
                 response_list[func_params.order]={
