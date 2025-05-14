@@ -22,7 +22,9 @@ class Registry:
             'RenderDF':RenderDF,
             'DownloadDF':DownloadDF
         }
-        self.models={}
+        self.models={
+            'FloatPointEvolModelFit':FloatPointEvolModelFit
+        }
 
     def get_all(self):
         l={}

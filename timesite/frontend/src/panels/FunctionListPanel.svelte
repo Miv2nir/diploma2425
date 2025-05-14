@@ -10,11 +10,13 @@
   var loaders=$state([]);
   var processors=$state([]);
   var renderers=$state([]);
+  var models=$state([]);
   async function setFunctionList(){
     const l = await getRequest('/api/functions/get_all/');
     loaders=l.loaders;
     processors=l.processors;
     renderers=l.renderers;
+    models=l.models;
   }
   setFunctionList();
   //allow for selection of functions for the main panel to update
@@ -43,6 +45,14 @@
       }}}><b>{f.display_name}</b></div>
     {/each}
     {#each renderers as f}
+    <div class="project-item center pointer" onclick={() =>{func_obj={
+      'name':f.name,
+      'display_name':f.display_name,
+      'description':f.description,
+      'params_id':''
+      }}}><b>{f.display_name}</b></div>
+    {/each}
+    {#each models as f}
     <div class="project-item center pointer" onclick={() =>{func_obj={
       'name':f.name,
       'display_name':f.display_name,

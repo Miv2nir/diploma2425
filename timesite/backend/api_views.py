@@ -332,7 +332,7 @@ def accept_processor(request,id):
     func_name=request.POST.get('func_name')
     print(func_name)
     if func_name=='DropColumns':
-        params_string=request.POST.get('text_params')
+        params_string=request.POST.get('text_params') #rewrite to work with the new mode
         params_dict={'text_params':params_string}
     elif func_name=='FillNA':
         params_dict={'fill_mode':request.POST.get('fill_mode')}
@@ -453,6 +453,69 @@ def accept_renderer(request,id):
             param_obj.save()
     return Response(status=201)
     
+@api_view(['POST'])
+def accept_model(request,id):
+    updating = request.POST.get('update')
+    print(updating)
+    #identify project
+    try:
+        proj_obj = models.Project.objects.get(pk=id)
+    except models.Project.DoesNotExist:
+        return Response(status=404)
+    #verify if permitted to edit
+    if request.user != proj_obj.user:
+        return Response(status=403)
+    #determine the object
+    func_name=request.POST.get('func_name')
+    print(func_name)
+    if func_name=='FloatPointEvolModelFit':
+        #one part of the integrated model work, produces a dictionary with parameters
+        params_dict={
+            'p':request.POST.get('p'),
+            'q':request.POST.get('q'),
+            'jump_threshold':request.POST.get('jump_threshold')
+        }
+    else:
+        params_dict={}
+    if request.POST.get('load_var_name'):
+        accept=request.POST.get('load_var_name')
+    else:
+        accept='df'
+    if request.POST.get('save_var_name'):
+        save_as=request.POST.get('save_var_name')
+    else:
+        save_as='df'
+    params={
+        'accept':accept,
+        'save_as':save_as,
+        'in_place':True,
+        'params_type':'dict',
+        'params':params_dict
+    }
+    order=request.POST.get('order')
+    print('order:',order)
+    if order==None: #new object
+        order=len(models.FunctionParams.objects.filter(project=proj_obj))
+    else: #updating
+        pass
+    print('order:',order)
+    try:
+        param_obj=models.FunctionParams.objects.filter(project=proj_obj,order=order)[0]
+        if updating=='true':
+            print('existing object, updating')
+            param_obj.info=params
+            param_obj.save()
+        else:
+            print('existing object, not updating')
+            return Response(403) #clashing with existing object
+    except IndexError:
+        if updating=='update':
+            return Response(404)
+        else:
+            print('new object, creating')
+            param_obj=models.FunctionParams(project=proj_obj,order=order,func_name=func_name,info=params)
+            param_obj.save()
+    return Response(status=201)
 
 @api_view(['POST'])
 def invoke_runtime(request,id):

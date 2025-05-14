@@ -145,10 +145,12 @@ class FloatPointEvolModelFit:
         #p,q,dist,jump_threshold - all need to appear in a form on the frontend
         p=params['p']
         q=params['q']
-        dist=params['dist'] #set up presets for it
+        #dist=params['dist'] #set up presets for it
+        dist='Normal'
         jump_threshold=params['jump_threshold']
         models_params=calibrate_models(df,tenor,p,q,dist,jump_threshold)
         #returns models_params
+        #somehow should also make a render of an output
         return models_params
 '''
 #leaving out the constructor intentionally so to not nuke the memory of the host on every api call
