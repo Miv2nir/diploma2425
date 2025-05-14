@@ -209,11 +209,12 @@ def accept_csv_load(request,id):
     dataset_id=request.POST.get('csv_files')
     print(dataset_id)
     data_obj=models.DataFile.objects.get(id=dataset_id)
-    print(data_obj)
+    print('test',request.POST.get('var_name'))
     #handle pipeline saving
     params={
         'data_obj':str(data_obj.id),
-        'save_as':'df' #temporary definition, should be appointed programmatically so to allow suppliment of additional
+        #'save_as':'df' #temporary definition, should be appointed programmatically so to allow suppliment of additional
+        'save_as':request.POST.get('var_name')
     }
     #get order from the frontend
     order=request.POST.get('order')
@@ -228,7 +229,8 @@ def accept_csv_load(request,id):
         print('param_obj',param_obj)
         if updating=='true':
             print('updating')
-            param_obj.info['data_obj']=str(data_obj.id)
+            #param_obj.info['data_obj']=str(data_obj.id)
+            param_obj.info=params
             param_obj.save()
         else:
             print('not updating')

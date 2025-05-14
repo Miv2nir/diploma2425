@@ -17,6 +17,7 @@
     //console.log(func_obj);
     var datastore_items = $state();
     var guest_mode_name=$state('');
+    var var_name=$state('df');
     async function getData(){
         const l = await getRequest('/api/functions/get_csv_files/');
         datastore_items=l;
@@ -92,6 +93,10 @@
             <option class="selector" value="{selected_data_obj}">{guest_mode_name}</option>
             {/if}
         </select>
+        <br>
+        <br>
+        <label for="var_name">Save the DataFrame as:</label>
+        <input type="text" class="login-input-box" id="var_name" name="var_name" value={var_name}>
         <br>
         <br>
         {#if is_author}
