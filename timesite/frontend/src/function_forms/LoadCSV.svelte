@@ -33,6 +33,7 @@
         selected_data_obj=l.info.data_obj;
         //console.log(l.info.data_obj);
         save_var_name=func_obj.produces;
+        console.log(func_obj.order);
     }
     if (func_obj.params_id){
         //console.log('Editing!');
@@ -75,7 +76,6 @@
     {/if}
     {/if}
 
-    {#key func_obj.params_id}
 <form action="/api/functions/{proj_obj.id}/accept_csv_load/" method="POST" id="csv_load_form" onsubmit={()=>sendForm()}>
     <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
     <input type="hidden" name="func_name" value="{func_obj.name}">
@@ -115,5 +115,4 @@
         {/if}
     </p>
 </form>    
-{/key}
 </div>

@@ -56,6 +56,7 @@
         <div class="project-item center"><b>{func_obj.display_name}</b></div>
         <!--function forms invokation (should probably rewrite into a separate component)-->
         <p>{func_obj.description}</p>
+        {#key func_obj}
         {#if func_obj.name=='LoadCSV'}
         <LoadCSV bind:func_obj={func_obj}
          bind:form_submitted={form_submitted}
@@ -105,6 +106,7 @@
           bind:pipeline_length={pipeline_length}
           bind:is_author={is_author}/>
         {/if}
+        {/key}
         {/if}
         {/if}
         </div>
