@@ -3,7 +3,8 @@
   import LeftDouble from "../elements/panel_buttons/LeftDouble.svelte";
   import {getRequest, postRequest} from "../lib/APICalls.js";
   let {func_obj=$bindable(),
-    is_author=$bindable(false)
+    is_author=$bindable(false),
+    proj_obj
   } = $props();
   //pull the list of all available functions
   //it's going to generate a list of functions in the ui basically
@@ -62,6 +63,7 @@
     {/each}
     {:else}
     <h1>Description</h1>
+    <p>{proj_obj.description}</p>
     {/if}
   </div>
 </div>

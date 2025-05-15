@@ -73,7 +73,8 @@
   <span class="home-main-container">
     {#key form_submitted}
     <FunctionListPanel bind:func_obj={func_obj} 
-    is_author={is_author}/>
+    is_author={is_author}
+    proj_obj={proj_obj}/>
     {/key}
     <MainPanel author={author}
     is_author={is_author}
