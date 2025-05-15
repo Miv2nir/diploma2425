@@ -476,6 +476,19 @@ def accept_model(request,id):
             'q':request.POST.get('q'),
             'jump_threshold':request.POST.get('jump_threshold')
         }
+    elif func_name=='ArchModelFit':
+        params_dict={
+            'chosen_column':request.POST.get('chosen_column'),
+            'mean':request.POST.get('mean'),
+            'lags':request.POST.get('lags'),
+            'vol':request.POST.get('vol'),
+            'p':request.POST.get('p'),
+            'o':request.POST.get('o'),
+            'q':request.POST.get('q'),
+            'power':request.POST.get('power'),
+            'dist':request.POST.get('dist'),
+            'rescale':request.POST.get('rescale')
+        }
     else:
         params_dict={}
     if request.POST.get('load_var_name'):
