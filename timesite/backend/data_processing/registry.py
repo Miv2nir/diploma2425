@@ -23,7 +23,8 @@ class Registry:
             'DownloadDF':DownloadDF
         }
         self.models={
-            'FloatPointEvolModelFit':FloatPointEvolModelFit
+            'FloatPointEvolModelFit':FloatPointEvolModelFit,
+            'ArchModelFit':ArchModelFit
         }
 
     def get_all(self):

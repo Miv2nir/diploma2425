@@ -5,6 +5,7 @@ from timesite.settings import MEDIA_ROOT
 from statsmodels.tsa.ar_model import AutoReg
 import numpy as np
 from django.template.loader import render_to_string
+from arch import arch_model
 
 import os
 from backend.data_processing.supplied_models import *
@@ -161,6 +162,39 @@ class FloatPointEvolModelFit:
         return render_to_string('function_render/FloatPointEvolModelFit.html',{
             'models_params':execution_result
         })
+
+class ArchModelFit:
+    def __init__(self):
+        self.initial=False
+        self.display_name='ARCH Fit'
+        self.description='ARCH Model: Initialization and fitting function.'
+        self.type='model'
+        self.accepts=['df']
+        self.returns=['am']
+    def execute(self,df:pd.DataFrame,params={}):
+        chosen_column=params['chosen_column']
+        #3 apsects to the ARCH model
+        #1. Mean Model
+        #2. Volatility Process
+        #3. Distributions
+        #Each part holds a certain parameter type to supply 
+        #aka on every choice there are special parameter fields
+        mean=params['mean']
+        lags=int(params['lags'])
+        vol=params['vol']
+        p=int(params['p'])
+        o=int(params['o'])
+        q=int(params['q'])
+        power=float(params['power'])
+        dist=params['dist']
+        rescale=bool(params['rescale'])
+        #defaults are defined on the frontend side (probably not the best)
+        am=arch_model(df[chosen_column],
+                      mean=mean,lags=lags,vol=vol,p=p,o=o,q=q,power=power,
+                      dist=dist,rescale=rescale).fit()
+        return am
+        
+        
 '''
 #leaving out the constructor intentionally so to not nuke the memory of the host on every api call
 class LoadCSV:
