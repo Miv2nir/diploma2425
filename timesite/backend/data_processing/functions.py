@@ -140,6 +140,9 @@ class FloatPointEvolModelFit:
         self.type='model'
         self.accepts=['df']
         self.returns=['models_params']
+        
+        self.ar_model=None
+        self.garch_model=None
     def execute(self,df:pd.DataFrame,params={}):
         #tenor is a column from a dataset
         chosen_column=params['chosen_column']
@@ -151,16 +154,20 @@ class FloatPointEvolModelFit:
         #dist=params['dist'] #set up presets for it
         dist='Normal'
         jump_threshold=int(params['jump_threshold'])
-        models_params=calibrate_models(df,tenor,p,q,dist,jump_threshold)
-        #returns models_params
-        #somehow should also make a render of an output
+        result=calibrate_models(df,tenor,p,q,dist,jump_threshold)
+        models_params=result[0]
+        #save models for render work
+        self.ar_model=result[1]
+        self.garch_model=result[2]
         return models_params
     def render(self,execution_result):
         #produce a representation for the result object
         #return str(execution_result)
-        print(os.getcwd())
+        
         return render_to_string('function_render/FloatPointEvolModelFit.html',{
-            'models_params':execution_result
+            'models_params':execution_result,
+            'ar_summary':self.ar_model.summary().as_html(),
+            'garch_summary':self.garch_model.summary().as_html()
         })
 
 class ArchModelFit:

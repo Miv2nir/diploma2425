@@ -47,4 +47,4 @@ def calibrate_models(df, tenor, p=1, q=1, dist='Normal', jump_threshold=3):
             'garch': garch_params,
             'jd': jd_params
         }
-        return models_params
+        return [models_params,ar_model,garch_fit]

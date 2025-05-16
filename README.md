@@ -11,6 +11,8 @@
 - pillow (required for image processing)
 - some other libraries to enable django interop with postgres
 - nodejs (for svelte runtime and serving essentially)
+- arch (model work)
+- statmodels (model work)
 
 # Additional libraries used on the frontend
 - js-cookie - https://github.com/js-cookie/js-cookie

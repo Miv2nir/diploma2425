@@ -1,5 +1,10 @@
 {% load filters %}
-<div>
+<div style="display: flex; flex-direction: column; align-items: center;">
+    <h3>Metrics:</h3>
+    <h3>AutoRegressive Process:</h3>
+    {{ar_summary|safe}}
+    <h3>GARCH Process:</h3>
+    {{garch_summary|safe}}
     <h3>Calculated Parameters:</h3>
     {%for item in models_params%}
     <div>
