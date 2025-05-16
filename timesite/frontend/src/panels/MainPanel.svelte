@@ -13,6 +13,7 @@
     import GetQuantile from "../function_forms/GetQuantile.svelte";
     import FloatPointEvolModelFit from "../function_forms/FloatPointEvolModelFit.svelte";
     import ArchModelFit from "../function_forms/ArchModelFit.svelte";
+    import LinePlotDf from "../function_forms/LinePlotDF.svelte";
     let {author,
       proj_obj,
       func_obj=$bindable(),
@@ -117,6 +118,13 @@
         {/if}
         {#if func_obj.name=='ArchModelFit'}
         <ArchModelFit bind:func_obj={func_obj}
+         bind:form_submitted={form_submitted}
+          proj_obj={proj_obj}
+          bind:pipeline_length={pipeline_length}
+          bind:is_author={is_author}/>
+        {/if}
+        {#if func_obj.name=='LinePlotDF'}
+        <LinePlotDf bind:func_obj={func_obj}
          bind:form_submitted={form_submitted}
           proj_obj={proj_obj}
           bind:pipeline_length={pipeline_length}
