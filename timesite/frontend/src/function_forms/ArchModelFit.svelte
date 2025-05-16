@@ -112,6 +112,11 @@
         </select>
         <br>
         <br>
+        <label for="var_name">Lag:</label>
+        <input type="text" disabled={!is_author} class="login-input-box smaller" name="lags" value={lags}>
+        
+        <br>
+        <br>
         <label for="vol">Volatility:</label>
         <br>
         <select name='vol' id="vol" disabled={!is_author} value={vol} class="selector">

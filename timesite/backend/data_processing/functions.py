@@ -192,6 +192,7 @@ class ArchModelFit:
         am=arch_model(df[chosen_column],
                       mean=mean,lags=lags,vol=vol,p=p,o=o,q=q,power=power,
                       dist=dist,rescale=rescale).fit()
+        print(am.summary())
         return am
         
         
