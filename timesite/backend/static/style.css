@@ -17,6 +17,7 @@
     --selection-color: #edf7ff;
     --selection-color-list: #eef6fc;
     --border-color: #1222fe;
+    --border-color-light: #7d85f6;
     --hover-color: #5552fc;
     --shadow-color: #9798f0;
     --error-text-color: red;
@@ -565,4 +566,32 @@ font-size: 1rem;
     scrollbar-width: thin;
     /*scrollbar-color:white var(--border-color);*/
     position:relative;
+}
+
+.simpletable{
+    width:95%;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    th,td {
+        border-bottom: 1px solid var(--border-color-light);
+    }
+    tr:hover {
+        background-color: var(--selection-color);
+    }
+    caption{
+        border-bottom: solid 2px;
+        border-color: var(--border-color);
+    }
+}
+.dataframe{
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    th,td {
+        border-bottom: 1px solid;
+        padding:0.2rem;
+    }
+    tr:hover {
+        background-color: var(--selection-color);
+    }
 }

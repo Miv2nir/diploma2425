@@ -201,7 +201,7 @@ class ArchModelFit:
         #some html styling
         html="<div style='\
         display: flex;\
-        flex-direction: column;'\
+        flex-direction: column; align-items: center;'\
         >"+execution_result.summary().as_html()+'</div>'
         return html
         
