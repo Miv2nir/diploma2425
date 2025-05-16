@@ -192,8 +192,18 @@ class ArchModelFit:
         am=arch_model(df[chosen_column],
                       mean=mean,lags=lags,vol=vol,p=p,o=o,q=q,power=power,
                       dist=dist,rescale=rescale).fit()
-        print(am.summary())
+        #print(am.summary())
+        #am.summary().
         return am
+    def render(self,execution_result:arch_model):
+        #execution result is am
+        #print(type(execution_result.summary()))
+        #some html styling
+        html="<div style='\
+        display: flex;\
+        flex-direction: column;'\
+        >"+execution_result.summary().as_html()+'</div>'
+        return html
         
         
 '''
