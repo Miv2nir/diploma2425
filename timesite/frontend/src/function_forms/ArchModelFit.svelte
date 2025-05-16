@@ -48,7 +48,7 @@
         chosen_column=func_params['chosen_column'];
         mean=func_params['mean'];
         lags=parseInt(func_params['lags']);
-        vol=func_params['GARCH'];
+        vol=func_params['vol'];
         p=parseInt(func_params['p']);
         o=parseInt(func_params['o']);
         q=parseInt(func_params['q']);
