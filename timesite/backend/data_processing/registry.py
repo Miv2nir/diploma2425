@@ -20,7 +20,8 @@ class Registry:
         }
         self.renderers={
             'RenderDF':RenderDF,
-            'DownloadDF':DownloadDF
+            'DownloadDF':DownloadDF,
+            'LinePlotDF':LinePlotDF
         }
         self.models={
             'FloatPointEvolModelFit':FloatPointEvolModelFit,

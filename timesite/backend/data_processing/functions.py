@@ -7,6 +7,7 @@ import numpy as np
 from django.template.loader import render_to_string
 from arch import arch_model
 
+import plotly.express as px
 import os
 from backend.data_processing.supplied_models import *
 '''
@@ -130,7 +131,25 @@ class DownloadDF:
         #name of the file = smth about function parameters
         df.to_csv(MEDIA_ROOT+'temp/'+params['params_id']+'.csv',index=index)
         return MEDIA_ROOT+'temp/'+params['params_id']+'.csv'
-    
+class LinePlotDF:
+    def __init__(self):
+        self.initial=False
+        self.display_name='Plot Line Graph'
+        self.description='Creates an interactive line graph of the DataFrame provided.'
+        self.type='renderer'
+        
+        self.accepts=['df']
+        self.returns=[]
+    def execute(self,df:pd.DataFrame,params={}):
+        #expected params
+        x=params['x']
+        y=params['y'].split(',')
+        labels={
+            'x':params['x_label'],
+            'y':params['y_label']
+        }
+        fig=px.line(df,x=x,y=y,labels=labels)
+        return fig.to_html(full_html=False,default_width='95%')
 class FloatPointEvolModelFit:
     def __init__(self):
         self.initial=False
@@ -211,7 +230,8 @@ class ArchModelFit:
         flex-direction: column; align-items: center;'\
         >"+execution_result.summary().as_html()+'</div>'
         return html
-        
+
+
         
 '''
 #leaving out the constructor intentionally so to not nuke the memory of the host on every api call

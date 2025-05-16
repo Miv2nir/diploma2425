@@ -13,6 +13,7 @@
 - nodejs (for svelte runtime and serving essentially)
 - arch (model work)
 - statmodels (model work)
+- plotly, plotly[express] (interactive graphs)
 
 # Additional libraries used on the frontend
 - js-cookie - https://github.com/js-cookie/js-cookie
