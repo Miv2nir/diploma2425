@@ -318,6 +318,7 @@ def delete_params(request,params_id):
 
 @api_view(['POST'])
 def accept_processor(request,id):
+    print(request.POST)
     updating = request.POST.get('update')
     print(updating)
     #identify project
@@ -422,6 +423,12 @@ def accept_renderer(request,id):
     #handle the rest of the form
     if func_name=='DownloadDF':
         params_dict['index']=request.POST.get('index_toggle')
+    elif func_name=='LinePlotDF':
+        #little experiment
+        for i in request.POST:
+            if i not in ['csrfmiddlewaretoken','func_name']:
+                params_dict[i]=request.POST.get(i)
+                print(params_dict)
     
     #determine function order
     order=request.POST.get('order')

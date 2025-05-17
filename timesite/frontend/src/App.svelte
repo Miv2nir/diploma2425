@@ -1,4 +1,7 @@
 <!--script src="/backend/static/front_lib/api_functions.js"></script-->
+<svelte:head>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js" type="text/javascript"></script>
+</svelte:head>
 <script>
   //get csrf token
   const csrftoken = Cookies.get('csrftoken');

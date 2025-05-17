@@ -14,7 +14,12 @@
       form=document.getElementById('renderer_form');
       //console.log(form);
     })
+    var func_params=$state();
     var load_var_name=$state('df');
+    var x=$state('');
+    var y=$state('');
+    var x_label=$state('');
+    var y_label=$state('');
     async function sendForm() {
       console.log('sending form');
       await fetch(form.action, {method:'post',
@@ -26,7 +31,12 @@
     async function getParams(){
         const l = await getRequest('/api/params/'+func_obj.params_id+'/get_params/');
         //console.log(l.info.data_obj);
+        func_params=l.info.params;
         load_var_name=func_obj.accepts;
+        x=func_params['x'];
+        y=func_params['y'];
+        x_label=func_params['x_label'];
+        y_label=func_params['y_label'];
     }
         if (func_obj.params_id){
         //console.log('Editing!');
@@ -61,6 +71,22 @@
         {/if}
         <label for="var_name">Load DataFrame from:</label>
         <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="load_var_name" value={load_var_name}>
+        <br>
+        <br>
+        <label for="x">Name the column for the x axis:</label>
+        <input type='text' disabled={!is_author} name='x' value={x} class="login-input-box" >
+        <br>
+        <br>
+        <label for="y">Name the columns for the y axis (separated by comma):</label>
+        <input type='text' disabled={!is_author} name='y' value={y} class="login-input-box" >
+        <br>
+        <br>
+        <label for="x_label">Set label for the x axis:</label>
+        <input type='text' disabled={!is_author} name='x_label' value={x_label} class="login-input-box" >
+        <br>
+        <br>
+        <label for="y">Set label for the y axis:</label>
+        <input type='text' disabled={!is_author} name='y_label' value={y_label} class="login-input-box" >
         <br>
         <br>
         {#if is_author}

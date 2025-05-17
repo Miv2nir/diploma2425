@@ -137,7 +137,7 @@ class LinePlotDF:
         self.display_name='Plot Line Graph'
         self.description='Creates an interactive line graph of the DataFrame provided.'
         self.type='renderer'
-        
+    
         self.accepts=['df']
         self.returns=[]
     def execute(self,df:pd.DataFrame,params={}):
@@ -149,7 +149,7 @@ class LinePlotDF:
             'y':params['y_label']
         }
         fig=px.line(df,x=x,y=y,labels=labels)
-        return fig.to_html(full_html=False,default_width='95%')
+        return fig.to_html(include_plotlyjs='cdn',full_html=False)
 class FloatPointEvolModelFit:
     def __init__(self):
         self.initial=False
