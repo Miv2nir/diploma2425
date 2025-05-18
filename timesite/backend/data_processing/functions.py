@@ -150,7 +150,9 @@ class LinePlotDF:
             'y':params['y_label']
         }
         fig=px.line(df,x=x,y=y,labels=labels)
-        return fig.to_html(include_plotlyjs='cdn',full_html=False)
+        #return fig.to_html(include_plotlyjs='cdn',full_html=False)
+        fig.write_html(MEDIA_ROOT+'temp/'+params['params_id']+'.html')
+        return '<iframe src="/'+MEDIA_ROOT+'temp/'+params['params_id']+'.html'+'" style="width:55vw; height:63vh;"></iframe>'
 class FloatPointEvolModelFit:
     def __init__(self):
         self.initial=False
@@ -246,7 +248,7 @@ class ARIMAModelFit:
         q=int(params['q'])
         arima_model=ARIMA(df[chosen_column],order=(p,d,q)).fit()
         return arima_model
-    def render(self,execution_result:arch_model):
+    def render(self,execution_result):
         #execution result is am
         #print(type(execution_result.summary()))
         #some html styling

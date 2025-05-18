@@ -309,6 +309,11 @@ def delete_params(request,params_id):
         target_file=pathlib.Path(path_to_file)
         target_file.unlink(missing_ok=True)
         print(path_to_file)
+    if param_obj.func_name=='LinePlotDF': #nuke the file if exists
+        path_to_file=MEDIA_ROOT+'temp/'+str(param_obj.id)+'.html'
+        target_file=pathlib.Path(path_to_file)
+        target_file.unlink(missing_ok=True)
+        print(path_to_file)
     param_obj.delete()
     #move the remaining objects back
     for i in models.FunctionParams.objects.filter(project=proj_obj,order__gt=old_order):
@@ -417,7 +422,7 @@ def accept_renderer(request,id):
     func_name=request.POST.get('func_name')
     #DownloadDF needs a reference onto the function object for setting the file name
     def download_df_treatment(params_dict,param_obj):
-        if func_name=='DownloadDF':
+        if func_name=='DownloadDF' or func_name=='LinePlotDF':
             params_dict['params_id']=str(param_obj.id)
         return params_dict
     #handle the rest of the form
