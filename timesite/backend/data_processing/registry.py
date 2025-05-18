@@ -22,7 +22,8 @@ class Registry:
         self.renderers={
             'RenderDF':RenderDF,
             'DownloadDF':DownloadDF,
-            'LinePlotDF':LinePlotDF
+            'LinePlotDF':LinePlotDF,
+            'PlotACF':PlotACF
         }
         self.models={
             'FloatPointEvolModelFit':FloatPointEvolModelFit,

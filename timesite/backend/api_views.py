@@ -427,13 +427,14 @@ def accept_renderer(request,id):
     func_name=request.POST.get('func_name')
     #DownloadDF needs a reference onto the function object for setting the file name
     def download_df_treatment(params_dict,param_obj):
-        if func_name=='DownloadDF' or func_name=='LinePlotDF':
+        #if func_name=='DownloadDF' or func_name=='LinePlotDF':
+        if func_name in ['DownloadDF','LinePlotDF','PlotACF','PlotPACF']:
             params_dict['params_id']=str(param_obj.id)
         return params_dict
     #handle the rest of the form
     if func_name=='DownloadDF':
         params_dict['index']=request.POST.get('index_toggle')
-    elif func_name=='LinePlotDF':
+    else:
         #little experiment
         for i in request.POST:
             if i not in ['csrfmiddlewaretoken','func_name']:

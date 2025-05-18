@@ -8,7 +8,7 @@ import numpy as np
 from django.template.loader import render_to_string
 from arch import arch_model
 
-from statsmodels.tsa.stattools import pacf
+from statsmodels.tsa.stattools import acf, pacf
 import plotly.graph_objects as go
 
 import plotly.express as px
@@ -125,7 +125,8 @@ class RenderDF:
         self.accepts=['df']
         self.returns=[]
     def execute(self,df:pd.DataFrame,params={}):
-        html = df.to_html()+'<br>' #get the main thing
+        html = '<div style="max-width:100%;overflow-x:scroll;">'+df.to_html()+'<br></div>' #get the main thing
+        #html = df.to_html()+'<br>'
         #create shape
         shape_html='<p>'+str(df.shape[0])+' rows, '+str(df.shape[1])+' columns'+'</p>\n'
         return shape_html+html
@@ -381,6 +382,35 @@ class ARMAModelForecast:
         #create shape
         shape_html='<p>'+str(df.shape[0])+' rows, '+str(df.shape[1])+' columns'+'</p>\n'
         return shape_html+html
+
+class PlotACF:
+    def __init__(self):
+        self.initial=False
+        self.display_name='Plot ACF'
+        self.description='Creates an interactive line graph of the DataFrame provided.'
+        self.type='renderer'
+    
+        self.accepts=['df']
+        self.returns=[]
+    def execute(self,df:pd.DataFrame,params={}):
+        chosen_column=params['chosen_column']
+        lags=int(params['lags'])
+        df_acf=acf(df[chosen_column],nlags=lags)
+        fig = go.Figure()
+        fig.add_trace(go.Bar(
+            x= np.arange(len(df_acf)),
+            y= df_acf,
+            name= 'ACF',
+            ))
+        fig.update_xaxes(rangeslider_visible=True)
+        fig.update_layout(
+            title="Autocorrelation",
+            xaxis_title="Lag",
+            yaxis_title="Autocorrelation",
+            height=500
+            )
+        fig.write_html(MEDIA_ROOT+'temp/'+params['params_id']+'.html',config={'displaylogo': False})
+        return '<iframe src="/'+MEDIA_ROOT+'temp/'+params['params_id']+'.html'+'" frameBorder="0" style="width:55vw; height:63vh;"></iframe>'
         
 '''
 #leaving out the constructor intentionally so to not nuke the memory of the host on every api call

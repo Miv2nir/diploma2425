@@ -102,6 +102,10 @@ let {
             <p>Your file is ready to download!</p>
             <a href="/{i.output}"><button type="button" class="login-button-primary">Download file</button></a>
         </div>
+        {:else if i.name==='RenderDF'}
+        <div style="max-width:100%;">
+            {@html i.output}
+        </div>
         {:else}
         <div>
             {@html i.output}
