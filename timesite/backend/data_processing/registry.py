@@ -25,7 +25,8 @@ class Registry:
         }
         self.models={
             'FloatPointEvolModelFit':FloatPointEvolModelFit,
-            'ArchModelFit':ArchModelFit
+            'ArchModelFit':ArchModelFit,
+            'ARIMAModelFit':ARIMAModelFit
         }
 
     def get_all(self):

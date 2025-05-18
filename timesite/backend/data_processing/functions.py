@@ -3,6 +3,7 @@ import backend.models as models
 from timesite.settings import MEDIA_ROOT
 
 from statsmodels.tsa.ar_model import AutoReg
+from statsmodels.tsa.arima.model import ARIMA
 import numpy as np
 from django.template.loader import render_to_string
 from arch import arch_model
@@ -221,6 +222,31 @@ class ArchModelFit:
         #print(am.summary())
         #am.summary().
         return am
+    def render(self,execution_result:arch_model):
+        #execution result is am
+        #print(type(execution_result.summary()))
+        #some html styling
+        html="<div style='\
+        display: flex;\
+        flex-direction: column; align-items: center;'\
+        >"+execution_result.summary().as_html()+'</div>'
+        return html
+class ARIMAModelFit:
+    def __init__(self):
+        self.initial=False
+        self.display_name='ARIMA Fit'
+        self.description='ARIMA Model: Initialization and fitting function.'
+        self.type='model'
+        self.accepts=['df']
+        self.returns=['arima_model']
+    def execute(self,df:pd.DataFrame,params={}):
+        chosen_column=params['chosen_column']
+        p=int(params['p'])
+        d=int(params['d'])
+        q=int(params['q'])
+        regression_type=params['regression_type']
+        arima_model=ARIMA(df[chosen_column],order=(p,d,q)).fit()
+        return arima_model
     def render(self,execution_result:arch_model):
         #execution result is am
         #print(type(execution_result.summary()))
