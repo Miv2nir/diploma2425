@@ -326,8 +326,8 @@ class ARModelForecast:
         self.returns=['df']
     def execute(self,ar_model,params={}):
         steps=int(params['steps'])
-        res=ar_model.get_forecast(steps=steps)
-        df_pred=res.predicted_mean.to_frame()
+        res=ar_model.forecast(steps=steps)
+        df_pred=res.to_frame()
         return df_pred
     def render(self,execution_result):
         df=execution_result

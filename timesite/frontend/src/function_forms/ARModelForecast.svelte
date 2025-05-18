@@ -16,11 +16,9 @@
       //console.log(form);
     })
     var func_params=$state();
-    var load_var_name=$state('df');
-    var save_var_name=$state('ar_model');
-    var chosen_column=$state('');
-    var lags=$state(1);
-    var trend=$state('c');
+    var load_var_name=$state('ar_model');
+    var save_var_name=$state('df_pred');
+    var steps=$state(12);
  async function sendForm() {
       console.log('sending form');
       await fetch(form.action, {method:'post',
@@ -38,10 +36,7 @@
         const l = await getRequest('/api/params/'+func_obj.params_id+'/get_params/');
         console.log(l.info.params);
         func_params=l.info.params;
-        chosen_column=func_params['chosen_column'];
-        lags=parseInt(func_params['lags']);
-        trend=func_params['trend'];
-
+        steps=parseInt(func_params['steps']);
         save_var_name=func_obj.produces;
         load_var_name=func_obj.accepts;
     }
@@ -81,24 +76,12 @@
         <input type="text" disabled={!is_author} class="login-input-box small" id="load_var_name" name="load_var_name" value={load_var_name}>
         <br>
         <br>
-        <label for="text_columns_definitions">Write the column name of the trend:</label>
         <br>
-        <input type="text" disabled={!is_author} name="chosen_column" value={chosen_column} class="login-input-box">
-        <br>
-        <br>
-        <label for="var_name">Lags:</label>
-        <input type="number" disabled={!is_author} class="login-input-box smaller" name="lags" value={lags}>
+        <label for="steps">Number of predicted points (steps):</label>
+        <input type="number" disabled={!is_author} class="login-input-box smaller" name="steps" value={steps}>
         <br>
         <br>
-        <select name='trend' id="trend" disabled={!is_author} value={trend} class="selector">
-            <option class="selector" value="c">Constant Only</option>
-            <option class="selector" value="t">Time Trend Only</option>
-            <option class="selector" value="ct">Constant and Time Trend</option>
-            <option class="selector" value="n">No Trend</option>
-        </select>
-        <br>
-        <br>
-        <label for="var_name">Store result model as:</label>
+        <label for="var_name">Store result DataFrame as:</label>
         <input type="text" disabled={!is_author}  class="login-input-box small" name="save_var_name" value={save_var_name}>
         <br>
         <br>
