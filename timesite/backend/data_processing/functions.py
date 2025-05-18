@@ -121,15 +121,13 @@ class MergeDF:
     def __init__(self):
         self.initial=False
         self.display_name='Merge Dataframes'
-        self.description='Merge two Dataframes into one'
+        self.description='Merge two Dataframes into one based on the coming order of the items within.'
         self.type='processor'
-        self.accepts=['df1','df2']
+        self.accepts=['df']
         self.returns=['df']
     def execute(self,df1:pd.DataFrame,df2:pd.DataFrame,params={}):
+        '''
         how=params['how']
-        left_on=params['left_on']
-        right_on=params['right_on']
-        
         left_index=False
         try:
             if params['left_index']=='on':
@@ -142,7 +140,12 @@ class MergeDF:
                 right_index=True
         except KeyError:
             pass
-        return df1.merge(df2,how=how,left_on=left_on,right_on=right_on,left_index=left_index,right_index=right_index)
+        '''
+        df1.reset_index(inplace=True)
+        df2.reset_index(inplace=True)
+        print(df1)
+        df_new=df1.merge(df2,left_index=True,right_index=True)
+        return df_new
         
 class SetDateIndex:
     def __init__(self):

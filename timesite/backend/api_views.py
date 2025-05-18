@@ -606,7 +606,10 @@ def invoke_runtime(request,id):
                     params=i.info['params']
                 except KeyError:
                     params={}
-                var_store[var_name_save]=func_obj.execute(var_store[var_name_load],params)
+                if i.func_name=='MergeDF':
+                    var_store[var_name_save]=func_obj.execute(var_store[var_name_load],var_store[params['second_df']],params)
+                else:
+                    var_store[var_name_save]=func_obj.execute(var_store[var_name_load],params)
                 func_status.info={
                     'loaded':var_name_load,
                     'saved_as':var_name_save

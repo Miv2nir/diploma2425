@@ -16,15 +16,12 @@
     })
     var func_params=$state();
     //var is_value=$state()
-    var numeric_only=$state(false);
     var save_var_name=$state('df_new');
     var load_var_name=$state('df');
     var second_df=$state('df2');
-    var how=$state('inner');
-    var left_on=$state('');
-    var right_on=$state('');
-    var left_index=$state(false);
-    var right_index=$state(false);
+    //var how=$state('inner');
+    //var left_index=$state(false);
+    //var right_index=$state(false);
 
     async function sendForm() {
       console.log('sending form');
@@ -44,11 +41,9 @@
         console.log(l.info.params);
         func_params=l.info.params;
         second_df=func_params['second_df'];
-        how=func_params['how'];
-        left_on=func_params['left_on'];
-        right_on=func_params['right_on'];
-        left_index=func_params['left_index'];
-        right_index=func_params['right_index'];
+        //how=func_params['how'];
+        //left_index=func_params['left_index'];
+        //right_index=func_params['right_index'];
         save_var_name=func_obj.produces;
         load_var_name=func_obj.accepts;
     }
@@ -93,7 +88,7 @@
         <input type="text" disabled={!is_author} class="login-input-box small" name="second_df" value={second_df}>
         <br>
         <br>
-        <label for="how">How:</label>
+        <!--label for="how">How:</label>
         <br>
         <select name='how' id="how" disabled={!is_author} value={how} class="selector">
             <option class="selector" value="inner">inner</option>
@@ -105,14 +100,6 @@
         </select>
         <br>
         <br>
-        <label for="left_on">Left On:</label>
-        <input type="text" disabled={!is_author} class="login-input-box small"name="left_on" value={left_on}>
-        <br>
-        <br>
-        <label for="right_on">Right On:</label>
-        <input type="text" disabled={!is_author} class="login-input-box small"name="right_on" value={right_on}>
-        <br>
-        <br>
         <label for="left_index">Left Index:</label>
         <input type="checkbox" disabled={!is_author} style="transform:scale(1.5);" name="left_index" checked={left_index}>
         <br>
@@ -120,7 +107,7 @@
         <label for="right_index">Right Index:</label>
         <input type="checkbox" disabled={!is_author} style="transform:scale(1.5);" name="right_index" checked={right_index}>
         <br>
-        <br>
+        <br-->
         <label for="var_name">Store changes as:</label>
         <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="save_var_name" value={save_var_name}>
         {#if is_author}
