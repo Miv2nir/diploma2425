@@ -244,7 +244,6 @@ class ARIMAModelFit:
         p=int(params['p'])
         d=int(params['d'])
         q=int(params['q'])
-        regression_type=params['regression_type']
         arima_model=ARIMA(df[chosen_column],order=(p,d,q)).fit()
         return arima_model
     def render(self,execution_result:arch_model):

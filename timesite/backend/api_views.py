@@ -475,6 +475,7 @@ def accept_model(request,id):
     #determine the object
     func_name=request.POST.get('func_name')
     print(func_name)
+    params_dict={}
     if func_name=='FloatPointEvolModelFit':
         #one part of the integrated model work, produces a dictionary with parameters
         params_dict={
@@ -497,7 +498,12 @@ def accept_model(request,id):
             'rescale':request.POST.get('rescale')
         }
     else:
-        params_dict={}
+        #little experiment
+        for i in request.POST:
+            if i not in ['csrfmiddlewaretoken','func_name']:
+                params_dict[i]=request.POST.get(i)
+                print(params_dict)
+
     if request.POST.get('load_var_name'):
         accept=request.POST.get('load_var_name')
     else:
