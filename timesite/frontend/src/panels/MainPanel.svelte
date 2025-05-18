@@ -18,6 +18,7 @@
     import SetDateIndex from "../function_forms/SetDateIndex.svelte";
     import Empty from "../function_forms/Empty.svelte";
     import ARIMAModelForecast from "../function_forms/ARIMAModelForecast.svelte";
+    import ARModelFit from "../function_forms/ARModelFit.svelte";
     let {author,
       proj_obj,
       func_obj=$bindable(),
@@ -31,7 +32,7 @@
 
       //define components
       const components={LoadCSV,DropColumns,RenderDF,DownloadDF,FillNA,DropNA,GetQuantile,
-        FloatPointEvolModelFit,ArchModelFit,LinePlotDF,ARIMAModelFit,SetDateIndex,ARIMAModelForecast};
+        FloatPointEvolModelFit,ArchModelFit,LinePlotDF,ARIMAModelFit,SetDateIndex,ARIMAModelForecast,ARModelFit};
       let FuncForm = $state();
       $effect(()=>{
       if (func_obj==undefined){

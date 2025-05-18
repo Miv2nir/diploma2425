@@ -303,7 +303,8 @@ class ARModelFit:
         chosen_column=params['chosen_column']
         lags=int(params['lags'])
         trend=params['trend']
-        ar_model=AutoReg(df['1 month'],lags=lags,trend=trend,missing='drop').fit()
+        
+        ar_model=AutoReg(df[chosen_column],lags=lags,trend=trend,missing='drop').fit()
         return ar_model
     def render(self,execution_result):
         #execution result is am
