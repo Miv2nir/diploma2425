@@ -335,6 +335,31 @@ class ARModelForecast:
         #create shape
         shape_html='<p>'+str(df.shape[0])+' rows, '+str(df.shape[1])+' columns'+'</p>\n'
         return shape_html+html
+
+class ARMAModelFit:
+    def __init__(self):
+        self.initial=False
+        self.display_name='ARMA Fit'
+        self.description='ARMA Model: Initialization and fitting function.'
+        self.type='model'
+        self.accepts=['df']
+        self.returns=['arma_model']
+    def execute(self,df:pd.DataFrame,params={}):
+        chosen_column=params['chosen_column']
+        p=int(params['p'])
+        q=int(params['q'])
+        arma_model=ARIMA(df[chosen_column],order=(p,0,q)).fit()
+        return arma_model
+    def render(self,execution_result):
+        #execution result is am
+        #print(type(execution_result.summary()))
+        #some html styling
+        html="<div style='\
+        display: flex;\
+        flex-direction: column; align-items: center;'\
+        >"+execution_result.summary().as_html()+'</div>'
+        return html
+        
         
 '''
 #leaving out the constructor intentionally so to not nuke the memory of the host on every api call

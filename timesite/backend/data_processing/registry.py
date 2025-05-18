@@ -30,7 +30,8 @@ class Registry:
             'ARIMAModelFit':ARIMAModelFit,
             'ARIMAModelForecast':ARIMAModelForecast,
             'ARModelFit':ARModelFit,
-            'ARModelForecast':ARModelForecast
+            'ARModelForecast':ARModelForecast,
+            'ARMAModelFit':ARMAModelFit
         }
 
     def get_all(self):
