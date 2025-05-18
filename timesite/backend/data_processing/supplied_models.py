@@ -48,3 +48,89 @@ def calibrate_models(df, tenor, p=1, q=1, dist='Normal', jump_threshold=3):
             'jd': jd_params
         }
         return [models_params,ar_model,garch_fit]
+
+def simulate_paths(df, modelsparams, n_simulations, n_steps, dt=250, calc_correlation_matrix=False):
+    import time
+    start_time = time.time()
+
+    tenors = list(df.keys())
+    n_tenors = len(tenors)
+
+    paths = {tenor: np.zeros((n_simulations, n_steps)) for tenor in tenors}
+    vol = {tenor: np.zeros((n_simulations, n_steps)) for tenor in tenors}
+
+    # correlation matrices
+    if calc_correlation_matrix:
+        pass
+    else:
+        corr_matrix = np.array([[1.0]])
+        L = np.array([[1.0]])
+        #corr_matrix = np.array([[1.0,1.0,1.0],[1.0,1.0,1.0],[1.0,1.0,1.0]])
+        #L = np.array([[1.0,1.0,1.0],[1.0,1.0,1.0],[1.0,1.0,1.0]])
+
+    for tenor in tenors:
+        paths[tenor][:, 0] = df.iloc[-1]
+        vol[tenor][:, 0] = modelsparams['ar']['resid_variance'] # starting variance from AR(1)
+
+    for t in range(1, n_steps):
+        Z = np.random.normal(0, 1, (n_simulations, n_tenors))
+        Z = Z @ L.T
+
+        check_epsilon_t=0
+        for tenor_idx, tenor in enumerate(tenors):
+            # Initialize models' params
+            ar_params = modelsparams['ar']
+            garch_params = modelsparams['garch']
+            jd_params = modelsparams['jd']
+
+            # AR params
+            const = ar_params['const']
+            phi = ar_params['phi']
+
+            # GARCH params
+            omega = garch_params['omega']
+            alpha = garch_params['alpha']
+            beta = garch_params['beta']
+
+            # JMP params
+            lambda_ = jd_params['lambda']
+            jd_mean = jd_params['jd_mean']
+            jd_std = jd_params['jd_std']
+
+            if t == 1:
+                epsilon_prev = paths[tenor][:, t-1] - const - phi*paths[tenor][:, t-1]
+            else:
+                epsilon_prev = paths[tenor][:, t-1] - const - phi*paths[tenor][:, t-2]
+
+            # brownian term
+            z_t = Z[:, tenor_idx]
+
+            # dr_CV
+            vol[tenor][:, t] = np.sqrt(omega + alpha*epsilon_prev**2 + beta*vol[tenor][:, t-1]**2)
+            epsilon_t = vol[tenor][:, t]*z_t*np.sqrt(paths[tenor][:, t])
+
+            # dr_JMP
+            jumps = np.random.binomial(1, lambda_*dt, n_simulations)
+            jump_sizes = np.random.normal(jd_mean, jd_std, n_simulations)
+
+            check_epsilon_t += jumps*jump_sizes
+            check_rate_t = const + phi*paths[tenor][:, t-1] + check_epsilon_t
+
+            if t == 1:
+                check_rate_t_prev = const + phi*paths[tenor][:, t-1] + check_epsilon_t
+            else:
+                check_rate_t_prev = const + phi*paths[tenor][:, t-2] + check_epsilon_t
+            #print(check_rate_t)
+            # dr_JMP, ensure non-negative values
+            if check_rate_t.all() < 0:
+                epsilon_t += max(jumps*jump_sizes, -check_rate_t_prev)
+            else:
+                epsilon_t += jumps*jump_sizes
+
+            #dr_MR (in discrete AR-form)
+            paths[tenor][:, t] = const + phi*paths[tenor][:, t-1] + epsilon_t
+
+    elapsed_time = time.time() - start_time
+    elapsed_time = float(f'{elapsed_time:.6f}')
+    print(f'Simulated paths for dataset. Execution time: {round(elapsed_time, 2)} seconds.')
+    return paths

@@ -266,7 +266,31 @@ class FloatPointEvolModelFit:
             'ar_summary':self.ar_model.summary().as_html(),
             'garch_summary':self.garch_model.summary().as_html()
         })
-
+class FloatPointEvolModelForecast:
+    def __init__(self):
+        self.initial=False
+        self.display_name='Floating Point Evolution Model: Forecast'
+        self.description='Forecasting part of the Floating Point Evolution Model involving a simulation being executed through a Monte Carlo process.'
+        self.type='model'
+        self.accepts=['models_params']
+        self.returns=['df']
+        
+        self.ar_model=None
+        self.garch_model=None
+    def execute(self,models_params,df:pd.DataFrame,params={}):
+        chosen_column=params['chosen_column']
+        n_simulations=int(params['n_simulations'])
+        n_steps=int(params['n_steps'])
+        dt=int(params['dt'])
+        res=simulate_paths(df[chosen_column],models_params,n_simulations,n_steps,dt)
+        return res
+    
+    def render(self,execution_result):
+        df=execution_result
+        html = df.to_html()+'<br>' #get the main thing
+        #create shape
+        shape_html='<p>'+str(df.shape[0])+' rows, '+str(df.shape[1])+' columns'+'</p>\n'
+        return shape_html+html
 class ArchModelFit:
     def __init__(self):
         self.initial=False

@@ -27,6 +27,7 @@
     import ArchModelForecast from "../function_forms/ArchModelForecast.svelte";
     import SplitByIndex from "../function_forms/SplitByIndex.svelte";
     import MergeDF from "../function_forms/MergeDF.svelte";
+    import FloatPointEvolModelForecast from "../function_forms/FloatPointEvolModelForecast.svelte";
     let {author,
       proj_obj,
       func_obj=$bindable(),
@@ -42,7 +43,7 @@
       const components={LoadCSV,DropColumns,RenderDF,DownloadDF,FillNA,DropNA,GetQuantile,
         FloatPointEvolModelFit,ArchModelFit,LinePlotDF,ARIMAModelFit,SetDateIndex,ARIMAModelForecast,
         ARModelFit,ARModelForecast,ARMAModelFit,ARMAModelForecast,PlotACF,PlotPACF,
-      ArchModelForecast,SplitByIndex,MergeDF};
+      ArchModelForecast,SplitByIndex,MergeDF,FloatPointEvolModelForecast};
       let FuncForm = $state();
       $effect(()=>{
       if (func_obj==undefined){

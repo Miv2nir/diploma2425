@@ -20,9 +20,9 @@
     var save_var_name=$state('models_params');
     //var dist=$state('Normal');
     var chosen_column=$state('');
-    var p=$state(1);
-    var q=$state(1);
-    var jump_threshold=$state(3);
+    var n_simulations=$state();
+    var n_steps=$state();
+    var dt=$state();
  async function sendForm() {
       console.log('sending form');
       await fetch(form.action, {method:'post',
@@ -41,9 +41,9 @@
         console.log(l.info.params);
         func_params=l.info.params;
         chosen_column=func_params['chosen_column'];
-        p=parseInt(func_params['p']);
-        q=parseInt(func_params['q']);
-        jump_threshold=func_params['jump_threshold'];
+        n_simulations=parseInt(func_params['n_simulations']);
+        n_steps=parseInt(func_params['n_steps']);
+        dt=parseInt(func_params['dt']);
 
         save_var_name=func_obj.produces;
         load_var_name=func_obj.accepts;
@@ -89,14 +89,14 @@
         <input type="text" disabled={!is_author} name="chosen_column" value={chosen_column} class="login-input-box" id="tenor_definition">
         <br>
         <br>
-        <label for="var_name">p:</label>
-        <input type="text" disabled={!is_author} class="login-input-box smaller" name="p" value={p}>
-        <label for="var_name" style="margin-left:1rem;">q:</label>
-        <input type="text" disabled={!is_author} class="login-input-box smaller" name="q" value={q}>
+        <label for="n_simulations">n_simulatins:</label>
+        <input type="number" disabled={!is_author} class="login-input-box smaller" name="n_simulations" value={n_simulations}>
+        <label for="n_steps" style="margin-left:1rem;">n_steps:</label>
+        <input type="number" disabled={!is_author} class="login-input-box smaller" name="n_steps" value={n_steps}>
         <br>
         <br>
-        <label for="var_name">Jump Threshold:</label>
-        <input type="text" disabled={!is_author} class="login-input-box smaller" name="jump_threshold" value={jump_threshold}>
+        <label for="var_name">dt:</label>
+        <input type="number" disabled={!is_author} class="login-input-box smaller" name="dt" value={dt}>
         <br>
         <br>
         <label for="var_name">Store parameters as:</label>
@@ -117,5 +117,4 @@
         <br>
         {/if}
     </form>
-
 </div>
