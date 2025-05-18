@@ -105,7 +105,7 @@ class SplitByIndex:
     def __init__(self):
         self.initial=False
         self.display_name='Split By Index'
-        self.description='Removes '
+        self.description='Removes values from a Dataframe by index.'
         self.type='processor'
         self.accepts=['df']
         self.returns=['df']
@@ -117,6 +117,33 @@ class SplitByIndex:
         elif splitting_mode=='right':
             df = df.iloc[split_point:,:]
         return df
+class MergeDF:
+    def __init__(self):
+        self.initial=False
+        self.display_name='Merge Dataframes'
+        self.description='Merge two Dataframes into one'
+        self.type='processor'
+        self.accepts=['df1','df2']
+        self.returns=['df']
+    def execute(self,df1:pd.DataFrame,df2:pd.DataFrame,params={}):
+        how=params['how']
+        left_on=params['left_on']
+        right_on=params['right_on']
+        
+        left_index=False
+        try:
+            if params['left_index']=='on':
+                left_index=True
+        except KeyError:
+            pass
+        right_index=False
+        try:
+            if params['right_index']=='on':
+                right_index=True
+        except KeyError:
+            pass
+        return df1.merge(df2,how=how,left_on=left_on,right_on=right_on,left_index=left_index,right_index=right_index)
+        
 class SetDateIndex:
     def __init__(self):
         self.initial=False

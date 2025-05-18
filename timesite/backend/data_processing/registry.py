@@ -18,7 +18,8 @@ class Registry:
             'DropNA':DropNA,
             'GetQuantile':GetQuantile,
             'SetDateIndex':SetDateIndex,
-            'SplitByIndex':SplitByIndex
+            'SplitByIndex':SplitByIndex,
+            'MergeDF':MergeDF
         }
         self.renderers={
             'RenderDF':RenderDF,

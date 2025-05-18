@@ -67,7 +67,7 @@
         {#if func_obj.params_id}
         <input type="hidden" name="update" value="true">
         {/if}
-        <label for="var_name">Load  DataFrame from:</label>
+        <label for="var_name">Load DataFrame from:</label>
         <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="load_var_name" value={load_var_name}>
         <br>
         <br>
