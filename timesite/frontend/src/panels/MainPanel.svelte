@@ -5,17 +5,18 @@
     import ServerSideResultRender from "../elements/ServerSideResultRender.svelte";
     import LoadCSV from "../function_forms/LoadCSV.svelte";
     import DropColumns from "../function_forms/DropColumns.svelte";
-    import RenderDf from "../function_forms/RenderDF.svelte";
-    import DownloadDf from "../function_forms/DownloadDF.svelte";
+    import RenderDF from "../function_forms/RenderDF.svelte";
+    import DownloadDF from "../function_forms/DownloadDF.svelte";
     import RuntimeQueryer from "../elements/RuntimeQueryer.svelte";
-    import FillNa from "../function_forms/FillNA.svelte";
-    import DropNa from "../function_forms/DropNA.svelte";
+    import FillNA from "../function_forms/FillNA.svelte";
+    import DropNA from "../function_forms/DropNA.svelte";
     import GetQuantile from "../function_forms/GetQuantile.svelte";
     import FloatPointEvolModelFit from "../function_forms/FloatPointEvolModelFit.svelte";
     import ArchModelFit from "../function_forms/ArchModelFit.svelte";
-    import LinePlotDf from "../function_forms/LinePlotDF.svelte";
+    import LinePlotDF from "../function_forms/LinePlotDF.svelte";
     import ArimaModelFit from "../function_forms/ARIMAModelFit.svelte";
     import SetDateIndex from "../function_forms/SetDateIndex.svelte";
+    import Empty from "../function_forms/Empty.svelte";
     let {author,
       proj_obj,
       func_obj=$bindable(),
@@ -26,6 +27,20 @@
       is_author=$bindable(false),
       runtime_finished=$bindable(false),
       pipeline_length=$bindable(0)} = $props();
+
+      //define components
+      const components={LoadCSV,DropColumns,RenderDF,DownloadDF,FillNA,DropNA,GetQuantile,
+        FloatPointEvolModelFit,ArchModelFit,LinePlotDF,ArimaModelFit,SetDateIndex};
+      let FuncForm = $state();
+      $effect(()=>{
+      if (func_obj==undefined){
+        FuncForm=Empty;
+      }
+      else{
+        FuncForm=components[func_obj.name];
+      }
+      })
+
 </script>
 <div style="display:flex; flex-direction:column; justify-content: space-around; height:90.3vh;" id='container-main-spacer'>
     <div class="home-container center" id="container-main" style="margin-bottom:1rem;">
@@ -62,6 +77,12 @@
         <!--function forms invokation (should probably rewrite into a separate component)-->
         <p>{func_obj.description}</p>
         {#key func_obj}
+        <FuncForm bind:func_obj={func_obj}
+         bind:form_submitted={form_submitted}
+          proj_obj={proj_obj}
+          bind:pipeline_length={pipeline_length}
+          bind:is_author={is_author} />
+        <!--
         {#if func_obj.name=='LoadCSV'}
         <LoadCSV bind:func_obj={func_obj}
          bind:form_submitted={form_submitted}
@@ -146,6 +167,14 @@
           bind:pipeline_length={pipeline_length}
           bind:is_author={is_author}/>
         {/if}
+        -->
+        <!--svelte:component this={components[func_obj.name]}
+        bind:func_obj={func_obj}
+         bind:form_submitted={form_submitted}
+          proj_obj={proj_obj}
+          bind:pipeline_length={pipeline_length}
+          bind:is_author={is_author}/-->
+
         {/key}
         {/if}
         {/if}
