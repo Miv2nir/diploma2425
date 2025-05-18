@@ -359,7 +359,25 @@ class ARMAModelFit:
         flex-direction: column; align-items: center;'\
         >"+execution_result.summary().as_html()+'</div>'
         return html
-        
+class ARMAModelForecast:
+    def __init__(self):
+        self.initial=False
+        self.display_name='ARMA Forecast'
+        self.description='ARMA Model: Modeling forecasts for the trained model.'
+        self.type='model'
+        self.accepts=['arma_model']
+        self.returns=['df_pred']
+    def execute(self,arima_model,params={}):
+        steps=int(params['steps'])
+        res=arima_model.get_forecast(steps=steps)
+        df_pred=res.predicted_mean.to_frame()
+        return df_pred
+    def render(self,execution_result):
+        df=execution_result
+        html = df.to_html()+'<br>' #get the main thing
+        #create shape
+        shape_html='<p>'+str(df.shape[0])+' rows, '+str(df.shape[1])+' columns'+'</p>\n'
+        return shape_html+html
         
 '''
 #leaving out the constructor intentionally so to not nuke the memory of the host on every api call
