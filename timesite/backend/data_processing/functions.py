@@ -101,7 +101,22 @@ class GetQuantile:
         numeric_only=params['numeric_only']
         #method=params['method']
         return df.quantile(quantile,numeric_only=numeric_only).to_frame()
-
+class SplitByIndex:
+    def __init__(self):
+        self.initial=False
+        self.display_name='Split By Index'
+        self.description='Removes '
+        self.type='processor'
+        self.accepts=['df']
+        self.returns=['df']
+    def execute(self,df:pd.DataFrame,params={}):
+        split_point=int(params['split_point'])
+        splitting_mode=params['splitting_mode']
+        if splitting_mode=='left':
+            df = df.iloc[:split_point,:]
+        elif splitting_mode=='right':
+            df = df.iloc[split_point:,:]
+        return df
 class SetDateIndex:
     def __init__(self):
         self.initial=False

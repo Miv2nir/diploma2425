@@ -1,9 +1,9 @@
 <script>
     let {func_obj=$bindable(),
-    form_submitted=$bindable(false),
-    proj_obj,
-    is_author=$bindable(false),
-    pipeline_length=$bindable(0)} = $props();
+      form_submitted=$bindable(false),
+      is_author=$bindable(false),
+      proj_obj,
+      pipeline_length=$bindable(0)} = $props();
     import { onMount } from 'svelte';
     import {getRequest, postRequest} from "../lib/APICalls.js";
     import Cookies from 'js-cookie';
@@ -11,15 +11,16 @@
     const csrftoken = Cookies.get('csrftoken');
     var form=undefined;
     onMount(()=>{
-      form=document.getElementById('model_form');
+      form=document.getElementById('processor_form');
       //console.log(form);
     })
     var func_params=$state();
-    var load_var_name=$state('am');
+    //var is_value=$state()
+    var split_point=$state(0);
+    var splitting_mode=$state('');
     var save_var_name=$state('df');
-    var horizon=$state(1);
-    var forecast_type=$state('mean');
- async function sendForm() {
+    var load_var_name=$state('df');
+    async function sendForm() {
       console.log('sending form');
       await fetch(form.action, {method:'post',
        body: new FormData(form)});
@@ -36,9 +37,8 @@
         const l = await getRequest('/api/params/'+func_obj.params_id+'/get_params/');
         console.log(l.info.params);
         func_params=l.info.params;
-        horizon=parseInt(func_params['horizon']);
-        forecast_type=func_params['forecast_type'];
-
+        split_point=parseInt(func_params['split_point']);
+        splitting_mode=func_params['splitting_mode'];
         save_var_name=func_obj.produces;
         load_var_name=func_obj.accepts;
     }
@@ -46,10 +46,11 @@
         //console.log('Editing!');
         getParams();
     }
+    console.log(func_obj);
 </script>
 
 <div>
-    {#if func_obj.params_id}
+{#if func_obj.params_id}
     <p>
         {#if func_obj.accepts.length!=0}
         <span>Accepts: {func_obj.accepts}</span>
@@ -68,45 +69,47 @@
     {/if}
     <br>
     {/if}
-    <form action="/api/functions/{proj_obj.id}/accept_model/" method="POST" id="model_form" onsubmit={()=>sendForm()}>
+        <form action="/api/functions/{proj_obj.id}/accept_processor/" method="POST" id="processor_form" onsubmit={()=>sendForm()}>
         <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
         <input type="hidden" name="func_name" value="{func_obj.name}">
         {#if func_obj.params_id}
         <input type="hidden" name="update" value="true">
-        {/if}    
-        <label for="var_name">Load model from:</label>
-        <input type="text" disabled={!is_author} class="login-input-box small" id="load_var_name" name="load_var_name" value={load_var_name}>
+        {/if}
+        <label for="var_name">Load DataFrame from:</label>
+        <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="load_var_name" value={load_var_name}>
         <br>
         <br>
-        <label for="horizon">Horizon:</label>
-        <input type="number" disabled={!is_author} class="login-input-box smaller" name="horizon" value={horizon}>
+        <label for="splitting_mode">Splitting Mode:</label>
         <br>
-        <br>
-        <label for="forecast_type">Forecast Type:</label>
-        <br>
-        <select name='forecast_type' id="forecast_type" disabled={!is_author} value={forecast_type} class="selector">
-            <option class="selector" value="mean">mean</option>
-            <option class="selector" value="residual_variance">residual_variance</option>
-            <option class="selector" value="variance">variance</option>
+        <select name='splitting_mode' id="splitting_mode" disabled={!is_author} value={splitting_mode} class="selector">
+            <option class="selector" value="left">left</option>
+            <option class="selector" value="right">right</option>
         </select>
         <br>
         <br>
-        <label for="var_name">Store resulting DataFrame as:</label>
-        <input type="text" disabled={!is_author}  class="login-input-box small" name="save_var_name" value={save_var_name}>
+        <label for="split_point">Splitting Index:</label>
+        <input type="number" disabled={!is_author} class="login-input-box smaller" name="split_point" value={split_point}>
+        <br>
+        <br>
+        <label for="var_name">Save DataFrame as:</label>
+        <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="save_var_name" value={save_var_name}>
         <br>
         <br>
         {#if is_author}
-        <button type="button" class="login-button-primary" onclick={()=>sendForm()}>Set Model</button>
         <br>
         <br>
+        <button type="button" class="login-button-primary" onclick={()=>sendForm()}>Set Renderer</button>
         {/if}
         {#if func_obj.params_id}
         <input type="hidden" name="order" value={func_obj.order}>
         {/if}
-        {#if is_author}
-        {#if func_obj.params_id}
-        <button type="button" onclick={()=>removeFunction()} class="login-button-delete">Remove Function</button>
-        {/if}
-        {/if}
     </form>
+    {#if func_obj.params_id}
+    <br>
+    {#if is_author}
+    <button type="button" onclick={()=>removeFunction()} class="login-button-delete">Remove Function</button>
+    {/if}
+    <br>
+    <br>
+    {/if}
 </div>
