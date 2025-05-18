@@ -151,7 +151,7 @@ class LinePlotDF:
         }
         fig=px.line(df,x=x,y=y,labels=labels)
         #return fig.to_html(include_plotlyjs='cdn',full_html=False)
-        fig.write_html(MEDIA_ROOT+'temp/'+params['params_id']+'.html')
+        fig.write_html(MEDIA_ROOT+'temp/'+params['params_id']+'.html',config={'displaylogo': False})
         return '<iframe src="/'+MEDIA_ROOT+'temp/'+params['params_id']+'.html'+'" style="width:55vw; height:63vh;"></iframe>'
 class FloatPointEvolModelFit:
     def __init__(self):
