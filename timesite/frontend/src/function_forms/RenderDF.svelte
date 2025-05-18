@@ -16,7 +16,9 @@
     })
     //get order
     var load_var_name=$state('df');
+    var func_params=$state();
     var order = $state(func_obj.order+1);
+    var render_full_dataset = $state(false);
     async function sendForm() {
       console.log('sending form');
       await fetch(form.action, {method:'post',
@@ -29,6 +31,8 @@
         const l = await getRequest('/api/params/'+func_obj.params_id+'/get_params/');
         //console.log(l.info.data_obj);
         load_var_name=func_obj.accepts;
+        func_params=l.info.params;
+        render_full_dataset=func_params['render_full_dataset'];
     }
         if (func_obj.params_id){
         //console.log('Editing!');
@@ -65,6 +69,10 @@
         {/if}
         <label for="var_name">Load DataFrame from:</label>
         <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="load_var_name" value={load_var_name}>
+        <br>
+        <br>
+        <label for="render_full_dataset">Render Full Dataset:</label>
+        <input type="checkbox" disabled={!is_author} style="transform:scale(1.5);" name="render_full_dataset" id='render_full_dataset' checked={render_full_dataset}>
         <br>
         <br>
         {#if is_author}

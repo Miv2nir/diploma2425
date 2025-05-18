@@ -126,11 +126,22 @@ class RenderDF:
         self.accepts=['df']
         self.returns=[]
     def execute(self,df:pd.DataFrame,params={}):
-        html = '<div style="max-width:100%;overflow-x:scroll;">'+df.to_html()+'<br></div>' #get the main thing
+        render_full_dataset=False
+        try:
+            if params['render_full_dataset']=='on':
+                render_full_dataset=True
+        except KeyError:
+            pass
+        #render_full_dataset=params['render_full_dataset']
+        if render_full_dataset:
+            df_render = '<div style="max-width:100%;overflow-x:scroll;">'+df.to_html()+'<br></div>' #get the main thing
+            shape_html='<p>'+str(df.shape[0])+' rows, '+str(df.shape[1])+' columns'+'</p>\n'
+            df_render=shape_html+df_render
         #html = df.to_html()+'<br>'
+        else:
+            df_render=df._repr_html_()+'<br>'
         #create shape
-        shape_html='<p>'+str(df.shape[0])+' rows, '+str(df.shape[1])+' columns'+'</p>\n'
-        return shape_html+html
+        return df_render
 class DownloadDF:
     def __init__(self):
         self.initial=False
