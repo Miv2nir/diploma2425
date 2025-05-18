@@ -329,6 +329,44 @@ font-size: 1rem;
     background-color: var(--selection-color);
     transition: 200ms ease;
 }
+.function-item {
+    height: 3.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    border: solid;
+    border-radius: 1rem;
+    border-color: var(--border-color);
+    background-color: var(--highlight-color);
+    box-shadow: 5px 5px 5px 1px var(--shadow-color);
+    overflow: hidden;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content:start;
+    align-items:center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+}
+.function-item-text{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+.function-item.center {
+    justify-content: center;
+}
+.function-item.pointer {
+    cursor: pointer;
+}
+.function-item:hover {
+    background-color: var(--selection-color);
+    transition: 200ms ease;
+}
 
 .pfp-edit-file-field {
     overflow: hidden;

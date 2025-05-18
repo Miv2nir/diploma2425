@@ -57,7 +57,7 @@
         <h1 style="padding-left: 3rem; padding-right:3rem;">Select a function from the right panel to examine...</h1>
         {/if}
         {#if func_obj}
-        <div class="project-item center"><b>{func_obj.display_name}</b></div>
+        <div class="function-item center"><b>{func_obj.display_name}</b><span class="subtitle">{func_obj.name}</span></div>
         <!--function forms invokation (should probably rewrite into a separate component)-->
         <p>{func_obj.description}</p>
         {#key func_obj}

@@ -29,38 +29,21 @@
   <div class="underlying-container">
     {#if is_author}
     <h2>Available Functions</h2>
-    {#each loaders as f}
-    <div class="project-item center pointer" onclick={() =>{func_obj={
+    {#snippet funclist(l)}
+    {#each l as f}
+    <div class="function-item center pointer" onclick={() =>{func_obj={
       'name':f.name,
       'display_name':f.display_name,
       'description':f.description,
       'params_id':''
-      }}}><b>{f.display_name}</b></div>
+      }}}><b class="function-item-text">{f.display_name}</b>
+      <span class="function-item-text subtitle">{f.name}</span></div>
     {/each}
-    {#each processors as f}
-    <div class="project-item center pointer" onclick={() =>{func_obj={
-      'name':f.name,
-      'display_name':f.display_name,
-      'description':f.description,
-      'params_id':''
-      }}}><b>{f.display_name}</b></div>
-    {/each}
-    {#each renderers as f}
-    <div class="project-item center pointer" onclick={() =>{func_obj={
-      'name':f.name,
-      'display_name':f.display_name,
-      'description':f.description,
-      'params_id':''
-      }}}><b>{f.display_name}</b></div>
-    {/each}
-    {#each models as f}
-    <div class="project-item center pointer" onclick={() =>{func_obj={
-      'name':f.name,
-      'display_name':f.display_name,
-      'description':f.description,
-      'params_id':''
-      }}}><b>{f.display_name}</b></div>
-    {/each}
+    {/snippet}
+    {@render funclist(loaders)}
+    {@render funclist(processors)}
+    {@render funclist(renderers)}
+    {@render funclist(models)}
     {:else}
     <h1>Description</h1>
     <p>{proj_obj.description}</p>
