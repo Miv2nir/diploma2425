@@ -28,7 +28,8 @@ class Registry:
             'FloatPointEvolModelFit':FloatPointEvolModelFit,
             'ArchModelFit':ArchModelFit,
             'ARIMAModelFit':ARIMAModelFit,
-            'ARIMAModelForecast':ARIMAModelForecast
+            'ARIMAModelForecast':ARIMAModelForecast,
+            'ARModelFit':ARModelFit
         }
 
     def get_all(self):

@@ -290,8 +290,31 @@ class ARIMAModelForecast:
         #create shape
         shape_html='<p>'+str(df.shape[0])+' rows, '+str(df.shape[1])+' columns'+'</p>\n'
         return shape_html+html
-
-
+    
+class ARModelFit:
+    def __init__(self):
+        self.initial=False
+        self.display_name='AutoReg Fit'
+        self.description='AutoRegression Model: Initialization and fitting function.'
+        self.type='model'
+        self.accepts=['df']
+        self.returns=['ar_model']
+    def execute(self,df:pd.DataFrame,params={}):
+        chosen_column=params['chosen_column']
+        lags=int(params['lags'])
+        trend=params['trend']
+        ar_model=AutoReg(df['1 month'],lags=lags,trend=trend,missing='drop').fit()
+        return ar_model
+    def render(self,execution_result):
+        #execution result is am
+        #print(type(execution_result.summary()))
+        #some html styling
+        html="<div style='\
+        display: flex;\
+        flex-direction: column; align-items: center;'\
+        >"+execution_result.summary().as_html()+'</div>'
+        return html
+        
         
 '''
 #leaving out the constructor intentionally so to not nuke the memory of the host on every api call
