@@ -8,6 +8,9 @@ import numpy as np
 from django.template.loader import render_to_string
 from arch import arch_model
 
+from statsmodels.tsa.stattools import pacf
+import plotly.graph_objects as go
+
 import plotly.express as px
 import os
 from backend.data_processing.supplied_models import *

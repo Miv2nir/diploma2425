@@ -3,7 +3,7 @@
     //console.log(f);
 </script>
 
-<br>
+<span class="function-item-text">
 {#if f.accepts.length!=0}
     <span>↳ {f.accepts}
         {#if f.produces.length!=0}
@@ -14,3 +14,4 @@
 {#if f.produces.length!=0}
     <span>⎆ {f.produces}</span>
 {/if}
+</span>

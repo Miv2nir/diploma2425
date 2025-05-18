@@ -114,7 +114,7 @@
     <h2>Pipeline</h2>
     {#key upd_flag}
     {#each pipeline_list as f,i }
-    <div class="project-item center pointer" onclick={() =>{
+    <div class="function-item center pointer" onclick={() =>{
             func_obj={
                 'name':f.name,
                 'display_name':f.display_name,
@@ -125,11 +125,9 @@
                 'produces':f.produces
             };console.log(f.accepts);
         }}>
-        <div>
             
-            <b>{f.display_name}</b>
+            <b class="function-item-text">{f.display_name}</b>
             <PipelineFuncVarDisplay f={f} />
-        </div>
         </div>
     {/each}
     {/key}
