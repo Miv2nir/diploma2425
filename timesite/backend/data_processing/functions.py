@@ -272,7 +272,7 @@ class ArchModelForecast:
                 df_result=forecasts.residual_variance
             case 'variance':
                 df_result=forecasts.variance
-        return df_result
+        return df_result.transpose()
     def render(self,execution_result):
         df=execution_result
         html = df.to_html()+'<br>' #get the main thing
