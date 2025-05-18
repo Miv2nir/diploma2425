@@ -97,7 +97,21 @@ class GetQuantile:
         numeric_only=params['numeric_only']
         #method=params['method']
         return df.quantile(quantile,numeric_only=numeric_only).to_frame()
-        
+
+class SetDateIndex:
+    def __init__(self):
+        self.initial=False
+        self.display_name='Set Date as Index'
+        self.description='Converts a selected column into datetime and then assigns it as the index column of the DataFrame.'
+        self.type='processor'
+        self.accepts=['df']
+        self.returns=['df']
+    def execute(self,df:pd.DataFrame,params={}):
+        chosen_column=params['chosen_column']
+        #method=params['method']
+        df[chosen_column]=pd.to_datetime(df[chosen_column])
+        return df.set_index(chosen_column)
+
 class RenderDF:
     def __init__(self):
         self.initial=False

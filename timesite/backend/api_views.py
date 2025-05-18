@@ -354,6 +354,11 @@ def accept_processor(request,id):
         }
     else:
         params_dict={}
+        for i in request.POST:
+            if i not in ['csrfmiddlewaretoken','func_name']:
+                params_dict[i]=request.POST.get(i)
+                print(params_dict)
+    
     if request.POST.get('load_var_name'):
         accept=request.POST.get('load_var_name')
     else:

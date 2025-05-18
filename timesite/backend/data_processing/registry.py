@@ -16,7 +16,8 @@ class Registry:
             'DropColumns':DropColumns,
             'FillNA':FillNA,
             'DropNA':DropNA,
-            'GetQuantile':GetQuantile
+            'GetQuantile':GetQuantile,
+            'SetDateIndex':SetDateIndex
         }
         self.renderers={
             'RenderDF':RenderDF,
