@@ -29,6 +29,7 @@ class Registry:
         self.models={
             'FloatPointEvolModelFit':FloatPointEvolModelFit,
             'ArchModelFit':ArchModelFit,
+            'ArchModelForecast':ArchModelForecast,
             'ARIMAModelFit':ARIMAModelFit,
             'ARIMAModelForecast':ARIMAModelForecast,
             'ARModelFit':ARModelFit,

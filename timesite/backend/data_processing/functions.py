@@ -7,6 +7,7 @@ from statsmodels.tsa.arima.model import ARIMA
 import numpy as np
 from django.template.loader import render_to_string
 from arch import arch_model
+from arch.univariate.base import ARCHModelResult
 
 from statsmodels.tsa.stattools import acf, pacf
 import plotly.graph_objects as go
@@ -251,14 +252,43 @@ class ArchModelFit:
         flex-direction: column; align-items: center;'\
         >"+execution_result.summary().as_html()+'</div>'
         return html
+
+class ArchModelForecast:
+    def __init__(self):
+        self.initial=False
+        self.display_name='ARCH Forecast'
+        self.description='ARCH Model: Initialization and fitting function.'
+        self.type='model'
+        self.accepts=['am']
+        self.returns=['df']
+    def execute(self,am:ARCHModelResult,params={}):
+        horizon=int(params['horizon'])
+        forecast_type=params['forecast_type']
+        forecasts=am.forecast(horizon=horizon)
+        match forecast_type:
+            case 'mean':
+                df_result=forecasts.mean
+            case 'residual_variance':
+                df_result=forecasts.residual_variance
+            case 'variance':
+                df_result=forecasts.variance
+        return df_result
+    def render(self,execution_result):
+        df=execution_result
+        html = df.to_html()+'<br>' #get the main thing
+        #create shape
+        shape_html='<p>'+str(df.shape[0])+' rows, '+str(df.shape[1])+' columns'+'</p>\n'
+        return shape_html+html
+    
+        
 class ARIMAModelFit:
     def __init__(self):
         self.initial=False
         self.display_name='ARIMA Fit'
-        self.description='ARIMA Model: Initialization and fitting function.'
+        self.description='ARIMA Model: Modeling forecasts for the trained model.'
         self.type='model'
-        self.accepts=['df']
-        self.returns=['arima_model']
+        self.accepts=['arima_model']
+        self.returns=['df']
     def execute(self,df:pd.DataFrame,params={}):
         chosen_column=params['chosen_column']
         p=int(params['p'])
