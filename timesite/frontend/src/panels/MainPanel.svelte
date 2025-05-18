@@ -14,7 +14,7 @@
     import FloatPointEvolModelFit from "../function_forms/FloatPointEvolModelFit.svelte";
     import ArchModelFit from "../function_forms/ArchModelFit.svelte";
     import LinePlotDF from "../function_forms/LinePlotDF.svelte";
-    import ArimaModelFit from "../function_forms/ARIMAModelFit.svelte";
+    import ARIMAModelFit from "../function_forms/ARIMAModelFit.svelte";
     import SetDateIndex from "../function_forms/SetDateIndex.svelte";
     import Empty from "../function_forms/Empty.svelte";
     let {author,
@@ -30,7 +30,7 @@
 
       //define components
       const components={LoadCSV,DropColumns,RenderDF,DownloadDF,FillNA,DropNA,GetQuantile,
-        FloatPointEvolModelFit,ArchModelFit,LinePlotDF,ArimaModelFit,SetDateIndex};
+        FloatPointEvolModelFit,ArchModelFit,LinePlotDF,ARIMAModelFit,SetDateIndex};
       let FuncForm = $state();
       $effect(()=>{
       if (func_obj==undefined){

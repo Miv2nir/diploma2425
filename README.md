@@ -15,5 +15,6 @@
 - statmodels (model work)
 - plotly, plotly[express] (interactive graphs)
 - autots (model work)
+- scikit-learn (model work)
 # Additional libraries used on the frontend
 - js-cookie - https://github.com/js-cookie/js-cookie
