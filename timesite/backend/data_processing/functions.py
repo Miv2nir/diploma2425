@@ -412,6 +412,35 @@ class PlotACF:
         fig.write_html(MEDIA_ROOT+'temp/'+params['params_id']+'.html',config={'displaylogo': False})
         return '<iframe src="/'+MEDIA_ROOT+'temp/'+params['params_id']+'.html'+'" frameBorder="0" style="width:55vw; height:63vh;"></iframe>'
         
+class PlotPACF:
+    def __init__(self):
+        self.initial=False
+        self.display_name='Plot PACF'
+        self.description='Creates an interactive line graph of the DataFrame provided.'
+        self.type='renderer'
+    
+        self.accepts=['df']
+        self.returns=[]
+    def execute(self,df:pd.DataFrame,params={}):
+        chosen_column=params['chosen_column']
+        lags=int(params['lags'])
+        df_pacf=pacf(df[chosen_column],nlags=lags)
+        fig = go.Figure()
+        fig.add_trace(go.Bar(
+            x= np.arange(len(df_pacf)),
+            y= df_pacf,
+            name= 'PACF',
+            ))
+        fig.update_xaxes(rangeslider_visible=True)
+        fig.update_layout(
+            title="Partial Autocorrelation",
+            xaxis_title="Lag",
+            yaxis_title="Partial Autocorrelation",
+            height=500
+            )
+        fig.write_html(MEDIA_ROOT+'temp/'+params['params_id']+'.html',config={'displaylogo': False})
+        return '<iframe src="/'+MEDIA_ROOT+'temp/'+params['params_id']+'.html'+'" frameBorder="0" style="width:55vw; height:63vh;"></iframe>'
+        
 '''
 #leaving out the constructor intentionally so to not nuke the memory of the host on every api call
 class LoadCSV:

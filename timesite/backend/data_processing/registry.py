@@ -23,7 +23,8 @@ class Registry:
             'RenderDF':RenderDF,
             'DownloadDF':DownloadDF,
             'LinePlotDF':LinePlotDF,
-            'PlotACF':PlotACF
+            'PlotACF':PlotACF,
+            'PlotPACF':PlotPACF
         }
         self.models={
             'FloatPointEvolModelFit':FloatPointEvolModelFit,
