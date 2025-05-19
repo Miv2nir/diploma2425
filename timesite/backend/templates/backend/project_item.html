@@ -42,9 +42,9 @@
                             {%csrf_token%}
                             <button type="submit" id="pin_button" style="width: 40vw; transition: none;" 
                             {% if is_pinned %}
-                            class="login-button-primary">Unpin this project
+                            class="login-button-secondary">Unpin this project
                             {% else %}
-                            class="login-button-secondary">Pin this project
+                            class="login-button-primary">Pin this project
                             {%endif%}
                         </button>
                         </form>
