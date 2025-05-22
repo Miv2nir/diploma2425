@@ -73,7 +73,7 @@
         <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="load_var_name" value={load_var_name}>
         <br>
         <br>
-        <label for="x">Name the column for the x axis:</label>
+        <label for="x">Name the column for the x axis (leave empty for index):</label>
         <input type='text' disabled={!is_author} name='x' value={x} class="login-input-box" >
         <br>
         <br>

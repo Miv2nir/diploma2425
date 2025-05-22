@@ -17,7 +17,7 @@
     //get order
     var func_params=$state();
     var load_var_name=$state('df');
-    var save_var_name=$state('models_params');
+    var save_var_name=$state('modelsparams');
     //var dist=$state('Normal');
     var chosen_column=$state('');
     var p=$state(1);

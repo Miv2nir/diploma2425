@@ -17,12 +17,13 @@
     //get order
     var func_params=$state();
     var load_var_name=$state('df');
-    var save_var_name=$state('models_params');
+    var save_var_name=$state('df_res');
+     var modelsparams=$state('modelsparams');
     //var dist=$state('Normal');
     var chosen_column=$state('');
-    var n_simulations=$state();
-    var n_steps=$state();
-    var dt=$state();
+    var n_simulations=$state(10);
+    var n_steps=$state(100);
+    var dt=$state(250);
  async function sendForm() {
       console.log('sending form');
       await fetch(form.action, {method:'post',
@@ -41,6 +42,7 @@
         console.log(l.info.params);
         func_params=l.info.params;
         chosen_column=func_params['chosen_column'];
+        modelsparams=func_params['modelsparams'];
         n_simulations=parseInt(func_params['n_simulations']);
         n_steps=parseInt(func_params['n_steps']);
         dt=parseInt(func_params['dt']);
@@ -84,7 +86,11 @@
         <input type="text" disabled={!is_author} class="login-input-box small" id="load_var_name" name="load_var_name" value={load_var_name}>
         <br>
         <br>
-        <label for="text_columns_definitions">Write the tenor name (column name):</label>
+        <label for="second_df">Load model parameters from:</label>
+        <input type="text" disabled={!is_author} class="login-input-box small" name="modelsparams" value={modelsparams}>
+        <br>
+        <br>
+        <label for="text_columns_definitions">Write the tenor name (column name) for estimation:</label>
         <br>
         <input type="text" disabled={!is_author} name="chosen_column" value={chosen_column} class="login-input-box" id="tenor_definition">
         <br>
@@ -99,7 +105,7 @@
         <input type="number" disabled={!is_author} class="login-input-box smaller" name="dt" value={dt}>
         <br>
         <br>
-        <label for="var_name">Store parameters as:</label>
+        <label for="var_name">Store result as:</label>
         <input type="text" disabled={!is_author}  class="login-input-box small" id="var_name" name="save_var_name" value={save_var_name}>
         <br>
         <br>

@@ -53,7 +53,7 @@ def simulate_paths(df, modelsparams, n_simulations, n_steps, dt=250, calc_correl
     import time
     start_time = time.time()
 
-    tenors = list(df.keys())
+    tenors = list(modelsparams.keys())
     n_tenors = len(tenors)
 
     paths = {tenor: np.zeros((n_simulations, n_steps)) for tenor in tenors}
@@ -63,14 +63,15 @@ def simulate_paths(df, modelsparams, n_simulations, n_steps, dt=250, calc_correl
     if calc_correlation_matrix:
         pass
     else:
-        corr_matrix = np.array([[1.0]])
-        L = np.array([[1.0]])
-        #corr_matrix = np.array([[1.0,1.0,1.0],[1.0,1.0,1.0],[1.0,1.0,1.0]])
-        #L = np.array([[1.0,1.0,1.0],[1.0,1.0,1.0],[1.0,1.0,1.0]])
+        #corr_matrix = np.array([[1.0]])
+        #L = np.array([[1.0]])
+        corr_matrix=np.ones((len(tenors),len(tenors)))
+        L=np.ones((len(tenors),len(tenors)))
 
     for tenor in tenors:
-        paths[tenor][:, 0] = df.iloc[-1]
-        vol[tenor][:, 0] = modelsparams['ar']['resid_variance'] # starting variance from AR(1)
+        paths[tenor][:, 0] = df[tenor].iloc[-1]
+        print(type(modelsparams[tenor]['ar']['resid_variance']))
+        vol[tenor][:, 0] = modelsparams[tenor]['ar']['resid_variance'] # starting variance from AR(1)
 
     for t in range(1, n_steps):
         Z = np.random.normal(0, 1, (n_simulations, n_tenors))
@@ -79,9 +80,9 @@ def simulate_paths(df, modelsparams, n_simulations, n_steps, dt=250, calc_correl
         check_epsilon_t=0
         for tenor_idx, tenor in enumerate(tenors):
             # Initialize models' params
-            ar_params = modelsparams['ar']
-            garch_params = modelsparams['garch']
-            jd_params = modelsparams['jd']
+            ar_params = modelsparams[tenor]['ar']
+            garch_params = modelsparams[tenor]['garch']
+            jd_params = modelsparams[tenor]['jd']
 
             # AR params
             const = ar_params['const']

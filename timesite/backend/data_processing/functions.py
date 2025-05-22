@@ -218,15 +218,25 @@ class LinePlotDF:
         self.returns=[]
     def execute(self,df:pd.DataFrame,params={}):
         #expected params
+        do_all=False
         x=params['x']
+        if not x:
+            x=df.index
         y=params['y'].split(',')
+        if y==['']:
+            do_all=True
         labels={
             'x':params['x_label'],
             'y':params['y_label']
         }
-        fig=px.line(df,x=x,y=y,labels=labels)
+        print('y',y)
+        if do_all:
+            fig=px.line(df,labels=labels)
+        else:
+            fig=px.line(df,x=x,y=y,labels=labels)
+        #fig.update_yaxes(autorange=False)
         #return fig.to_html(include_plotlyjs='cdn',full_html=False)
-        fig.write_html(MEDIA_ROOT+'temp/'+params['params_id']+'.html',config={'displaylogo': False})
+        fig.write_html(MEDIA_ROOT+'temp/'+params['params_id']+'.html',config={'displaylogo': False,'responsive':False})
         return '<iframe src="/'+MEDIA_ROOT+'temp/'+params['params_id']+'.html'+'" frameBorder="0" style="width:55vw; height:63vh;"></iframe>'
 class FloatPointEvolModelFit:
     def __init__(self):
@@ -238,52 +248,59 @@ class FloatPointEvolModelFit:
         self.accepts=['df']
         self.returns=['models_params']
         
-        self.ar_model=None
-        self.garch_model=None
+        self.ar_model={}
+        self.garch_model={}
     def execute(self,df:pd.DataFrame,params={}):
         #tenor is a column from a dataset
-        chosen_column=params['chosen_column']
+        chosen_columns=params['chosen_column'].split(',')
         #tenor = df[chosen_column]
-        tenor = chosen_column
-        #p,q,dist,jump_threshold - all need to appear in a form on the frontend
         p=int(params['p'])
         q=int(params['q'])
         #dist=params['dist'] #set up presets for it
         dist='Normal'
         jump_threshold=int(params['jump_threshold'])
-        result=calibrate_models(df,tenor,p,q,dist,jump_threshold)
-        models_params=result[0]
-        #save models for render work
-        self.ar_model=result[1]
-        self.garch_model=result[2]
-        return models_params
+        modelsparams={}
+        for tenor in chosen_columns:
+            #p,q,dist,jump_threshold - all need to appear in a form on the frontend
+            result=calibrate_models(df,tenor,p,q,dist,jump_threshold)
+            models_params=result[0]
+            modelsparams[tenor]=models_params
+            #save models for render work
+            self.ar_model[tenor]=result[1]
+            self.garch_model[tenor]=result[2]
+        return modelsparams
     def render(self,execution_result):
         #produce a representation for the result object
         #return str(execution_result)
-        
-        return render_to_string('function_render/FloatPointEvolModelFit.html',{
-            'models_params':execution_result,
-            'ar_summary':self.ar_model.summary().as_html(),
-            'garch_summary':self.garch_model.summary().as_html()
+        super_html=''
+        for tenor in execution_result:
+            super_html+= render_to_string('function_render/FloatPointEvolModelFit.html',{
+            'tenor':tenor,
+            'models_params':execution_result[tenor],
+            'ar_summary':self.ar_model[tenor].summary().as_html(),
+            'garch_summary':self.garch_model[tenor].summary().as_html()
         })
+        return super_html
 class FloatPointEvolModelForecast:
     def __init__(self):
         self.initial=False
         self.display_name='Floating Point Evolution Model: Forecast'
         self.description='Forecasting part of the Floating Point Evolution Model involving a simulation being executed through a Monte Carlo process.'
         self.type='model'
-        self.accepts=['models_params']
+        self.accepts=['df','models_params']
         self.returns=['df']
         
         self.ar_model=None
         self.garch_model=None
-    def execute(self,models_params,df:pd.DataFrame,params={}):
+    def execute(self,df:pd.DataFrame,modelsparams,params={}):
         chosen_column=params['chosen_column']
         n_simulations=int(params['n_simulations'])
         n_steps=int(params['n_steps'])
         dt=int(params['dt'])
-        res=simulate_paths(df[chosen_column],models_params,n_simulations,n_steps,dt)
-        return res
+        res=simulate_paths(df,modelsparams,n_simulations,n_steps,dt)
+        df_res=pd.DataFrame(res[chosen_column]).transpose()
+        df_res['mean']=df_res.mean(axis=1)
+        return df_res
     
     def render(self,execution_result):
         df=execution_result

@@ -642,8 +642,10 @@ def invoke_runtime(request,id):
                     result_obj=models.RuntimeRenderResult.objects.filter(func_params=i)[0]
                 except IndexError:
                     result_obj=models.RuntimeRenderResult(func_params=i)
-                    
-                var_store[var_name_save]=func_obj.execute(var_store[var_name_load],params)
+                if i.func_name=='FloatPointEvolModelForecast':
+                    var_store[var_name_save]=func_obj.execute(var_store[var_name_load],var_store[params['modelsparams']],params)
+                else:  
+                    var_store[var_name_save]=func_obj.execute(var_store[var_name_load],params)
                 result_obj.result=func_obj.render(var_store[var_name_save])
                 result_obj.save()
                 func_status.info={
