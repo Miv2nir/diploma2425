@@ -14,7 +14,14 @@ def calibrate_models(df, tenor, p=1, q=1, dist='Normal', jump_threshold=3):
             'resid_variance': np.sqrt(ar_model.sigma2)
         }
         residuals = ar_model.resid
-
+        #calc MSE for AR(1)
+        mse_ar=0
+        for i in residuals:
+            mse_ar+=(i**2)
+        mse_ar/=df.shape[0]
+        rmse_ar=np.sqrt(mse_ar)
+        
+        
         # Fit GARCH to the residuals from AR(1) process (instead of daily log rate)
         garch_model = arch_model(residuals, vol='GARCH', p=p, q=q, dist=dist)
         garch_fit = garch_model.fit(disp='off')
@@ -24,6 +31,12 @@ def calibrate_models(df, tenor, p=1, q=1, dist='Normal', jump_threshold=3):
             'beta': garch_fit.params['beta[1]'],
         }
 
+        #calc MSE for GARCH
+        mse_garch=0
+        for i in garch_fit.resid:
+            mse_garch+=(i**2)
+        mse_garch/=df.shape[0]
+        rmse_garch=np.sqrt(mse_garch)
         # Standardize residuals using GARCH volatility
         vol = garch_fit.conditional_volatility
         standardized_residuals = residuals / vol
@@ -47,7 +60,7 @@ def calibrate_models(df, tenor, p=1, q=1, dist='Normal', jump_threshold=3):
             'garch': garch_params,
             'jd': jd_params
         }
-        return [models_params,ar_model,garch_fit]
+        return [models_params,ar_model,garch_fit,mse_ar,rmse_ar,mse_garch,rmse_garch]
 
 def simulate_paths(df, modelsparams, n_simulations, n_steps, dt=250, calc_correlation_matrix=False):
     import time

@@ -2,16 +2,27 @@
 <div style="display: flex; flex-direction: column; align-items: center;">
     <h3>{{tenor}}:</h3>
     <h3>AutoRegressive Process:</h3>
+    <!--p>MSE: {{mse_ar}}</p>
+    <p>RMSE: {{rmse_ar}}</p-->
     {{ar_summary|safe}}
     <h3>GARCH Process:</h3>
+    <!--p>MSE: {{mse_garch}}</p>
+    <p>RMSE: {{rmse_garch}}</p-->
     {{garch_summary|safe}}
     <h3>Calculated Parameters:</h3>
     {%for item in models_params%}
     <div>
-        <h3>{{item}}:</h3>
+        <!--h3>{{item}}:</h3-->
+        <table class="simpletable">
+            <caption>{{item}}</caption>
         {%for i in models_params|get_item:item %}
-        <p>{{i}}: {{models_params|get_item:item|get_item:i}}</p>
+        <!--p>{{i}}: {{models_params|get_item:item|get_item:i}}</p-->
+            <tr>
+                <th>{{i}}:</th>
+                <td>{{models_params|get_item:item|get_item:i}}</td>
+            </tr>
         {%endfor%}
+        </table>
     </div>
     {%endfor%}
 </div>

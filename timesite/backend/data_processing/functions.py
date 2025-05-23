@@ -250,6 +250,10 @@ class FloatPointEvolModelFit:
         
         self.ar_model={}
         self.garch_model={}
+        self.mse_ar={}
+        self.rmse_ar={}
+        self.mse_garch={}
+        self.rmse_garch={}
     def execute(self,df:pd.DataFrame,params={}):
         #tenor is a column from a dataset
         chosen_columns=params['chosen_column'].split(',')
@@ -268,17 +272,36 @@ class FloatPointEvolModelFit:
             #save models for render work
             self.ar_model[tenor]=result[1]
             self.garch_model[tenor]=result[2]
+            self.mse_ar[tenor]=result[3]
+            self.rmse_ar[tenor]=result[4]
+            self.mse_garch[tenor]=result[5]
+            self.rmse_garch[tenor]=result[6]
         return modelsparams
     def render(self,execution_result):
         #produce a representation for the result object
         #return str(execution_result)
         super_html=''
         for tenor in execution_result:
+            ar_summary=self.ar_model[tenor].summary().as_html().replace('</table>',
+                                                                        render_to_string('function_render/table_addon.html',{
+                                                                            'mse':self.mse_ar[tenor],
+                                                                            'rmse':self.rmse_ar[tenor]
+                                                                        })+'</table>',1)
+            garch_summary=self.garch_model[tenor].summary().as_html().replace('</table>',
+                                                                        render_to_string('function_render/table_addon.html',{
+                                                                            'mse':self.mse_garch[tenor],
+                                                                            'rmse':self.rmse_garch[tenor]
+                                                                        })+'</table>',1)
+            print(ar_summary)
             super_html+= render_to_string('function_render/FloatPointEvolModelFit.html',{
             'tenor':tenor,
             'models_params':execution_result[tenor],
-            'ar_summary':self.ar_model[tenor].summary().as_html(),
-            'garch_summary':self.garch_model[tenor].summary().as_html()
+            'ar_summary':ar_summary,
+            'garch_summary':garch_summary,
+            'mse_ar':self.mse_ar[tenor],
+            'rmse_ar':self.rmse_ar[tenor],
+            'mse_garch':self.mse_garch[tenor],
+            'rmse_garch':self.rmse_garch[tenor]
         })
         return super_html
 class FloatPointEvolModelForecast:
