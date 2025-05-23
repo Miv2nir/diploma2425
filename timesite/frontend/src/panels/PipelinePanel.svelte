@@ -153,5 +153,7 @@
     {:else}
     <p>Add a renderer to run the pipeline.</p>
     {/if}
+            <br>
+            <br>
 </div>
     </div>

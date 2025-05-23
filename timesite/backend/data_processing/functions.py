@@ -339,6 +339,8 @@ class ArchModelFit:
         self.type='model'
         self.accepts=['df']
         self.returns=['am']
+        self.mse=0
+        self.rmse=0
     def execute(self,df:pd.DataFrame,params={}):
         chosen_column=params['chosen_column']
         #3 apsects to the ARCH model
@@ -360,6 +362,10 @@ class ArchModelFit:
         am=arch_model(df[chosen_column],
                       mean=mean,lags=lags,vol=vol,p=p,o=o,q=q,power=power,
                       dist=dist,rescale=rescale).fit()
+        for i in am.resid:
+            self.mse+=(i**2)
+        self.mse/=df.shape[0]
+        self.rmse=np.sqrt(self.mse)
         #print(am.summary())
         #am.summary().
         return am
@@ -370,7 +376,10 @@ class ArchModelFit:
         html="<div style='\
         display: flex;\
         flex-direction: column; align-items: center;'\
-        >"+execution_result.summary().as_html()+'</div>'
+        >"+execution_result.summary().as_html().replace('</table>',render_to_string('function_render/table_addon.html',{
+                                                                            'mse':self.mse,
+                                                                            'rmse':self.rmse
+                                                                        })+'</table>',1)+'</div>'
         return html
 
 class ArchModelForecast:
@@ -409,12 +418,19 @@ class ARIMAModelFit:
         self.type='model'
         self.accepts=['arima_model']
         self.returns=['df']
+        
+        self.mse=0
+        self.rmse=0
     def execute(self,df:pd.DataFrame,params={}):
         chosen_column=params['chosen_column']
         p=int(params['p'])
         d=int(params['d'])
         q=int(params['q'])
         arima_model=ARIMA(df[chosen_column],order=(p,d,q)).fit()
+        for i in arima_model.resid:
+            self.mse+=(i**2)
+        self.mse/=df.shape[0]
+        self.rmse=np.sqrt(self.mse)
         return arima_model
     def render(self,execution_result):
         #execution result is am
@@ -423,7 +439,10 @@ class ARIMAModelFit:
         html="<div style='\
         display: flex;\
         flex-direction: column; align-items: center;'\
-        >"+execution_result.summary().as_html()+'</div>'
+        >"+execution_result.summary().as_html().replace('</table>',render_to_string('function_render/table_addon.html',{
+                                                                            'mse':self.mse,
+                                                                            'rmse':self.rmse
+                                                                        })+'</table>',1)+'</div>'
         return html
 class ARIMAModelForecast:
     def __init__(self):
@@ -453,12 +472,19 @@ class ARModelFit:
         self.type='model'
         self.accepts=['df']
         self.returns=['ar_model']
+        
+        self.mse=0
+        self.rmse=0
     def execute(self,df:pd.DataFrame,params={}):
         chosen_column=params['chosen_column']
         lags=int(params['lags'])
         trend=params['trend']
-        
         ar_model=AutoReg(df[chosen_column],lags=lags,trend=trend,missing='drop').fit()
+        
+        for i in ar_model.resid:
+            self.mse+=(i**2)
+        self.mse/=df.shape[0]
+        self.rmse=np.sqrt(self.mse)
         return ar_model
     def render(self,execution_result):
         #execution result is am
@@ -467,7 +493,10 @@ class ARModelFit:
         html="<div style='\
         display: flex;\
         flex-direction: column; align-items: center;'\
-        >"+execution_result.summary().as_html()+'</div>'
+        >"+execution_result.summary().as_html().replace('</table>',render_to_string('function_render/table_addon.html',{
+                                                                            'mse':self.mse,
+                                                                            'rmse':self.rmse
+                                                                        })+'</table>',1)+'</div>'
         return html
 
 class ARModelForecast:
@@ -498,11 +527,19 @@ class ARMAModelFit:
         self.type='model'
         self.accepts=['df']
         self.returns=['arma_model']
+
+        self.mse=0
+        self.rmse=0
     def execute(self,df:pd.DataFrame,params={}):
         chosen_column=params['chosen_column']
         p=int(params['p'])
         q=int(params['q'])
         arma_model=ARIMA(df[chosen_column],order=(p,0,q)).fit()
+        
+        for i in arma_model.resid:
+            self.mse+=(i**2)
+        self.mse/=df.shape[0]
+        self.rmse=np.sqrt(self.mse)
         return arma_model
     def render(self,execution_result):
         #execution result is am
@@ -511,7 +548,10 @@ class ARMAModelFit:
         html="<div style='\
         display: flex;\
         flex-direction: column; align-items: center;'\
-        >"+execution_result.summary().as_html()+'</div>'
+        >"+execution_result.summary().as_html().replace('</table>',render_to_string('function_render/table_addon.html',{
+                                                                            'mse':self.mse,
+                                                                            'rmse':self.rmse
+                                                                        })+'</table>',1)+'</div>'
         return html
 class ARMAModelForecast:
     def __init__(self):

@@ -18,8 +18,8 @@
     //var is_value=$state()
     var split_point=$state(0);
     var splitting_mode=$state('');
-    var save_var_name=$state('df');
     var load_var_name=$state('df');
+    var save_var_name=$state('df_new');
     async function sendForm() {
       console.log('sending form');
       await fetch(form.action, {method:'post',

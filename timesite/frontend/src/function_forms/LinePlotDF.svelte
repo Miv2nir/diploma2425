@@ -82,10 +82,12 @@
         <br>
         <br>
         <label for="x_label">Set label for the x axis:</label>
+                <br>
         <input type='text' disabled={!is_author} name='x_label' value={x_label} class="login-input-box" >
         <br>
         <br>
         <label for="y">Set label for the y axis:</label>
+                <br>
         <input type='text' disabled={!is_author} name='y_label' value={y_label} class="login-input-box" >
         <br>
         <br>
