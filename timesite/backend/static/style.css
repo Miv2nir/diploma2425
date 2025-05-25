@@ -571,7 +571,7 @@ font-size: 1rem;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    justify-self: center;
+    /*justify-self: center;*/
     align-items: center;
     text-align: center;
     gap: 1rem;
