@@ -237,7 +237,8 @@ class LinePlotDF:
         #fig.update_yaxes(autorange=False)
         #return fig.to_html(include_plotlyjs='cdn',full_html=False)
         fig.write_html(MEDIA_ROOT+'temp/'+params['params_id']+'.html',config={'displaylogo': False,'responsive':False})
-        return '<iframe src="/'+MEDIA_ROOT+'temp/'+params['params_id']+'.html'+'" frameBorder="0" style="width:55vw; height:63vh;"></iframe>'
+        return '<iframe src="/'+MEDIA_ROOT+'temp/'+params['params_id']+'.html'+'" frameBorder="0" style="width:100%; height:63vh;">\
+            </iframe>'
 class FloatPointEvolModelFit:
     def __init__(self):
         self.initial=False

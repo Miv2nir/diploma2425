@@ -106,6 +106,10 @@ let {
         <div style="max-width:100%;">
             {@html i.output}
         </div>
+        {:else if i.name=='LinePlotDF'}
+        <div style="width:100%; display:flex;justify-content:center;">
+            {@html i.output}
+        </div>
         {:else}
         <div>
             {@html i.output}

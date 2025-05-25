@@ -633,3 +633,7 @@ font-size: 1rem;
         background-color: var(--selection-color);
     }
 }
+.plot-container-centerer{
+    display: flex;
+    justify-content: center;
+}
