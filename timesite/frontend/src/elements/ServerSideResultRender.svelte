@@ -110,6 +110,14 @@ let {
         <div style="width:100%; display:flex;justify-content:center;">
             {@html i.output}
         </div>
+        {:else if i.name=='PlotACF'}
+        <div style="width:100%; display:flex;justify-content:center;">
+            {@html i.output}
+        </div>
+        {:else if i.name=='PlotPACF'}
+        <div style="width:100%; display:flex;justify-content:center;">
+            {@html i.output}
+        </div>
         {:else}
         <div>
             {@html i.output}

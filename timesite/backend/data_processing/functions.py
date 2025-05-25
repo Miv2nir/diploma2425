@@ -601,7 +601,7 @@ class PlotACF:
             height=500
             )
         fig.write_html(MEDIA_ROOT+'temp/'+params['params_id']+'.html',config={'displaylogo': False})
-        return '<iframe src="/'+MEDIA_ROOT+'temp/'+params['params_id']+'.html'+'" frameBorder="0" style="width:55vw; height:63vh;"></iframe>'
+        return '<iframe src="/'+MEDIA_ROOT+'temp/'+params['params_id']+'.html'+'" frameBorder="0" style="width:100%; height:63vh;"></iframe>'
         
 class PlotPACF:
     def __init__(self):
@@ -630,7 +630,7 @@ class PlotPACF:
             height=500
             )
         fig.write_html(MEDIA_ROOT+'temp/'+params['params_id']+'.html',config={'displaylogo': False})
-        return '<iframe src="/'+MEDIA_ROOT+'temp/'+params['params_id']+'.html'+'" frameBorder="0" style="width:55vw; height:63vh;"></iframe>'
+        return '<iframe src="/'+MEDIA_ROOT+'temp/'+params['params_id']+'.html'+'" frameBorder="0" style="width:100%; height:63vh;"></iframe>'
         
 '''
 #leaving out the constructor intentionally so to not nuke the memory of the host on every api call
