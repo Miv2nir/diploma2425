@@ -71,11 +71,15 @@ def get_user_info(request):
     
 @api_view()
 def get_specific_user_info(request,pk):
-    user=User.objects.get(pk=pk)
     try:
-        user_detais=models.UserInfo.objects.get(pk=pk)
-    except models.UserInfo.DoesNotExist:
+        user=User.objects.get(pk=pk)
+    except:
         return Response(status=404)
+    try:
+        user_detais=models.UserInfo.objects.get(user=user)
+    except:
+        user_detais=models.UserInfo(user=user)
+        user_detais.save()
     has_pfp=False
     pfp_path=''
     try:
