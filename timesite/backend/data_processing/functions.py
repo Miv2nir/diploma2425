@@ -161,6 +161,12 @@ class SetDateIndex:
         df[chosen_column]=pd.to_datetime(df[chosen_column])
         return df.set_index(chosen_column)
 
+def compose_full_render(df):
+    df_render = '<div style="max-width:100%;overflow-x:scroll;">'+df.to_html()+'<br></div>' #get the main thing
+    shape_html='<p>'+str(df.shape[0])+' rows, '+str(df.shape[1])+' columns'+'</p>\n'
+    df_render=shape_html+df_render
+    return df_render
+
 class RenderDF:
     def __init__(self):
         self.initial=False
@@ -179,9 +185,10 @@ class RenderDF:
             pass
         #render_full_dataset=params['render_full_dataset']
         if render_full_dataset:
-            df_render = '<div style="max-width:100%;overflow-x:scroll;">'+df.to_html()+'<br></div>' #get the main thing
-            shape_html='<p>'+str(df.shape[0])+' rows, '+str(df.shape[1])+' columns'+'</p>\n'
-            df_render=shape_html+df_render
+            #df_render = '<div style="max-width:100%;overflow-x:scroll;">'+df.to_html()+'<br></div>' #get the main thing
+            #shape_html='<p>'+str(df.shape[0])+' rows, '+str(df.shape[1])+' columns'+'</p>\n'
+            #df_render=shape_html+df_render
+            df_render=compose_full_render(df)
         #html = df.to_html()+'<br>'
         else:
             df_render=df._repr_html_()+'<br>'
@@ -328,10 +335,12 @@ class FloatPointEvolModelForecast:
     
     def render(self,execution_result):
         df=execution_result
-        html = df.to_html()+'<br>' #get the main thing
+        #html = df.to_html()+'<br>' #get the main thing
         #create shape
-        shape_html='<p>'+str(df.shape[0])+' rows, '+str(df.shape[1])+' columns'+'</p>\n'
-        return shape_html+html
+        #shape_html='<p>'+str(df.shape[0])+' rows, '+str(df.shape[1])+' columns'+'</p>\n'
+        #return shape_html+html
+        #return df._repr_html_()+'<br>'
+        return compose_full_render(df)
 class ArchModelFit:
     def __init__(self):
         self.initial=False
