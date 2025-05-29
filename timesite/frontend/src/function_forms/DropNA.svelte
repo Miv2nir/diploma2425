@@ -77,7 +77,7 @@
         <br>
         <br>
         {#if is_author}
-        <button type="button" class="login-button-primary" onclick={()=>sendForm()}>Set Procesor</button>
+        <button type="button" class="login-button-primary" onclick={()=>sendForm()}>Set Processor</button>
         {/if}
         {#if func_obj.params_id}
         <input type="hidden" name="order" value={func_obj.order}>

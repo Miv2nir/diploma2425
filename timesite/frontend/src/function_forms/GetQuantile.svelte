@@ -18,8 +18,8 @@
     //var is_value=$state()
     var value_number=$state(0.0);
     var numeric_only=$state(false);
-    var save_var_name=$state('quant');
     var load_var_name=$state('df');
+    var save_var_name=$state('quant');
     async function sendForm() {
       console.log('sending form');
       await fetch(form.action, {method:'post',
@@ -94,7 +94,7 @@
         {#if is_author}
         <br>
         <br>
-        <button type="button" class="login-button-primary" onclick={()=>sendForm()}>Set Renderer</button>
+        <button type="button" class="login-button-primary" onclick={()=>sendForm()}>Set Processor</button>
         {/if}
         {#if func_obj.params_id}
         <input type="hidden" name="order" value={func_obj.order}>

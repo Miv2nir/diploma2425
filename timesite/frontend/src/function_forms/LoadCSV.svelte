@@ -101,7 +101,7 @@
         <br>
         <br>
         {#if is_author}
-        <button type="button" onclick={()=>sendForm()} class="login-button-primary">Save Parameters</button>
+        <button type="button" onclick={()=>sendForm()} class="login-button-primary">Set Loader</button>
         {/if}
         <br>
         {#if func_obj.params_id}
