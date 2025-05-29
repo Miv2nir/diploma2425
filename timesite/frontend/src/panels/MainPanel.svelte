@@ -59,7 +59,7 @@
     <div class="home-container center" id="container-main" style="margin-bottom:1rem;">
       <Left />
       <Right />
-      <div class="underlying-container" style="height:80vh;">
+      <div class="underlying-container" style="height:100%;">
       {#if runtime_invoked}
         {#if runtime_finished}
           {#if !runtime_errored}
