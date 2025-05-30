@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import FileExtensionValidator
 
 import uuid
 
@@ -47,7 +48,7 @@ class Project(models.Model):
 
 class DataFile(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    file=models.FileField(upload_to='data_store/')
+    file=models.FileField(upload_to='data_store/',validators=[FileExtensionValidator(['csv'])])
     EXTENSIONS= {
         'CSV':'.csv',
     }

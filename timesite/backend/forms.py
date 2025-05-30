@@ -1,5 +1,6 @@
 from django import forms
 from backend import models
+from django.core.validators import FileExtensionValidator
 
 #TODO: refactor for some fancy new css that doesn't suck
 #essentials
@@ -58,7 +59,7 @@ class DataFileForm(forms.ModelForm):
         model= models.DataFile
         fields=['file','name','description','display_in_guest_mode']
         widgets = {
-            'file':forms.FileInput(attrs={'onchange':'updateLabel();'}),
+            'file':forms.FileInput(attrs={'onchange':'updateLabel();','accept':'.csv'}),
             'name':forms.TextInput(attrs={'placeholder': 'File Name','class': 'login-input-box'}),
             'description':forms.Textarea(attrs={'placeholder':'Description','class':'login-input-box'}),
             'display_in_guest_mode':forms.CheckboxInput()
