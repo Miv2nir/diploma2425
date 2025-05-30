@@ -11,15 +11,15 @@
     const csrftoken = Cookies.get('csrftoken');
     var form=undefined;
     onMount(()=>{
-      form=document.getElementById('processor_form');
+      form=document.getElementById('renderer_form');
       //console.log(form);
     })
     var func_params=$state();
     //var is_value=$state()
-    var value_number=$state(0.0);
-    var numeric_only=$state(false);
+    var value_number=$state(0.5);
+    var numeric_only=$state(true);
     var load_var_name=$state('df');
-    var save_var_name=$state('quant');
+    //var save_var_name=$state('quant');
     async function sendForm() {
       console.log('sending form');
       await fetch(form.action, {method:'post',
@@ -39,7 +39,7 @@
         func_params=l.info.params;
         value_number=parseFloat(func_params['quantile']);
         numeric_only=func_params['numeric_only'];
-        save_var_name=func_obj.produces;
+        //save_var_name=func_obj.produces;
         load_var_name=func_obj.accepts;
     }
     if (func_obj.params_id){
@@ -69,7 +69,7 @@
     {/if}
     <br>
     {/if}
-        <form action="/api/functions/{proj_obj.id}/accept_processor/" method="POST" id="processor_form" onsubmit={()=>sendForm()}>
+        <form action="/api/functions/{proj_obj.id}/accept_renderer/" method="POST" id="renderer_form" onsubmit={()=>sendForm()}>
         <input type="hidden" name="csrfmiddlewaretoken" value="{csrftoken}">
         <input type="hidden" name="func_name" value="{func_obj.name}">
         {#if func_obj.params_id}
@@ -87,13 +87,12 @@
         <input type="checkbox" disabled={!is_author} style="transform:scale(1.5);" name="numeric_only" id='numeric_toggle' checked={numeric_only}>
         <br>
         <br>
-        <label for="var_name">Store changes as:</label>
-        <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="save_var_name" value={save_var_name}>
+        <!--label for="var_name">Store changes as:</label>
+        <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="save_var_name" value={save_var_name}-->
         <br>
         <br>
         {#if is_author}
-        <br>
-        <br>
+
         <button type="button" class="login-button-primary" onclick={()=>sendForm()}>Set Processor</button>
         {/if}
         {#if func_obj.params_id}

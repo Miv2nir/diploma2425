@@ -88,19 +88,7 @@ class DropNA:
     def execute(self,df:pd.DataFrame,params={}):
         df.dropna(axis=0,inplace=True)
         return df
-class GetQuantile:
-    def __init__(self):
-        self.initial=False
-        self.display_name='Quantile'
-        self.description='Calculates quantile of a dataset'
-        self.type='processor'
-        self.accepts=['df']
-        self.returns=['df']
-    def execute(self,df:pd.DataFrame,params={}):
-        quantile=float(params['quantile'])
-        numeric_only=params['numeric_only']
-        #method=params['method']
-        return df.quantile(quantile,numeric_only=numeric_only).to_frame()
+
 class SplitByIndex:
     def __init__(self):
         self.initial=False
@@ -161,11 +149,29 @@ class SetDateIndex:
         df[chosen_column]=pd.to_datetime(df[chosen_column])
         return df.set_index(chosen_column)
 
-def compose_full_render(df):
+def compose_full_render(df,add_shape=True):
     df_render = '<div style="max-width:100%;overflow-x:auto; transform:rotateX(180deg);"><div style="transform:rotateX(180deg);">'+df.to_html()+'</div></div>' #get the main thing
-    shape_html='<p>'+str(df.shape[0])+' rows, '+str(df.shape[1])+' columns'+'</p>\n'
+    if add_shape:
+        shape_html='<p>'+str(df.shape[0])+' rows, '+str(df.shape[1])+' columns'+'</p>\n'
+    else:
+        shape_html=''
     df_render=shape_html+df_render
     return df_render
+
+class GetQuantile:
+    def __init__(self):
+        self.initial=False
+        self.display_name='Quantile'
+        self.description='Calculates quantile of a dataset'
+        self.type='renderer'
+        self.accepts=['df']
+        self.returns=[]
+    def execute(self,df:pd.DataFrame,params={}):
+        quantile=float(params['quantile'])
+        numeric_only=params['numeric_only']
+        #method=params['method']
+        df_quant=df.quantile(quantile,numeric_only=numeric_only).to_frame()
+        return compose_full_render(df_quant,add_shape=False)
 
 class RenderDF:
     def __init__(self):

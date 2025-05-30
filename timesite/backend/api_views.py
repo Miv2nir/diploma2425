@@ -349,13 +349,7 @@ def accept_processor(request,id):
         if request.POST.get('fill_mode')=='value':
             pass #save the value
             params_dict['value']=request.POST.get('fill_value')
-    elif func_name=='GetQuantile':
-        #params_dict['quantile']=request.POST.get('q')
-        #params_dict['numeric_only']=request.POST.get('numeric_only')
-        params_dict={
-            'quantile':request.POST.get('q'),
-            'numeric_only':request.POST.get('numeric_only')
-        }
+
     else:
         params_dict={}
         for i in request.POST:
@@ -438,6 +432,11 @@ def accept_renderer(request,id):
     #handle the rest of the form
     if func_name=='DownloadDF':
         params_dict['index']=request.POST.get('index_toggle')
+    elif func_name=='GetQuantile':
+        #params_dict['quantile']=request.POST.get('q')
+        #params_dict['numeric_only']=request.POST.get('numeric_only')
+        params_dict['quantile']=request.POST.get('q')
+        params_dict['numeric_only']=request.POST.get('numeric_only')
     else:
         #little experiment
         for i in request.POST:

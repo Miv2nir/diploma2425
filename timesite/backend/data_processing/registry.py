@@ -16,7 +16,6 @@ class Registry:
             'DropColumns':DropColumns,
             'FillNA':FillNA,
             'DropNA':DropNA,
-            'GetQuantile':GetQuantile,
             'SetDateIndex':SetDateIndex,
             'SplitByIndex':SplitByIndex,
             'MergeDF':MergeDF
@@ -25,6 +24,7 @@ class Registry:
             'RenderDF':RenderDF,
             'DownloadDF':DownloadDF,
             'LinePlotDF':LinePlotDF,
+            'GetQuantile':GetQuantile,
             'PlotACF':PlotACF,
             'PlotPACF':PlotPACF
         }
