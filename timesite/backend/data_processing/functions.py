@@ -250,7 +250,7 @@ class LinePlotDF:
             fig=px.line(df,x=x,y=y,labels=labels)
         #fig.update_yaxes(autorange=False)
         #return fig.to_html(include_plotlyjs='cdn',full_html=False)
-        fig.write_html(MEDIA_ROOT+'temp/'+params['params_id']+'.html',config={'displaylogo': False,'responsive':False})
+        fig.write_html(MEDIA_ROOT+'temp/'+params['params_id']+'.html',config={'displaylogo': False,'responsive':False},include_plotlyjs='cdn')
         return '<iframe src="/'+MEDIA_ROOT+'temp/'+params['params_id']+'.html'+'" frameBorder="0" style="width:100%; height:63vh;">\
             </iframe>'
 class FloatPointEvolModelFit:
