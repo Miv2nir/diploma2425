@@ -82,14 +82,14 @@
         {#if func_obj.params_id}
         <input type="hidden" name="order" value={func_obj.order}>
         {/if}
-      </p>
-    </form>
     {#if func_obj.params_id}
+    <br>
     <br>
     {#if is_author}
     <button type="button" onclick={()=>removeFunction()} class="login-button-delete">Remove Function</button>
-    <br>
-    <br>
     {/if}
     {/if}
+      </p>
+    </form>
+
 </div>

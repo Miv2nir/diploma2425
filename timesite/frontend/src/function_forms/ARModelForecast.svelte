@@ -97,8 +97,6 @@
         {#if is_author}
         {#if func_obj.params_id}
         <button type="button" onclick={()=>removeFunction()} class="login-button-delete">Remove Function</button>
-        <br>
-        <br>
         {/if}
         {/if}
         </p>

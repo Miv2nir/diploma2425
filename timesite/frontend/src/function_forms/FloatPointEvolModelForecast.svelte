@@ -82,6 +82,7 @@
         {#if func_obj.params_id}
         <input type="hidden" name="update" value="true">
         {/if}    
+        <p>
         <label for="var_name">Load DataFrame from:</label>
         <input type="text" disabled={!is_author} class="login-input-box small" id="load_var_name" name="load_var_name" value={load_var_name}>
         <br>
@@ -119,8 +120,7 @@
         {#if is_author}
         <button type="button" onclick={()=>removeFunction()} class="login-button-delete">Remove Function</button>
         {/if}
-        <br>
-        <br>
         {/if}
+        </p>
     </form>
 </div>

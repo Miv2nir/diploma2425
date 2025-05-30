@@ -75,6 +75,7 @@
         {#if func_obj.params_id}
         <input type="hidden" name="update" value="true">
         {/if}
+        <p>
         <label for="var_name">Load DataFrame from:</label>
         <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="load_var_name" value={load_var_name}>
         <br>
@@ -89,8 +90,6 @@
         <br>
         <!--label for="var_name">Store changes as:</label>
         <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="save_var_name" value={save_var_name}-->
-        <br>
-        <br>
         {#if is_author}
 
         <button type="button" class="login-button-primary" onclick={()=>sendForm()}>Set Processor</button>
@@ -98,13 +97,13 @@
         {#if func_obj.params_id}
         <input type="hidden" name="order" value={func_obj.order}>
         {/if}
+        {#if func_obj.params_id}
+        <br>
+        {#if is_author}
+        <br>
+        <button type="button" onclick={()=>removeFunction()} class="login-button-delete">Remove Function</button>
+        {/if}
+        {/if}
+    </p>
     </form>
-    {#if func_obj.params_id}
-    <br>
-    {#if is_author}
-    <button type="button" onclick={()=>removeFunction()} class="login-button-delete">Remove Function</button>
-    {/if}
-    <br>
-    <br>
-    {/if}
 </div>

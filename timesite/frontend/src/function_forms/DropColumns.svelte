@@ -94,16 +94,14 @@
         {#if func_obj.params_id}
         <input type="hidden" name="order" value={func_obj.order}>
         {/if}
+    {#if func_obj.params_id}
+    {#if is_author}
+    <br>
+    <br>
+    <button type="button" onclick={()=>removeFunction()} class="login-button-delete">Remove Function</button>
+    {/if}
+    {/if}
       </p>
     </form>
-    {#if func_obj.params_id}
-    <br>
-    {#if is_author}
-    <button type="button" onclick={()=>removeFunction()} class="login-button-delete">Remove Function</button>
-        <br>
-        <br>
-    {/if}
-    <br>
-    <br>
-    {/if}
+
 </div>
