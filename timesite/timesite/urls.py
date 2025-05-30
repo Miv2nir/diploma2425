@@ -64,6 +64,7 @@ urlpatterns = [
     path('api/functions/<uuid:id>/get_pipeline/',api_views.get_pipeline),
     path('api/functions/<uuid:id>/get_runtime_status/',api_views.get_runtime_status),
     path('api/functions/<uuid:id>/get_results/',api_views.get_results),
+    path('api/functions/<uuid:id>/stop_runtime/',api_views.stop_runtime),
     path('api/functions/<uuid:func_id>/get_foreign_datastore_item/',api_views.get_foreign_datastore_item),
     path('api/functions/<uuid:id>/execute/',api_views.invoke_runtime),
     path('api/functions/<uuid:func_id>/move_function_up/',api_views.move_function_up),

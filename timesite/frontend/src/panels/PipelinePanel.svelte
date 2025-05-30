@@ -1,5 +1,5 @@
 <script>
-    import { run } from "svelte/legacy";
+    import { nonpassive, run, stopImmediatePropagation } from "svelte/legacy";
     import RightDouble from "../elements/panel_buttons/RightDouble.svelte";
     import UserThumb from "../elements/UserThumb.svelte";
     let {upd_flag=$bindable(false),
@@ -98,13 +98,22 @@
                     }
                 }
             }
-        }
-        runtime_finished=true; //sets the main panel to render results
+        }else{
+                runtime_finished=true; //sets the main panel to render results
+            }
     }
     async function getLastResult(){
         //similar in behavior to that of invokeRuntime but instead it just goes for the last results
         runtime_invoked=true;
         runtime_finished=true;
+    }
+    async function stopExecution(){
+        var stop_signal=postRequest('/api/functions/'+proj_obj.id+'/stop_runtime/',csrftoken);
+        await stop_signal;
+        runtime_invoked=false;
+        runtime_finished=false;
+        runtime_error={};
+        runtime_errored=false;
     }
 </script>
 <div class="home-container" id="container-side-2">
@@ -136,11 +145,7 @@
         <p>{@html warning}</p>
         {:else}
             {#if runtime_invoked}
-            <button type="button" onclick={()=>{runtime_invoked=false;
-                 runtime_finished=false;
-                 runtime_error={};
-                 runtime_errored=false;
-                 }} class="login-button-secondary">Reset</button>
+            <button type="button" onclick={stopExecution} class="login-button-secondary">Reset</button>
             {:else}
             {#if is_author}
             <button type="button" onclick={invokeRuntime} class="login-button-primary">Run</button>

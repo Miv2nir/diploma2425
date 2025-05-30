@@ -569,6 +569,13 @@ def invoke_runtime(request,id):
     #verify if permitted to edit (non-authors should only be able to get the results)
     if request.user != proj_obj.user:
         return Response(status=403)
+    #create a runtime permit
+    try:
+        permit=models.RuntimePermit.objects.filter(project=proj_obj)[0]
+    except IndexError:
+        permit=models.RuntimePermit(project=proj_obj)
+        permit.save()
+        
     func_list=models.FunctionParams.objects.filter(project=proj_obj).order_by('order')
     var_store={}
     r=registry.Registry()
@@ -581,12 +588,20 @@ def invoke_runtime(request,id):
             models.FunctionStatus(func=i).save()
         except ObjectDoesNotExist:
             pass
+
     for i in func_list:
         #runtime logic goes here
+        #check if the execution shall continue, update the permit
+        try:
+            permit=models.RuntimePermit.objects.filter(project=proj_obj)[0]
+        except IndexError:
+            #called to halt
+            return Response(status=500)
+        
         #1. figure out the function type. Loaders don't accept values from var_store
-        print(i.func_name,i.info)
+        #print(i.func_name,i.info)
         func_obj=r.get_all()[i.func_name]()
-        print('Func_Obj:',func_obj)
+        #print('Func_Obj:',func_obj)
         try:
             func_status=models.FunctionStatus.objects.filter(func=i)[0]
         except IndexError:
@@ -624,12 +639,12 @@ def invoke_runtime(request,id):
                     params=i.info['params']
                 except KeyError:
                     params={}
-                #print(func_obj.execute(var_store[var_name_load]))
+                ##print(func_obj.execute(var_store[var_name_load]))
                 try:
                     result_obj=models.RuntimeRenderResult.objects.filter(func_params=i)[0]
                 except IndexError:
                     result_obj=models.RuntimeRenderResult(func_params=i)
-                print('test',func_obj)
+                #print('test',func_obj)
                 result_obj.result=func_obj.execute(var_store[var_name_load],params)
                 result_obj.save()
                 func_status.info={
@@ -660,16 +675,36 @@ def invoke_runtime(request,id):
             func_status.status='OK'
             func_status.save()
         except Exception as e: 
-            print(traceback.format_exc())
+            #print(traceback.format_exc())
             func_status.status='ER'
             func_status.info={
                 'error':repr(e)
             }
             func_status.save()
+            permit.delete()
             return Response(status=500)
         #for the purposes of testing the RuntimeQueryer.svelte
         #sleep(1.5)
+    permit.delete()
     return Response(status=200)
+
+@api_view(['POST'])
+def stop_runtime(request,id):
+    #identify project
+    try:
+        proj_obj = models.Project.objects.get(pk=id)
+    except models.Project.DoesNotExist:
+        return Response(status=404)
+    #verify if permitted to edit (non-authors should only be able to get the results)
+    if request.user != proj_obj.user:
+        return Response(status=403)
+    #get permit
+    try:
+        permit=models.RuntimePermit.objects.filter(project=proj_obj)[0]
+    except IndexError:
+        return Response(status=404)
+    permit.delete()
+    return Response(status=201)
 
 @api_view()
 def get_runtime_status(request,id):
@@ -688,7 +723,7 @@ def get_runtime_status(request,id):
             status_list.append(s)
         except ObjectDoesNotExist:
             pass
-    print(status_list)
+    #print(status_list)
     #serialize the list
     return Response(status_list)
 

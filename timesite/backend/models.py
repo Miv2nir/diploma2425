@@ -108,6 +108,8 @@ class RuntimeRenderResult(models.Model):
     def __str__(self):
         return 'Results for '+str(self.func_params)
 
+class RuntimePermit(models.Model):
+    project=models.OneToOneField(Project,on_delete=models.CASCADE)
     
     
     
