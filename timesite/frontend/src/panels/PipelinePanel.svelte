@@ -94,6 +94,7 @@
                         }
                         console.log(status[i].info.error);
                         runtime_errored=true;
+                        runtime_finished=true;
                         break;
                     }
                 }
