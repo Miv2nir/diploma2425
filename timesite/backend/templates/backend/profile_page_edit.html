@@ -52,7 +52,9 @@ input[type="file"]::file-selector-button {
                             </div>
                             {{form.pfp}}
                             <div style="display: none;">{{form.delete_pfp}}</div>
+                            {%if has_pfp%}
                             <button class="login-button-secondary" id="delete_button" type="button" onclick="setPFPDeletion();">Remove PFP</button>
+                            {%endif%}
                             <p>{{form.email.label_tag}}<br>{{form.email}}</p>
                             <p>{{form.login.label_tag}}<br>{{form.login}}</p>
                             <p>{{form.display_name.label_tag}}<br>{{form.display_name}}</p>

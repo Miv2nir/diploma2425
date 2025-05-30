@@ -205,7 +205,7 @@ def profile_page_edit(request,username):
         'display_name':info_obj.display_name
     })
     
-    return render(request,'backend/profile_page_edit.html',{'user':request.user,'form':form})
+    return render(request,'backend/profile_page_edit.html',{'user':request.user,'form':form,'has_pfp':bool(pfp_obj.pfp)})
 
 @login_required
 def project_list(request):
@@ -299,8 +299,9 @@ def project_item_edit(request,id):
         'access':proj_obj.access,
         'description':proj_obj.description
     })
-    
-    return render(request,'backend/project_item_edit.html',{'user':request.user,'item':proj_obj,'form':form})
+
+
+    return render(request,'backend/project_item_edit.html',{'user':request.user,'item':proj_obj,'form':form,'has_icon':bool(proj_obj.icon)})
 
 @login_required
 def project_item_new(request):
