@@ -162,7 +162,7 @@ class SetDateIndex:
         return df.set_index(chosen_column)
 
 def compose_full_render(df):
-    df_render = '<div style="max-width:100%;overflow-x:scroll;">'+df.to_html()+'<br></div>' #get the main thing
+    df_render = '<div style="max-width:100%;overflow-x:auto; transform:rotateX(180deg);"><div style="transform:rotateX(180deg);">'+df.to_html()+'</div></div>' #get the main thing
     shape_html='<p>'+str(df.shape[0])+' rows, '+str(df.shape[1])+' columns'+'</p>\n'
     df_render=shape_html+df_render
     return df_render
@@ -191,7 +191,8 @@ class RenderDF:
             df_render=compose_full_render(df)
         #html = df.to_html()+'<br>'
         else:
-            df_render=df._repr_html_()+'<br>'
+            #df_render=df._repr_html_()+'<br>'
+            df_render='<div style="max-width:100%;overflow-x:auto;">'+df._repr_html_()+'</div>'
         #create shape
         return df_render
 class DownloadDF:
