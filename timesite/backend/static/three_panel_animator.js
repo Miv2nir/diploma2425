@@ -16,6 +16,10 @@
     var sidepanel_button_left_double = document.getElementById('sidepanel_button_left_double');
     var sidepanel_button_right_double = document.getElementById('sidepanel_button_right_double');
 
+    //only for the editor
+    var project_item=document.getElementById('project_item_editor');
+    console.log(project_item);
+
     function addTransition() {
         container_left.classList.add('transitioning');
         container_right.classList.add('transitioning');
@@ -65,6 +69,10 @@
             //general process
             container_main.classList.remove('offset-left');
             container_main.classList.remove('offset-right');
+            if (project_item!=null){
+                project_item.classList.remove('offset-left');
+                project_item.classList.remove('offset-right');
+            }
             container_left.classList.remove('left');
             container_right.classList.remove('right');
             //setTimeout(function(){container_left.classList.remove('absoluted');},0);
@@ -96,6 +104,10 @@
             container_left.classList.add('left');
             //sidebar_substituter_left.classList.add('triggered');
             container_main.classList.add('offset-left');
+            console.log(project_item);
+            if (project_item!=null){
+                project_item.classList.add('offset-left');
+            }
             addTransition();
             container_left.classList.remove('hidden');
             container_left.classList.add('unfold-left');
@@ -118,6 +130,9 @@
             container_right.classList.add('right');
             //sidebar_substituter_right.classList.add('triggered');
             container_main.classList.add('offset-right');
+            if (project_item!=null){
+                project_item.classList.add('offset-right');
+            }
             addTransition();
             container_right.classList.remove('hidden');
             container_right.classList.add('unfold-right');

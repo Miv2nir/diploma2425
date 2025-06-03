@@ -101,5 +101,7 @@
       bind:pipeline_length={pipeline_length}/>
     {/key}
   </span>
+  {#key form_submitted}
   <script src="/backend/static/three_panel_animator.js"></script>
+  {/key}
 {/if}

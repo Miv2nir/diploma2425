@@ -5,7 +5,7 @@
 
 </script>
 
-<div class="project-item-editor" style="position:relative;">
+<div class="project-item-editor" id="project_item_editor" style="position:relative;">
     {#if project.icon}
     <img src="{project.icon}" class="thumb-icon" alt='icon'>
     {:else}
