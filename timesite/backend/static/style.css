@@ -219,6 +219,12 @@ a {
 }
 .home-container.half {
     width: 67vw;
+    transition: width 200ms ease;
+}
+@media only screen and (max-width:1000px) {
+    .home-container.half {
+    width: 90vw;
+}
 }
 .home-container.transitioning {
     transition: width 600ms,box-shadow 600ms, border-width 600ms;
