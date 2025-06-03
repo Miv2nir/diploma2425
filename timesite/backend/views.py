@@ -170,7 +170,7 @@ def profile_page_edit(request,username):
                     if lookup==request.user:
                         pass
                     else:
-                        return HttpResponseRedirect('/profile/edit/?username_taken=true')
+                        return HttpResponseRedirect('/profile/'+username+'/edit/?username_taken=true')
                 except IndexError:
                     pass
                 user_obj.username=new_username
@@ -181,11 +181,11 @@ def profile_page_edit(request,username):
                 upd_user=authenticate(request,username=request.user,password=old_password)
                 print(upd_user)
                 if upd_user is None: #credentials didn't match
-                    return HttpResponseRedirect('/profile/edit/?wrong_password=true')
+                    return HttpResponseRedirect('/profile/'+username+'/edit/?wrong_password=true')
                 if new_password==verify_password:
                     user_obj.set_password(new_password)
                 else:
-                    return HttpResponseRedirect('/profile/edit/?password_mismatch=true')
+                    return HttpResponseRedirect('/profile/'+username+'/edit/?password_mismatch=true')
 
             user_obj.save()
             
@@ -196,7 +196,7 @@ def profile_page_edit(request,username):
             
             #return HttpResponseRedirect('/profile/edit/?success=true')
             return HttpResponseRedirect('/profile/?success=true')
-        return HttpResponseRedirect('/profile/edit/')
+        return HttpResponseRedirect('/profile/'+username+'/edit/')
                 
     #GET
     form=forms.UserEditForm(initial={
@@ -205,7 +205,10 @@ def profile_page_edit(request,username):
         'display_name':info_obj.display_name
     })
     
-    return render(request,'backend/profile_page_edit.html',{'user':request.user,'form':form,'has_pfp':bool(pfp_obj.pfp)})
+    return render(request,'backend/profile_page_edit.html',{'user':request.user,'form':form,'has_pfp':bool(pfp_obj.pfp),
+                                                            'password_mismatch':request.GET.get('password_mismatch'),
+                                                            'username_taken':request.GET.get('username_taken'),
+                                                            'wrong_password':request.GET.get('wrong_password')})
 
 @login_required
 def project_list(request):

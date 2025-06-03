@@ -39,6 +39,15 @@ input[type="file"]::file-selector-button {
                     <a href="../" class="fancy-underline subtitle">Exit without saving</a>
                     <div class="hr"></div>
                     <!--p>form</p-->
+                    {%if password_mismatch%}
+                    <p class="error-text" style="margin-bottom: 0;">Sorry, passwords don't match.</p>
+                    {%endif%}
+                    {%if username_taken%}
+                    <p class="error-text" style="margin-bottom: 0;">Sorry, that username is already taken.</p>
+                    {%endif%}
+                    {%if wrong_password%}
+                    <p class="error-text" style="margin-bottom: 0;">Sorry, wrong password.</p>
+                    {%endif%}
                     <form action="" enctype="multipart/form-data" method="post" id="profile_form">
                         {%csrf_token%}
                         <div>
