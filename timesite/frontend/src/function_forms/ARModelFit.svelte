@@ -8,6 +8,7 @@
     import {getRequest, postRequest} from "../lib/APICalls.js";
     import Cookies from 'js-cookie';
     import OrderButtons from "../elements/OrderButtons.svelte";
+    import { validateForm } from "../lib/ValidateForm.js";
     import { parse } from 'svelte/compiler';
     const csrftoken = Cookies.get('csrftoken');
     var form=undefined;
@@ -21,8 +22,16 @@
     var chosen_column=$state('');
     var lags=$state(1);
     var trend=$state('c');
+    var error_msg=$state('');
  async function sendForm() {
-      console.log('sending form');
+      var values_missing=validateForm(form);
+      if (values_missing){
+        error_msg='Please fill all of the missing values!';
+        return false;
+      }
+      else{
+        error_msg='';
+      }
       await fetch(form.action, {method:'post',
        body: new FormData(form)});
       //discard this component for it has been used
@@ -78,19 +87,20 @@
         <input type="hidden" name="update" value="true">
         {/if}    
         <p>
-        <label for="var_name">Load DataFrame from:</label>
-        <input type="text" disabled={!is_author} class="login-input-box small" id="load_var_name" name="load_var_name" value={load_var_name}>
+        <label for="load_var_name">Load DataFrame from:</label>
+        <input required type="text" disabled={!is_author} class="login-input-box small" id="load_var_name" name="load_var_name" value={load_var_name}>
         <br>
         <br>
         <label for="text_columns_definitions">Write the column name of the trend:</label>
         <br>
-        <input type="text" disabled={!is_author} name="chosen_column" value={chosen_column} class="login-input-box">
+        <input required type="text" id="text_columns_definitions" disabled={!is_author} name="chosen_column" value={chosen_column} class="login-input-box">
         <br>
         <br>
-        <label for="var_name">Lags:</label>
-        <input type="number" disabled={!is_author} class="login-input-box smaller" name="lags" value={lags}>
+        <label for="lags">Lags:</label>
+        <input required type="number" disabled={!is_author} class="login-input-box smaller" name="lags" id="lags" value={lags}>
         <br>
         <br>
+        <label for="trend">Trend to include in the model:</label>
         <select name='trend' id="trend" disabled={!is_author} value={trend} class="selector">
             <option class="selector" value="c">Constant Only</option>
             <option class="selector" value="t">Time Trend Only</option>
@@ -99,8 +109,8 @@
         </select>
         <br>
         <br>
-        <label for="var_name">Store result model as:</label>
-        <input type="text" disabled={!is_author}  class="login-input-box small" name="save_var_name" value={save_var_name}>
+        <label for="save_var_name">Store result model as:</label>
+        <input required type="text" disabled={!is_author}  class="login-input-box small" name="save_var_name" id="save_var_name" value={save_var_name}>
         <br>
         <br>
         {#if is_author}

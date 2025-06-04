@@ -249,7 +249,7 @@ def accept_csv_load(request,id):
         else:
             param_obj=models.FunctionParams(project=proj_obj,order=order,func_name='LoadCSV',info=params)
             param_obj.save()
-    return Response(status=201)
+    return Response(status=204)
 
 @api_view()
 def get_pipeline(request,id):
@@ -323,7 +323,7 @@ def delete_params(request,params_id):
     for i in models.FunctionParams.objects.filter(project=proj_obj,order__gt=old_order):
         i.order-=1
         i.save()
-    return Response(201)
+    return Response(204)
 
 @api_view(['POST'])
 def accept_processor(request,id):
@@ -396,7 +396,7 @@ def accept_processor(request,id):
             print('new object, creating')
             param_obj=models.FunctionParams(project=proj_obj,order=order,func_name=func_name,info=params)
             param_obj.save()
-    return Response(status=201)
+    return Response(status=204)
     
 
 @api_view(['POST'])  
@@ -472,7 +472,7 @@ def accept_renderer(request,id):
             params_dict=download_df_treatment(params_dict,param_obj)
             param_obj.info=params
             param_obj.save()
-    return Response(status=201)
+    return Response(status=204)
     
 @api_view(['POST'])
 def accept_model(request,id):
@@ -556,7 +556,7 @@ def accept_model(request,id):
             print('new object, creating')
             param_obj=models.FunctionParams(project=proj_obj,order=order,func_name=func_name,info=params)
             param_obj.save()
-    return Response(status=201)
+    return Response(status=204)
 
 @api_view(['POST'])
 def invoke_runtime(request,id):

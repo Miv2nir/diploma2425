@@ -8,6 +8,7 @@
     import {getRequest, postRequest} from "../lib/APICalls.js";
     import Cookies from 'js-cookie';
     import OrderButtons from "../elements/OrderButtons.svelte";
+    import { validateForm } from "../lib/ValidateForm.js";
     const csrftoken = Cookies.get('csrftoken');
     var form=undefined;
     onMount(()=>{
@@ -19,8 +20,16 @@
     var text_params=$state('');
     var save_var_name=$state('df');
     var load_var_name=$state('df');
-    async function sendForm() {
-      console.log('sending form');
+    var error_msg=$state('');
+ async function sendForm() {
+      var values_missing=validateForm(form);
+      if (values_missing){
+        error_msg='Please fill all of the missing values!';
+        return false;
+      }
+      else{
+        error_msg='';
+      }
       await fetch(form.action, {method:'post',
        body: new FormData(form)});
       //discard this component for it has been used
@@ -75,21 +84,21 @@
         <input type="hidden" name="update" value="true">
         {/if}
         <p>
-        <label for="var_name">Load DataFrame from:</label>
-        <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="load_var_name" value={load_var_name}>
+        <label for="load_var_name">Load DataFrame from:</label>
+        <input required type="text" disabled={!is_author} class="login-input-box small" id="load_var_name" name="load_var_name" value={load_var_name}>
         <br>
         <br>
         <label for="text_columns_definitions">Define column names, separated by comma:</label>
         <br>
-        <input type="text" disabled={!is_author} name="text_params" value={text_params} class="login-input-box" id="text_columns_definitions">
+        <input required type="text" disabled={!is_author} name="text_params" value={text_params} class="login-input-box" id="text_columns_definitions">
         <br>
         <br>
-        <label for="var_name">Store changes as:</label>
-        <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="save_var_name" value={save_var_name}>
+        <label for="save_var_name">Store changes as:</label>
+        <input required type="text" disabled={!is_author} class="login-input-box small" id="save_var_name" name="save_var_name" value={save_var_name}>
         <br>
         <br>
         {#if is_author}
-        <button type="button" class="login-button-primary" onclick={()=>sendForm()}>Set Processor</button>
+        <button type="button" onclick={()=>sendForm()} class="login-button-primary" >Set Processor</button>
         {/if}
         {#if func_obj.params_id}
         <input type="hidden" name="order" value={func_obj.order}>

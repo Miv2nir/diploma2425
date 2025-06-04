@@ -9,6 +9,7 @@
     import Cookies from 'js-cookie';
     import { onMount } from 'svelte';
     import OrderButtons from "../elements/OrderButtons.svelte";
+    import { validateForm } from "../lib/ValidateForm.js";
     let {func_obj=$bindable(),
         form_submitted=$bindable(false),
         is_author=$bindable(false),
@@ -18,6 +19,7 @@
     var datastore_items = $state();
     var guest_mode_name=$state('');
     var save_var_name=$state('df');
+    var error_msg=$state('');
     async function getData(){
         const l = await getRequest('/api/functions/get_csv_files/');
         datastore_items=l;
@@ -46,7 +48,15 @@
     //const form=document.getElementById('csv_load_form');
     //console.log(form);
     async function sendForm() {
-      console.log('sending form');
+      //console.log(form['csv_files']);
+      var values_missing=validateForm(form);
+      if (values_missing){
+        error_msg='Please fill all of the missing values!';
+        return false;
+      }
+      else{
+        error_msg='';
+      }
       await fetch(form.action, {method:'post',
        body: new FormData(form)});
       //discard this component for it has been used
@@ -62,6 +72,9 @@
 </script>
 
 <div>
+    {#if error_msg}
+    <p class="error-text">{error_msg}</p>
+    {/if}
     {#if func_obj.params_id}
     {#if func_obj.accepts.length!=0}
     <p>Accepts: {func_obj.accepts}</p>
@@ -85,7 +98,7 @@
     <p>
         <label for="csv_files_selection">Select CSV Dataset:</label>
         <br>
-        <select name="csv_files" disabled={!is_author} value={selected_data_obj} class="selector" id="csv_files_selection">
+        <select required name="csv_files" disabled={!is_author} value={selected_data_obj} class="selector" id="csv_files_selection">
             {#if is_author}
             {#each datastore_items as d}
             <option class="selector" value="{d.id}">{d.name}</option>
@@ -97,7 +110,7 @@
         <br>
         <br>
         <label for="var_name">Store DataFrame as:</label>
-        <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="var_name" value={save_var_name}>
+        <input required type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="var_name" value={save_var_name}>
         <br>
         <br>
         {#if is_author}

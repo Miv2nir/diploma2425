@@ -68,6 +68,7 @@ a {
 .error-text {
     color: var(--error-text-color);
 }
+
 .status-text {
     color: var(--status-text-color);
 }

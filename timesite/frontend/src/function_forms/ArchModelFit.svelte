@@ -9,6 +9,7 @@
     import Cookies from 'js-cookie';
     import OrderButtons from "../elements/OrderButtons.svelte";
     import { parse } from 'svelte/compiler';
+    import { validateForm } from "../lib/ValidateForm.js";
     const csrftoken = Cookies.get('csrftoken');
     var form=undefined;
     onMount(()=>{
@@ -28,8 +29,16 @@
     var power=$state(2.0);
     var dist=$state('normal');
     var rescale=$state(false);
+    var error_msg=$state('');
  async function sendForm() {
-      console.log('sending form');
+      var values_missing=validateForm(form);
+      if (values_missing){
+        error_msg='Please fill all of the missing values!';
+        return false;
+      }
+      else{
+        error_msg='';
+      }
       await fetch(form.action, {method:'post',
        body: new FormData(form)});
       //discard this component for it has been used
@@ -91,18 +100,18 @@
         <input type="hidden" name="update" value="true">
         {/if}    
         <p>
-        <label for="var_name">Load DataFrame from:</label>
-        <input type="text" disabled={!is_author} class="login-input-box small" id="load_var_name" name="load_var_name" value={load_var_name}>
+        <label for="load_var_name">Load DataFrame from:</label>
+        <input required type="text" disabled={!is_author} class="login-input-box small" id="load_var_name" name="load_var_name" value={load_var_name}>
         <br>
         <br>
-        <label for="text_columns_definitions">Write the tenor name (column name):</label>
+        <label for="chosen_column">Write the tenor name (column name):</label>
         <br>
-        <input type="text" disabled={!is_author} name="chosen_column" value={chosen_column} class="login-input-box" id="tenor_definition">
+        <input required type="text" disabled={!is_author} name="chosen_column" value={chosen_column} class="login-input-box" id="chosen_column">
         <br>
         <br>
         <label for="mean">Mean:</label>
         <br>
-        <select name='mean' id="mean" disabled={!is_author} value={mean} class="selector">
+        <select required name='mean' id="mean" disabled={!is_author} value={mean} class="selector">
             <option class="selector" value="Constant">Constant</option>
             <option class="selector" value="Zero">Zero</option>
             <option class="selector" value="LS">LS</option>
@@ -113,14 +122,14 @@
         </select>
         <br>
         <br>
-        <label for="var_name">Lag:</label>
-        <input type="text" disabled={!is_author} class="login-input-box smaller" name="lags" value={lags}>
+        <label for="lags">Lag:</label>
+        <input required type="text" id="lags" disabled={!is_author} class="login-input-box smaller" name="lags" value={lags}>
         
         <br>
         <br>
         <label for="vol">Volatility:</label>
         <br>
-        <select name='vol' id="vol" disabled={!is_author} value={vol} class="selector">
+        <select required name='vol' id="vol" disabled={!is_author} value={vol} class="selector">
             <option class="selector" value="GARCH">GARCH</option>
             <option class="selector" value="ARCH">ARCH</option>
             <option class="selector" value="EGARCH">EGARCH</option>
@@ -130,14 +139,14 @@
         </select>
         <br>
         <br>
-        <label for="var_name">p:</label>
-        <input type="text" disabled={!is_author} class="login-input-box smaller" name="p" value={p}>
-        <label for="var_name" style="margin-left:1rem;">o:</label>
-        <input type="text" disabled={!is_author} class="login-input-box smaller" name="o" value={o}>
-        <label for="var_name" style="margin-left:1rem;">q:</label>
-        <input type="text" disabled={!is_author} class="login-input-box smaller" name="q" value={q}>
-        <label for="var_name" style="margin-left:1rem;">Power:</label>
-        <input type="text" disabled={!is_author} class="login-input-box smaller" name="power" value={power}>
+        <label for="p">p:</label>
+        <input required type="text"  disabled={!is_author} class="login-input-box smaller" name="p" id="p" value={p}>
+        <label for="o" style="margin-left:1rem;">o:</label>
+        <input required type="text" disabled={!is_author} class="login-input-box smaller" name="o" id="o" value={o}>
+        <label for="q" style="margin-left:1rem;">q:</label>
+        <input required type="text" disabled={!is_author} class="login-input-box smaller" name="q" id="q" value={q}>
+        <label for="power" style="margin-left:1rem;">Power:</label>
+        <input required type="text" disabled={!is_author} class="login-input-box smaller" name="power" id="power" value={power}>
         
         <br>
         <br>
@@ -159,8 +168,8 @@
         <input type="checkbox" disabled={!is_author} style="transform:scale(1.5);" name="rescale" checked={rescale}>
         <br>
         <br>
-        <label for="var_name">Store result model as:</label>
-        <input type="text" disabled={!is_author}  class="login-input-box small" name="save_var_name" value={save_var_name}>
+        <label for="save_var_name">Store result model as:</label>
+        <input required type="text" disabled={!is_author}  class="login-input-box small" name="save_var_name" id="save_var_name" value={save_var_name}>
         <br>
         <br>
         {#if is_author}

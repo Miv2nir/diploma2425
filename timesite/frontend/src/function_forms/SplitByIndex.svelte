@@ -8,6 +8,7 @@
     import {getRequest, postRequest} from "../lib/APICalls.js";
     import Cookies from 'js-cookie';
     import OrderButtons from "../elements/OrderButtons.svelte";
+    import { validateForm } from "../lib/ValidateForm.js";
     const csrftoken = Cookies.get('csrftoken');
     var form=undefined;
     onMount(()=>{
@@ -20,8 +21,16 @@
     var splitting_mode=$state('');
     var load_var_name=$state('df');
     var save_var_name=$state('df_new');
-    async function sendForm() {
-      console.log('sending form');
+    var error_msg=$state('');
+ async function sendForm() {
+      var values_missing=validateForm(form);
+      if (values_missing){
+        error_msg='Please fill all of the missing values!';
+        return false;
+      }
+      else{
+        error_msg='';
+      }
       await fetch(form.action, {method:'post',
        body: new FormData(form)});
       //discard this component for it has been used
@@ -77,23 +86,23 @@
         {/if}
         <p>
         <label for="var_name">Load DataFrame from:</label>
-        <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="load_var_name" value={load_var_name}>
+        <input required type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="load_var_name" value={load_var_name}>
         <br>
         <br>
         <label for="splitting_mode">Splitting Mode:</label>
         <br>
-        <select name='splitting_mode' id="splitting_mode" disabled={!is_author} value={splitting_mode} class="selector">
+        <select required name='splitting_mode' id="splitting_mode" disabled={!is_author} value={splitting_mode} class="selector">
             <option class="selector" value="left">left</option>
             <option class="selector" value="right">right</option>
         </select>
         <br>
         <br>
         <label for="split_point">Splitting Index:</label>
-        <input type="number" disabled={!is_author} class="login-input-box smaller" name="split_point" value={split_point}>
+        <input required type="number" disabled={!is_author} class="login-input-box smaller" name="split_point" id="split_point" value={split_point}>
         <br>
         <br>
-        <label for="var_name">Save DataFrame as:</label>
-        <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="save_var_name" value={save_var_name}>
+        <label for="save_var_name">Save DataFrame as:</label>
+        <input required type="text" disabled={!is_author} class="login-input-box small" id="save_var_name" name="save_var_name" value={save_var_name}>
         {#if is_author}
         <br>
         <br>

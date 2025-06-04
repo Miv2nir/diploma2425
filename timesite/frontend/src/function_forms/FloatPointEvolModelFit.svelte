@@ -8,6 +8,7 @@
     import {getRequest, postRequest} from "../lib/APICalls.js";
     import Cookies from 'js-cookie';
     import OrderButtons from "../elements/OrderButtons.svelte";
+    import { validateForm } from "../lib/ValidateForm.js";
     const csrftoken = Cookies.get('csrftoken');
     var form=undefined;
     onMount(()=>{
@@ -23,8 +24,16 @@
     var p=$state(1);
     var q=$state(1);
     var jump_threshold=$state(3);
+    var error_msg=$state('');
  async function sendForm() {
-      console.log('sending form');
+      var values_missing=validateForm(form);
+      if (values_missing){
+        error_msg='Please fill all of the missing values!';
+        return false;
+      }
+      else{
+        error_msg='';
+      }
       await fetch(form.action, {method:'post',
        body: new FormData(form)});
       //discard this component for it has been used
@@ -81,27 +90,27 @@
         <input type="hidden" name="update" value="true">
         {/if}    
         <p>
-        <label for="var_name">Load DataFrame from:</label>
-        <input type="text" disabled={!is_author} class="login-input-box small" id="load_var_name" name="load_var_name" value={load_var_name}>
+        <label for="load_var_name">Load DataFrame from:</label>
+        <input required type="text" disabled={!is_author} class="login-input-box small" id="load_var_name" name="load_var_name" value={load_var_name}>
         <br>
         <br>
-        <label for="text_columns_definitions">Write the tenor name (column name):</label>
+        <label for="tenor_definition">Write the tenor name (column name):</label>
         <br>
-        <input type="text" disabled={!is_author} name="chosen_column" value={chosen_column} class="login-input-box" id="tenor_definition">
-        <br>
-        <br>
-        <label for="var_name">p:</label>
-        <input type="text" disabled={!is_author} class="login-input-box smaller" name="p" value={p}>
-        <label for="var_name" style="margin-left:1rem;">q:</label>
-        <input type="text" disabled={!is_author} class="login-input-box smaller" name="q" value={q}>
+        <input required type="text" disabled={!is_author} name="chosen_column" value={chosen_column} class="login-input-box" id="tenor_definition">
         <br>
         <br>
-        <label for="var_name">Jump Threshold:</label>
-        <input type="text" disabled={!is_author} class="login-input-box smaller" name="jump_threshold" value={jump_threshold}>
+        <label for="p">p:</label>
+        <input required type="text" disabled={!is_author} class="login-input-box smaller" name="p" id="p" value={p}>
+        <label for="q" style="margin-left:1rem;">q:</label>
+        <input required type="text" disabled={!is_author} class="login-input-box smaller" name="q" id="q" value={q}>
         <br>
         <br>
-        <label for="var_name">Store parameters as:</label>
-        <input type="text" disabled={!is_author}  class="login-input-box small" id="var_name" name="save_var_name" value={save_var_name}>
+        <label for="jump_threshold">Jump Threshold:</label>
+        <input required type="text" disabled={!is_author} class="login-input-box smaller" name="jump_threshold" id="jump_threshold" value={jump_threshold}>
+        <br>
+        <br>
+        <label for="save_var_name">Store parameters as:</label>
+        <input required type="text" disabled={!is_author}  class="login-input-box small" id="save_var_name" name="save_var_name" value={save_var_name}>
         <br>
         <br>
         {#if is_author}

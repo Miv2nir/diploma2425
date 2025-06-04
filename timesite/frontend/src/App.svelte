@@ -72,7 +72,8 @@
   let runtime_finished=$state(false);
 </script>
 
-{#if user_logged_in && project_retrieved}
+{#if user_logged_in}
+  {#if project_retrieved}
   <span class="home-main-container">
     {#key form_submitted}
     <FunctionListPanel bind:func_obj={func_obj} 
@@ -104,4 +105,15 @@
   {#key form_submitted}
   <script src="/backend/static/three_panel_animator.js"></script>
   {/key}
+  {:else}
+  <div style="
+    height: 100svh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;">
+    <div style="font-size: 2rem;">Loading...</div>
+  </div>
+  {/if}
+
 {/if}

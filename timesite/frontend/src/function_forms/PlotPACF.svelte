@@ -8,6 +8,7 @@
     import {getRequest, postRequest} from "../lib/APICalls.js";
     import Cookies from 'js-cookie';
     import OrderButtons from "../elements/OrderButtons.svelte";
+    import { validateForm } from "../lib/ValidateForm.js";
     const csrftoken = Cookies.get('csrftoken');
     var form=undefined;
     onMount(()=>{
@@ -18,8 +19,16 @@
     var load_var_name=$state('df');
     var chosen_column=$state('');
     var lags=$state(40);
-    async function sendForm() {
-      console.log('sending form');
+    var error_msg=$state('');
+ async function sendForm() {
+      var values_missing=validateForm(form);
+      if (values_missing){
+        error_msg='Please fill all of the missing values!';
+        return false;
+      }
+      else{
+        error_msg='';
+      }
       await fetch(form.action, {method:'post',
        body: new FormData(form)});
       //discard this component for it has been used
@@ -67,15 +76,15 @@
         {/if}
         <p>
         <label for="var_name">Load DataFrame from:</label>
-        <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="load_var_name" value={load_var_name}>
+        <input required type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="load_var_name" value={load_var_name}>
         <br>
         <br>
         <label for="chosen_column">Name of the column of interest:</label>
-        <input type='text' disabled={!is_author} name='chosen_column' value={chosen_column} class="login-input-box" >
+        <input required type='text' disabled={!is_author} name='chosen_column' id="chosen_column" value={chosen_column} class="login-input-box" >
         <br>
         <br>
-        <label for="var_name">Lags:</label>
-        <input type="number" disabled={!is_author} class="login-input-box smaller" name="lags" value={lags}>
+        <label for="lags">Lags:</label>
+        <input required type="number" disabled={!is_author} class="login-input-box smaller" name="lags" id="lags" value={lags}>
         <br>
         <br>
         {#if is_author}

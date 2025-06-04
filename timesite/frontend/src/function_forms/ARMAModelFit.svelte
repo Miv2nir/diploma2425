@@ -9,6 +9,7 @@
     import Cookies from 'js-cookie';
     import OrderButtons from "../elements/OrderButtons.svelte";
     import { parse } from 'svelte/compiler';
+    import { validateForm } from "../lib/ValidateForm.js";
     const csrftoken = Cookies.get('csrftoken');
     var form=undefined;
     onMount(()=>{
@@ -21,8 +22,16 @@
     var chosen_column=$state('');
     var p=$state(1);
     var q=$state(1);
+    var error_msg=$state('');
  async function sendForm() {
-      console.log('sending form');
+      var values_missing=validateForm(form);
+      if (values_missing){
+        error_msg='Please fill all of the missing values!';
+        return false;
+      }
+      else{
+        error_msg='';
+      }
       await fetch(form.action, {method:'post',
        body: new FormData(form)});
       //discard this component for it has been used
@@ -78,22 +87,23 @@
         <input type="hidden" name="update" value="true">
         {/if}   
         <p> 
-        <label for="var_name">Load DataFrame from:</label>
-        <input type="text" disabled={!is_author} class="login-input-box small" id="load_var_name" name="load_var_name" value={load_var_name}>
+        <label for="load_var_name">Load DataFrame from:</label>
+        <input required type="text" disabled={!is_author} class="login-input-box small" id="load_var_name" name="load_var_name" value={load_var_name}>
         <br>
         <br>
         <label for="text_columns_definitions">Write the column name of the trend:</label>
         <br>
-        <input type="text" disabled={!is_author} name="chosen_column" value={chosen_column} class="login-input-box" id="tenor_definition">
+        <input required type="text" disabled={!is_author} name="chosen_column" value={chosen_column} class="login-input-box" id="text_columns_definitions">
         <br>
         <br>
-        <label for="var_name">p:</label>
-        <input type="text" disabled={!is_author} class="login-input-box smaller" name="p" value={p}>
-        <label for="var_name" style="margin-left:1rem;">q:</label>
-        <input type="text" disabled={!is_author} class="login-input-box smaller" name="q" value={q}><br>
+        <label for="p">p:</label>
+        <input required type="text" disabled={!is_author} class="login-input-box smaller" name="p" id="p" value={p}>
+        <label for="q" style="margin-left:1rem;">q:</label>
+        <input required type="text" disabled={!is_author} class="login-input-box smaller" name="q" id="q" value={q}>
         <br>
-        <label for="var_name">Store result model as:</label>
-        <input type="text" disabled={!is_author}  class="login-input-box small" name="save_var_name" value={save_var_name}>
+        <br>
+        <label for="save_var_name">Store result model as:</label>
+        <input required type="text" disabled={!is_author}  class="login-input-box small" name="save_var_name" id="save_var_name" value={save_var_name}>
         <br>
         <br>
         {#if is_author}

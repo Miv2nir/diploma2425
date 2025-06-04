@@ -8,6 +8,7 @@
     import {getRequest, postRequest} from "../lib/APICalls.js";
     import Cookies from 'js-cookie';
     import OrderButtons from "../elements/OrderButtons.svelte";
+    import { validateForm } from "../lib/ValidateForm.js";
     const csrftoken = Cookies.get('csrftoken');
     var form=undefined;
     onMount(()=>{
@@ -19,9 +20,17 @@
     var value_number=$state(0.5);
     var numeric_only=$state(true);
     var load_var_name=$state('df');
+    var error_msg=$state('');
     //var save_var_name=$state('quant');
-    async function sendForm() {
-      console.log('sending form');
+ async function sendForm() {
+      var values_missing=validateForm(form);
+      if (values_missing){
+        error_msg='Please fill all of the missing values!';
+        return false;
+      }
+      else{
+        error_msg='';
+      }
       await fetch(form.action, {method:'post',
        body: new FormData(form)});
       //discard this component for it has been used
@@ -77,15 +86,15 @@
         {/if}
         <p>
         <label for="var_name">Load DataFrame from:</label>
-        <input type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="load_var_name" value={load_var_name}>
+        <input required type="text" disabled={!is_author} class="login-input-box small" id="var_name" name="load_var_name" value={load_var_name}>
         <br>
         <br>
         <label for='value_definition'>Define the quantile value:</label>
-        <input type='number' disabled={!is_author} name='q' value={value_number} class="login-input-box" step='0.01' id='value_definition'>
+        <input required type='number' disabled={!is_author} name='q' value={value_number} class="login-input-box" step='0.01' id='value_definition'>
         <br>
         <br>
         <label for="index_toggle">Numeric Values Only:</label>
-        <input type="checkbox" disabled={!is_author} style="transform:scale(1.5);" name="numeric_only" id='numeric_toggle' checked={numeric_only}>
+        <input type="checkbox" disabled={!is_author} style="transform:scale(1.5);" name="numeric_only" id='index_toggle' checked={numeric_only}>
         <br>
         <br>
         <!--label for="var_name">Store changes as:</label>
