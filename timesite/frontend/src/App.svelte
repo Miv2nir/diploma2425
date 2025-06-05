@@ -74,46 +74,54 @@
 
 {#if user_logged_in}
   {#if project_retrieved}
-  <span class="home-main-container">
-    {#key form_submitted}
-    <FunctionListPanel bind:func_obj={func_obj} 
-    is_author={is_author}
-    proj_obj={proj_obj}/>
-    {/key}
-    <MainPanel author={author}
-    is_author={is_author}
-     proj_obj={proj_obj}
+    <span class="home-main-container">
+      {#key form_submitted}
+      <FunctionListPanel bind:func_obj={func_obj} 
+      is_author={is_author}
+      proj_obj={proj_obj}/>
+      {/key}
+      <MainPanel author={author}
+      is_author={is_author}
+      proj_obj={proj_obj}
+        bind:func_obj={func_obj}
+        bind:form_submitted={form_submitted}
+        bind:runtime_invoked={runtime_invoked}
+        bind:runtime_error={runtime_error}
+        bind:runtime_errored={runtime_errored}
+        bind:runtime_finished={runtime_finished}
+        bind:pipeline_length={pipeline_length}/>
+      {#key form_submitted}
+      <PipelinePanel bind:upd_flag={upd_flag}
+      is_author={is_author}
       bind:func_obj={func_obj}
-       bind:form_submitted={form_submitted}
-       bind:runtime_invoked={runtime_invoked}
-       bind:runtime_error={runtime_error}
-       bind:runtime_errored={runtime_errored}
-       bind:runtime_finished={runtime_finished}
-       bind:pipeline_length={pipeline_length}/>
+        proj_obj={proj_obj} 
+        bind:runtime_invoked={runtime_invoked}
+        bind:runtime_error={runtime_error}
+        bind:runtime_errored={runtime_errored}
+        bind:runtime_finished={runtime_finished}
+        bind:pipeline_length={pipeline_length}/>
+      {/key}
+    </span>
     {#key form_submitted}
-    <PipelinePanel bind:upd_flag={upd_flag}
-    is_author={is_author}
-     bind:func_obj={func_obj}
-      proj_obj={proj_obj} 
-      bind:runtime_invoked={runtime_invoked}
-      bind:runtime_error={runtime_error}
-      bind:runtime_errored={runtime_errored}
-      bind:runtime_finished={runtime_finished}
-      bind:pipeline_length={pipeline_length}/>
+    <script src="/backend/static/three_panel_animator.js"></script>
     {/key}
-  </span>
-  {#key form_submitted}
-  <script src="/backend/static/three_panel_animator.js"></script>
-  {/key}
   {:else}
-  <div style="
-    height: 100svh;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;">
-    <div style="font-size: 2rem;">Loading...</div>
-  </div>
+    <div style="
+      height: 100svh;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;">
+      <div style="font-size: 2rem;">Loading...</div>
+    </div>
   {/if}
-
+  {:else}
+    <div style="
+      height: 100svh;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;">
+      <div style="font-size: 2rem;">Verifying user session...</div>
+    </div>
 {/if}
