@@ -39,11 +39,26 @@
                 warning+=('['+
                 pipeline_list[i].name+
                 ', pos.'+
-                String(i)+
+                String(parseInt(i)+1)+
                 ']: '+
                 accepted_var+
                 ' is not defined!<br>')
                 console.log(warning);
+            }
+            //if mergedf or floatpointevolmodelforecast, do it again on another parameter
+            if (pipeline_list[i].name==='MergeDF' || pipeline_list[i].name==='FloatPointEvolModelForecast'){
+                const accepted_var_second=pipeline_list[i].accepts_second
+                console.log(accepted_var_second);
+                if (!(var_store.has(accepted_var_second)) && (accepted_var_second.length!=0)){
+                    warning+=('['+
+                    pipeline_list[i].name+
+                    ', pos.'+
+                    String(parseInt(i)+1)+
+                    ']: '+
+                    accepted_var_second+
+                    ' is not defined!<br>')
+                    console.log(warning);
+                }
             }
             //append all created variables
             const produces = pipeline_list[i].produces;
@@ -159,7 +174,7 @@
     {:else}
     <p>Add a renderer to run the pipeline.</p>
     {/if}
-            <br>
-            <br>
+    <br>
+    <br>
 </div>
     </div>

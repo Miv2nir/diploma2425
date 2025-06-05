@@ -282,6 +282,11 @@ def get_pipeline(request,id):
             'accepts':accepts,
             'produces':produces
             })
+        if i.func_name=='MergeDF':
+            l[-1]['accepts_second']=i.info['params']['second_df']
+        if  i.func_name=='FloatPointEvolModelForecast':
+            l[-1]['accepts_second']=i.info['params']['modelsparams']
+            
     return Response(l)
 
 @api_view()
