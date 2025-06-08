@@ -231,7 +231,8 @@ a {
     transition: width 600ms,box-shadow 600ms, border-width 600ms;
 }
 .pfp {
-    height: auto;
+    object-fit: cover;
+    height: 3rem;
     width: 3rem;
     margin-right: 1rem;
     border-radius: 50%;
@@ -448,7 +449,8 @@ font-size: 1rem;
 }
 
 .thumb-icon {
-    height: auto;
+    object-fit: cover;
+    height: 2.7rem;
     width: 2.7rem;
     margin-left: 0.3rem;
     margin-right: 1rem;
